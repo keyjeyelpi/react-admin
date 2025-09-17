@@ -16,7 +16,11 @@ import {
 } from 'react-icons/tb';
 
 import { useAppDispatch, useAppSelector } from '../store';
-import { setDashboardCollapsed, setDashboardLoading } from '../store/slices/settings.slice';
+import {
+  setDashboardCollapsed,
+  setDashboardContainerMaxWidth,
+  setDashboardLoading,
+} from '../store/slices/settings.slice';
 
 export type iSidebarOptions = {
   title?: string;
@@ -74,25 +78,25 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
           activeIcon: <TbSettingsFilled />,
         },
         {
-          title: 'Blocks',
-          url: '/blocks',
+          title: 'Components',
+          url: '/components',
           icon: <TbBlocks />,
           submenu: [
             {
-              title: 'Styles',
-              url: '/blocks/styles',
+              title: 'Kanban',
+              url: '/kanban',
             },
             {
               title: 'Options',
-              url: '/blocks/options',
+              url: '/options',
             },
             {
               title: 'Forms',
-              url: '/blocks/forms',
+              url: '/forms',
             },
             {
               title: 'Themes',
-              url: '/blocks/themes',
+              url: '/themes',
             },
           ],
         },
@@ -122,6 +126,7 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
 const useDashboard = () => {
   const loading = useAppSelector((state) => state.settings?.dashboard.loading) || false;
   const collapsed = useAppSelector((state) => state.settings?.dashboard.collapsed) || false;
+  const containerMaxWidth = useAppSelector((state) => state.settings?.dashboard.containerMaxWidth);
 
   const dispatch = useAppDispatch();
 
@@ -133,7 +138,11 @@ const useDashboard = () => {
     dispatch(setDashboardCollapsed(value));
   };
 
-  return { loading, setLoading, collapsed, setCollapsed };
+  const setContainerMaxWidth = (value: 'sm' | 'md' | 'lg' | 'xl' | false) => {
+    dispatch(setDashboardContainerMaxWidth(value));
+  };
+
+  return { loading, setLoading, collapsed, setCollapsed, containerMaxWidth, setContainerMaxWidth };
 };
 
 export default useDashboard;

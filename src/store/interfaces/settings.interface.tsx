@@ -8,6 +8,7 @@ export interface iSettingsState {
 interface iDashboard {
   loading: boolean;
   collapsed: boolean;
+  containerMaxWidth?: 'sm' | 'md' | 'lg' | 'xl' | false;
 }
 
 // THEME INTERFACES

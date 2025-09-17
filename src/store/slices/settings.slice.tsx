@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { iSettingsState } from "../interfaces/settings.interface";
+import { set } from "react-hook-form";
 
 const initialState: iSettingsState = {
   dashboard: {
     loading: false,
     collapsed: false,
+    containerMaxWidth: 'xl',
   },
   theme: {
     mode: "system",
@@ -51,6 +53,9 @@ export const SettingsSlice = createSlice({
     setDashboardLoading: (state, action) => {
       state.dashboard.loading = action.payload;
     },
+    setDashboardContainerMaxWidth: (state, action) => {
+      state.dashboard.containerMaxWidth = action.payload;
+    }
   },
 });
 
@@ -64,4 +69,5 @@ export const {
   setSecondaryFont,
   setDashboardLoading,
   setDashboardCollapsed,
+  setDashboardContainerMaxWidth
 } = SettingsSlice.actions;

@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { BlocksRoute } from './blocks.dashboard';
+import { ComponentsRoute } from './blocks.dashboard';
 
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
 const Dashboard = lazy(() => import('../../pages/dashboard.page'));
@@ -19,7 +19,7 @@ const dashboardRoutes = [
     path: 'settings',
     element: <Settings />,
   },
-  BlocksRoute,
+  ComponentsRoute,
   {
     path: '*',
     element: <NotFound />,

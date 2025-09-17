@@ -1,9 +1,17 @@
 import { Stack, Typography } from '@mui/material';
 import Title from '../components/title.component';
+import useDashboard from '../hooks/dashboard.hook';
+import { useEffect } from 'react';
 
 const AccountSettings = () => {};
 
 const Settings = () => {
+  const { setContainerMaxWidth } = useDashboard();
+
+  useEffect(() => {
+    setContainerMaxWidth(false);
+  }, []);
+
   return (
     <Stack gap={2}>
       <Title subtitle="Adjust your preferences and configurations." />

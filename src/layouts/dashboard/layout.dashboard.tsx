@@ -9,10 +9,14 @@ import DashboardLayoutHeader from './header.dashboard';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const DashboardLayout = () => {
-  const { loading } = useDashboard();
+  const { loading, containerMaxWidth, setContainerMaxWidth } = useDashboard();
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user);
+
+  useLayoutEffect(() => {
+    setContainerMaxWidth('xl');
+  }, [location.pathname]);
 
   useLayoutEffect(() => {
     if (user?.id) return;
@@ -46,19 +50,22 @@ const DashboardLayout = () => {
             <LinearProgress />
           </Collapse>
           <Suspense fallback={<LinearProgress />}>
-            <Container maxWidth="xl" sx={{ height: '100%' }}>
-              <AnimatePresence mode="wait" initial={true}>
+            <Container maxWidth={containerMaxWidth} sx={{ height: '100%' }}>
+              <AnimatePresence mode="wait" initial>
                 <Box
                   component={motion.div}
                   key={location.pathname}
                   initial={{
-                    filter: 'blur(16px)',
+                    opacity: 0,
+                    x: '100dvw',
                   }}
                   animate={{
-                    filter: 'blur(0px)',
+                    opacity: 1,
+                    x: 0,
                   }}
                   exit={{
-                    filter: 'blur(16px)',
+                    opacity: 0,
+                    x: '-100dvw',
                   }}
                   sx={{ py: 4, height: '100%' }}
                 >

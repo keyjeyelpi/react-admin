@@ -42,8 +42,10 @@ export const DashboardLayoutSidebarToggle = () => {
 
 const SidebarSubmenu = ({
   submenu,
+  url,
 }: {
   submenu: iSidebarOptions[number]['options'][number]['submenu'];
+  url: string;
 }) => {
   const { collapsed } = useDashboard();
   const location = useLocation();
@@ -102,7 +104,7 @@ const SidebarSubmenu = ({
                   fontWeight: 600,
                 },
               ]}
-              onClick={() => navigate(menu.url)}
+              onClick={() => navigate(url + menu.url)}
             >
               {menu.title}
             </Button>
@@ -159,7 +161,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
           },
         }}
       >
-        <SidebarSubmenu submenu={option?.submenu} />
+        <SidebarSubmenu submenu={option?.submenu} url={option.url} />
       </Popover>
 
       {!collapsed ? (
@@ -269,7 +271,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
         </IconButton>
       )}
       <Collapse in={!!option.submenu && openSubmenu && !collapsed} unmountOnExit>
-        <SidebarSubmenu submenu={option?.submenu} />
+        <SidebarSubmenu submenu={option?.submenu} url={option.url} />
       </Collapse>
     </Stack>
   );

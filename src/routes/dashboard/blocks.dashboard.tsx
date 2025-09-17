@@ -1,15 +1,15 @@
 import { lazy } from 'react';
 
-const Styles = lazy(() => import('../../pages/blocks/style.blocks'));
+const Kanban = lazy(() => import('../../pages/components/kanban.components'));
 
-const blocksRoutes = [
+const componentsRoutes = [
   {
-    path: 'styles',
-    element: <Styles />,
+    path: 'kanban',
+    element: <Kanban />,
   },
 ];
 
-export const BlocksRoute = {
-  path: '/blocks',
-  children: blocksRoutes,
+export const ComponentsRoute = {
+  path: '/components',
+  children: componentsRoutes,
 };

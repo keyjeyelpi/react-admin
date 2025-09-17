@@ -3,6 +3,7 @@ import type { Theme } from '@mui/material/styles';
 import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
+import { green, red } from '@mui/material/colors';
 
 import darkLogo from '../assets/images/logo/black.png';
 import lightLogo from '../assets/images/logo/white.png';
@@ -153,6 +154,8 @@ const useTheme = (): Theme => {
   const primaryPalette = generatePalette(primary);
   const secondaryPalette = generatePalette(secondary);
   const backgroundPalette = generatePalette('#888888');
+  const successPalette = generatePalette(green[500]);
+  const errorPalette = generatePalette(red[500]);
 
   useEffect(() => {
     const rootElement = document.querySelector(':root') as HTMLElement | null;
@@ -168,6 +171,8 @@ const useTheme = (): Theme => {
       primary: primaryPalette,
       secondary: secondaryPalette,
       background: backgroundPalette,
+      success: successPalette,
+      error: errorPalette,
     },
     components: {
       MuiButton: {
@@ -189,6 +194,13 @@ const useTheme = (): Theme => {
       },
       MuiCard: {
         styleOverrides: {
+          root: {
+            borderRadius: 8,
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides:{
           root: {
             borderRadius: 8,
           }

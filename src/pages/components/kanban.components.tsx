@@ -1,6 +1,6 @@
 import Title from '../../components/title.component';
 
-const Style = () => {
+const Kanban = () => {
   return (
     <>
       <Title subtitle="Solid foundation and integral part of the design." />
@@ -8,4 +8,4 @@ const Style = () => {
   );
 };
 
-export default Style;
+export default Kanban;

@@ -1,6 +1,7 @@
-import { Divider, Stack, Typography } from '@mui/material';
+import { Chip, Divider, Stack, Typography } from '@mui/material';
 import { cloneElement, type JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
+import Typing from '../typing-text.component';
 
 const DashboardCard = ({
   auto,
@@ -23,65 +24,63 @@ const DashboardCard = ({
   return (
     <Stack sx={[!!auto && { height: '100%', width: '100%' }]} justifyContent="center">
       <Stack
-        flexDirection="row"
-        alignItems="center"
         gap={3}
         sx={{
           p: 2,
         }}
       >
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            height: 60,
-            width: 60,
-            bgcolor: 'background.50',
-            borderRadius: 2,
-            border: (theme) => `solid 1px ${theme.palette.divider}`,
-          }}
-        >
-          {cloneElement(icon, { size: 32 })}
-        </Stack>
-        <Stack justifyContent="space-between">
-          <Typography variant="h6">{title}</Typography>
-          <Typography variant="h3" fontWeight={600}>
-            {value}
-          </Typography>
-        </Stack>
-      </Stack>
-      {previousValue && (
-        <>
-          <Divider />
+        <Stack flexDirection="row" alignItems="center" gap={2}>
           <Stack
-            flexDirection="row"
             alignItems="center"
+            justifyContent="center"
             sx={{
-              px: 2,
-              py: 1,
+              height: 32,
+              width: 32,
+              bgcolor: 'background.50',
+              borderRadius: 2,
+              border: (theme) => `solid 1px ${theme.palette.divider}`,
             }}
           >
-            {typeof previousValue === 'number' && typeof value === 'number' ? (
-              <Typography variant="caption">
-                <Typography
-                  component="span"
-                  variant="caption"
-                  sx={{
-                    color: change > 0 ? 'success.main' : change < 0 ? 'error.main' : 'text.primary',
-                  }}
-                  fontWeight={600}
-                >
-                  {change > 0 ? <TbTrendingUp /> : <TbTrendingDown />}
-                  {Math.abs(change)}%
-                </Typography>{' '}
-                {change > 0 ? 'increase' : change < 0 ? 'decrease' : 'nothing'} vs last month
-              </Typography>
-            ) : (
-              <Typography variant="caption">{previousValue}</Typography>
-            )}
+            {cloneElement(icon, { size: 14 })}
           </Stack>
-        </>
-      )}
+          <Typography variant="h6">{title}</Typography>
+        </Stack>
+        <Stack flexDirection="row" alignItems="center" gap={2}>
+          <Typing text={value?.toLocaleString()} variant="h3" fontWeight={600} delay={10} />
+          {previousValue && (
+            <Chip
+              variant="filled"
+              size="small"
+              sx={{
+                backgroundColor:
+                  change > 0 ? 'success.100' : change < 0 ? 'error.100' : 'background.50',
+              }}
+              label={
+                <Stack flexDirection="row" alignItems="center">
+                  {typeof previousValue === 'number' && typeof value === 'number' ? (
+                    <Stack
+                      flexDirection="row"
+                      alignItems="center"
+                      gap={0.5}
+                      sx={{
+                        color:
+                          change > 0 ? 'success.main' : change < 0 ? 'error.main' : 'text.primary',
+                      }}
+                    >
+                      <Typography component="span" variant="caption" fontWeight={600}>
+                        {Math.abs(change)}%
+                      </Typography>
+                      {change > 0 ? <TbTrendingUp /> : <TbTrendingDown />}
+                    </Stack>
+                  ) : (
+                    <Typography variant="caption">{previousValue}</Typography>
+                  )}
+                </Stack>
+              }
+            />
+          )}
+        </Stack>
+      </Stack>
     </Stack>
   );
 };

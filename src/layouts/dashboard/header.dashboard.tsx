@@ -248,6 +248,30 @@ const DashboardLayoutHeader = () => {
                   {index !== profileSettings.length - 1 && <Divider />}
                 </Stack>
               ))}
+              <Divider />
+              <Box sx={{ p: 1 }}>
+                <Button
+                  fullWidth
+                  disableElevation
+                  disableFocusRipple
+                  disableRipple
+                  disableTouchRipple
+                  sx={{
+                    borderRadius: 0,
+                    borderBottomLeftRadius: 8,
+                    borderBottomRightRadius: 8,
+                    p: 0.5,
+                    color: 'text.primary',
+                    textTransform: 'none',
+                    '&:hover': {
+                      backgroundColor: 'background.50',
+                    },
+                  }}
+                  onClick={() => dispatch(setLogout())}
+                >
+                  <Typography variant="body2">Logout</Typography>
+                </Button>
+              </Box>
             </Popover>
           </Stack>
         </Stack>

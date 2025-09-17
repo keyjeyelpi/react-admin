@@ -69,10 +69,12 @@ export function usePositionReorder<T>(
 
   useEffect(() => {
     setOrder((prevOrder) =>
+      initialState.length === prevOrder.length ?
       prevOrder.map((item) => {
         const found = initialState.find((initItem) => initItem.id === item.id);
         return found ? { ...item, content: found.content } : item;
-      })
+      }) :
+      initialState
     );
   }, [initialState]);
 
