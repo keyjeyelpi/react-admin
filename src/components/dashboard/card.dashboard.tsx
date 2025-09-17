@@ -1,4 +1,4 @@
-import { Chip, Divider, Stack, Typography } from '@mui/material';
+import { Chip, Stack, Typography } from '@mui/material';
 import { cloneElement, type JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
 import Typing from '../typing-text.component';

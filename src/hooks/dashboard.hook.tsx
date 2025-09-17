@@ -49,23 +49,28 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
           icon: <TbLayoutDashboard />,
           activeIcon: <TbLayoutDashboardFilled />,
         },
-        {
-          title: 'Payment',
-          url: '/payment',
-          icon: <TbArrowsLeftRight />,
-        },
-        {
-          title: 'Customers',
-          url: '/customers',
-          icon: <TbUsers />,
-        },
-        {
-          title: 'Messages',
-          url: '/messages',
-          icon: <TbMessage />,
-          activeIcon: <TbMessageFilled />,
-          endIcon: <Chip label="8" size="small" sx={{ borderRadius: 2 }} />,
-        },
+        // Hide for now
+        ...(false
+          ? [
+              {
+                title: 'Payment',
+                url: '/payment',
+                icon: <TbArrowsLeftRight />,
+              },
+              {
+                title: 'Customers',
+                url: '/customers',
+                icon: <TbUsers />,
+              },
+              {
+                title: 'Messages',
+                url: '/messages',
+                icon: <TbMessage />,
+                activeIcon: <TbMessageFilled />,
+                endIcon: <Chip label="8" size="small" sx={{ borderRadius: 2 }} />,
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -86,36 +91,44 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
               title: 'Kanban',
               url: '/kanban',
             },
-            {
-              title: 'Options',
-              url: '/options',
-            },
-            {
-              title: 'Forms',
-              url: '/forms',
-            },
-            {
-              title: 'Themes',
-              url: '/themes',
-            },
+            ...(true
+              ? []
+              : [
+                  {
+                    title: 'Options',
+                    url: '/options',
+                  },
+                  {
+                    title: 'Forms',
+                    url: '/forms',
+                  },
+                  {
+                    title: 'Themes',
+                    url: '/themes',
+                  },
+                ]),
           ],
         },
-        {
-          title: 'Widgets',
-          url: '/widgets',
-          icon: <TbChalkboard />,
-        },
-        {
-          title: 'Elements',
-          url: '/elements',
-          icon: <TbCherry />,
-          activeIcon: <TbCherryFilled />,
-        },
-        {
-          title: 'Tables',
-          url: '/tables',
-          icon: <TbChartTreemap />,
-        },
+        ...(true
+          ? []
+          : [
+              {
+                title: 'Widgets',
+                url: '/widgets',
+                icon: <TbChalkboard />,
+              },
+              {
+                title: 'Elements',
+                url: '/elements',
+                icon: <TbCherry />,
+                activeIcon: <TbCherryFilled />,
+              },
+              {
+                title: 'Tables',
+                url: '/tables',
+                icon: <TbChartTreemap />,
+              },
+            ]),
       ],
     },
   ];

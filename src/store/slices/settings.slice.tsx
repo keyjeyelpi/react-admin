@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { iSettingsState } from "../interfaces/settings.interface";
-import { set } from "react-hook-form";
 
 const initialState: iSettingsState = {
   dashboard: {

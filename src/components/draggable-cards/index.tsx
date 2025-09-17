@@ -1,8 +1,7 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMeasurePosition } from './useMeasurePosition';
-import { Box, Card, IconButton, Stack, Typography, type SxProps } from '@mui/material';
-import { TbX } from 'react-icons/tb';
+import { Box, Card, Stack, type SxProps } from '@mui/material';
 
 export interface CardProps {
   id: string;

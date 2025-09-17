@@ -3,8 +3,6 @@ import Title from '../components/title.component';
 import useDashboard from '../hooks/dashboard.hook';
 import { useEffect } from 'react';
 
-const AccountSettings = () => {};
-
 const Settings = () => {
   const { setContainerMaxWidth } = useDashboard();
 

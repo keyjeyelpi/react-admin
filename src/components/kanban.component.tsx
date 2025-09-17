@@ -1,5 +1,5 @@
 import { Card, Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useState, type Dispatch, type SetStateAction } from 'react';
 import { motion, type PanInfo } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import { TbPlus } from 'react-icons/tb';
@@ -14,21 +14,18 @@ export interface Column {
   id: string;
   name: string;
   items: Task[];
+  addAction?: () => void;
 }
 
-const KanbanContainer = ({ items }: { items: Column[] }) => {
-  const [cards, setCards] = useState<Column[]>(items);
-
-  const addCard = (id: string) => {
-    setCards((prev) =>
-      prev.map((col) =>
-        col.id === id
-          ? { ...col, items: [...col.items, { id: uuid(), content: 'New Task' }] }
-          : col,
-      ),
-    );
-  };
-
+const KanbanCard = ({
+  item,
+  cards,
+  setCards,
+}: {
+  item: Task;
+  cards: Column[];
+  setCards: Dispatch<SetStateAction<Column[]>>;
+}) => {
   const handleDragEnd = (info: PanInfo, taskId: string) => {
     const { x, y } = info.point;
 
@@ -70,6 +67,46 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
 
       return [...newCards];
     });
+  };
+
+  return (
+    <Card
+      key={item.id}
+      elevation={0}
+      component={motion.div}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      drag
+      dragSnapToOrigin
+      onDragEnd={(_, info) => handleDragEnd(info, item.id)}
+      sx={{
+        bgcolor: 'background.default',
+        borderRadius: 1,
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        '&:hover': {
+          cursor: 'grab',
+        },
+        '&:active': { cursor: 'grabbing' },
+      }}
+    >
+      {item.content}
+    </Card>
+  );
+};
+
+const KanbanContainer = ({ items }: { items: Column[] }) => {
+  const [cards, setCards] = useState<Column[]>(items);
+
+  const addCard = (id: string) => {
+    setCards((prev) =>
+      prev.map((col) =>
+        col.id === id
+          ? { ...col, items: [...col.items, { id: uuid(), content: 'New Task' }] }
+          : col,
+      ),
+    );
+
+    items.find((col) => col.id === id)?.addAction?.();
   };
 
   return (
@@ -115,27 +152,7 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
             </Stack>
             <Stack gap={1}>
               {card.items.map((item) => (
-                <Card
-                  key={item.id}
-                  elevation={0}
-                  component={motion.div}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  drag
-                  dragSnapToOrigin
-                  onDragEnd={(_, info) => handleDragEnd(info, item.id)}
-                  sx={{
-                    bgcolor: 'background.default',
-                    borderRadius: 1,
-                    border: (theme) => `1px solid ${theme.palette.divider}`,
-                    '&:hover': {
-                      cursor: 'grab',
-                    },
-                    '&:active': { cursor: 'grabbing' },
-                  }}
-                >
-                  {item.content}
-                </Card>
+                <KanbanCard key={item.id} item={item} cards={cards} setCards={setCards} />
               ))}
             </Stack>
           </Stack>
