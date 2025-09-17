@@ -20,6 +20,7 @@ import Logo from '../../components/logo.component';
 import { cloneElement, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { set } from 'react-hook-form';
 
 const drawerWidth = 240;
 
@@ -47,7 +48,8 @@ const SidebarSubmenu = ({
   submenu: iSidebarOptions[number]['options'][number]['submenu'];
   url: string;
 }) => {
-  const { collapsed } = useDashboard();
+  const { breakpoint } = useBreakpoint();
+  const { collapsed, setCollapsed } = useDashboard();
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -104,7 +106,12 @@ const SidebarSubmenu = ({
                   fontWeight: 600,
                 },
               ]}
-              onClick={() => navigate(url + menu.url)}
+              onClick={() => {
+                navigate(url + menu.url);
+                if (breakpoint === 'xs') {
+                  setCollapsed(true);
+                }
+              }}
             >
               {menu.title}
             </Button>

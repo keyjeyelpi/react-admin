@@ -2,12 +2,29 @@ import { type ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMeasurePosition } from './useMeasurePosition';
 import { Box, Card, Stack, type SxProps } from '@mui/material';
+import { useBreakpoint } from '../../theme';
 
 export interface CardProps {
   id: string;
   content: ReactNode;
-  column: number;
-  row: number;
+  column:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+        xl?: number;
+      };
+  row:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+        xl?: number;
+      };
 }
 
 interface DraggableCardProps {
@@ -74,7 +91,15 @@ const DraggableCard = ({
 }: DraggableCardProps) => {
   const [isDragging, setDragging] = useState(false);
 
+  const { getResponsiveValue, breakpoint } = useBreakpoint();
   const ref = useMeasurePosition((pos) => updatePosition(i, pos));
+
+  const columnValue =
+    typeof card?.column === 'number'
+      ? card?.column
+      : getResponsiveValue(card?.column, breakpoint) || 1;
+  const rowValue =
+    typeof card?.column === 'number' ? card?.row : getResponsiveValue(card?.row, breakpoint) || 1;
 
   return (
     <Card
@@ -95,8 +120,8 @@ const DraggableCard = ({
       }}
       onClick={onClick}
       animate={{
-        gridColumn: `span ${card.column}`,
-        gridRow: `span ${card.row}`,
+        gridColumn: `span ${columnValue}`,
+        gridRow: `span ${rowValue}`,
       }}
       elevation={0}
       drag={!turnDragOff}

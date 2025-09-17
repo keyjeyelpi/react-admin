@@ -19,7 +19,15 @@ import { faker } from '@faker-js/faker';
 
 interface Task {
   id: string;
-  content: JSX.Element;
+  content: {
+    title: string;
+    description: string;
+    category?: {
+      color?: string;
+      label?: string;
+      icon?: JSX.Element;
+    };
+  };
   status?: string;
 }
 
@@ -53,7 +61,7 @@ export const KanbanCardContent = ({
   setSelected?: () => void;
 }) => {
   return (
-    <Stack>
+    <Stack justifyContent="space-between" alignItems="stretch" sx={{ height: '100%' }}>
       <Stack gap={1} sx={{ p: 2 }}>
         {category && (
           <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
@@ -107,14 +115,20 @@ export const KanbanCardContent = ({
           </Collapse>
         </Box>
       </Stack>
-      {!selected && (
-        <Box>
-          <Divider />
+      <Box>
+        <Divider />
+        {!selected ? (
           <Button size="small" onClick={setSelected} fullWidth>
             Show More
           </Button>
-        </Box>
-      )}
+        ) : (
+          <Stack>
+            <Button size="small" fullWidth>
+              Show More
+            </Button>
+          </Stack>
+        )}
+      </Box>
     </Stack>
   );
 };
@@ -198,6 +212,8 @@ const KanbanCard = ({
           margin: 'auto',
           borderRadius: 1,
           border: (theme) => `1px solid ${theme.palette.divider}`,
+        },
+        !selected && {
           '&:hover': {
             cursor: 'grab',
           },
@@ -206,16 +222,17 @@ const KanbanCard = ({
         !!selected && {
           position: 'fixed',
           width: 600,
+          maxWidth: "90vw",
           height: 500,
+          maxHeight: "90dvh",
           zIndex: 9999,
         },
       ]}
     >
-      {cloneElement(item.content, {
-        selected,
-        setSelected: () => setSelected?.(item.id),
-        id: item.id,
-      })}
+      <KanbanCardContent
+        {...item.content}
+        {...{ selected, setSelected: () => setSelected?.(item.id), id: item.id }}
+      />
     </Card>
   );
 };
@@ -234,17 +251,15 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
                 ...col.items,
                 {
                   id: uuid(),
-                  content: (
-                    <KanbanCardContent
-                      category={{
-                        color: 'primary.main',
-                        label: faker.commerce.department(),
-                        icon: <TbLayersSelected />,
-                      }}
-                      title={faker.lorem.words(3)}
-                      description={faker.lorem.paragraphs(2)}
-                    />
-                  ),
+                  content: {
+                    title: faker.lorem.words(3),
+                    description: faker.lorem.paragraphs(2),
+                    category: {
+                      color: 'primary.main',
+                      label: faker.commerce.department(),
+                      icon: <TbLayersSelected />,
+                    },
+                  },
                 },
               ],
             }
@@ -301,6 +316,7 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
               sx={{
                 p: 2,
                 borderRadius: 1,
+                minWidth: 350,
               }}
             >
               <Stack direction="row" justifyContent="space-between" alignItems="center">

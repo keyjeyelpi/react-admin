@@ -35,7 +35,12 @@ const DashboardLayout = () => {
       sx={{ minHeight: '100vh' }}
     >
       <DashboardLayoutSidebar />
-      <Stack flex={1}>
+      <Stack
+        flex={1}
+        sx={{
+          overflowX: 'auto',
+        }}
+      >
         <DashboardLayoutHeader />
         <Stack
           component="main"

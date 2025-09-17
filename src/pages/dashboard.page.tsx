@@ -15,7 +15,10 @@ const cards: CardProps[] = [
     content: (
       <DashboardCard icon={<TbTicket />} title="Tickets" value={31} previousValue={38} auto />
     ),
-    column: 4,
+    column: {
+      xs: 20,
+      md: 10,
+    },
     row: 5,
   },
   {
@@ -23,7 +26,10 @@ const cards: CardProps[] = [
     content: (
       <DashboardCard icon={<TbUsers />} title="Sign Ups" value={24} previousValue={18} auto />
     ),
-    column: 4,
+    column: {
+      xs: 20,
+      md: 10,
+    },
     row: 5,
   },
   {
@@ -31,15 +37,10 @@ const cards: CardProps[] = [
     content: (
       <DashboardCard icon={<TbBug />} title="Open Issues" value={16} previousValue={19} auto />
     ),
-    column: 4,
-    row: 5,
-  },
-  {
-    id: uuid(),
-    content: (
-      <DashboardCard icon={<TbWorld />} title="Views" value={31032} previousValue={30217} auto />
-    ),
-    column: 4,
+    column: {
+      xs: 20,
+      md: 10,
+    },
     row: 5,
   },
   {
@@ -47,19 +48,28 @@ const cards: CardProps[] = [
     content: (
       <DashboardCard icon={<TbWorld />} title="Views" value={3103} previousValue={3021} auto />
     ),
-    column: 4,
+    column: {
+      xs: 20,
+      md: 10,
+    },
     row: 5,
   },
   {
     id: uuid(),
     content: <></>,
-    column: 5,
-    row: 10,
+    column: {
+      xs: 20,
+      md: 10,
+    },
+    row: { xs: 5, md: 10 },
   },
   {
     id: uuid(),
     content: <></>,
-    column: 5,
+    column: {
+      xs: 20,
+      md: 10,
+    },
     row: 10,
   },
   {
@@ -100,7 +110,7 @@ const Dashboard = () => {
   return (
     <Stack gap={2} flex={1} sx={{ height: '100%' }}>
       <Title subtitle="Overview & analytics" />
-      <DraggableCardContainer row={25} column={20} flex={1}>
+      <DraggableCardContainer row={50} column={40} flex={1}>
         {order.map((card, index) => (
           <DraggableCard
             key={card.id}

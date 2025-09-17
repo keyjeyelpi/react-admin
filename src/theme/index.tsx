@@ -11,6 +11,7 @@ import { useAppSelector } from '../store';
 
 export const useBreakpoint = () => {
   const theme = useTheme();
+  const breakpoints = ['xl', 'lg', 'md', 'sm', 'xs'];
 
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
   const isSm = useMediaQuery(theme.breakpoints.only('sm'));
@@ -18,7 +19,30 @@ export const useBreakpoint = () => {
   const isLg = useMediaQuery(theme.breakpoints.only('lg'));
   const isXl = useMediaQuery(theme.breakpoints.only('xl'));
 
+  const getResponsiveValue = (
+    value: number | Partial<Record<(typeof breakpoints)[number], number>> | undefined,
+    currentBreakpoint: (typeof breakpoints)[number],
+  ): number | undefined => {
+    if (typeof value === 'number') return value;
+
+    if (!value) return undefined;
+
+    // Start at current breakpoint, walk down until xs
+    const startIndex = breakpoints.indexOf(currentBreakpoint);
+
+    for (let i = startIndex; i < breakpoints.length; i++) {
+      const bp = breakpoints[i];
+      if (value[bp] !== undefined) {
+        return value[bp];
+      }
+    }
+
+    return undefined;
+  };
+
   return {
+    getResponsiveValue,
+    breakpoints,
     breakpoint: isXs ? 'xs' : isSm ? 'sm' : isMd ? 'md' : isLg ? 'lg' : isXl ? 'xl' : 'unknown',
     bpOrder: ['xs', 'sm', 'md', 'lg', 'xl'],
   };
@@ -200,10 +224,10 @@ const useTheme = (): Theme => {
         },
       },
       MuiChip: {
-        styleOverrides:{
+        styleOverrides: {
           root: {
             borderRadius: 8,
-          }
+          },
         },
       },
       MuiCssBaseline: {
