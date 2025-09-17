@@ -132,7 +132,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
   const isURL = !!(
     option.url === location.pathname ||
     ('alternativeLinks' in option ? option.alternativeLinks : [])?.includes(location.pathname) ||
-    (option.submenu || []).some((sub) => sub.url === location.pathname)
+    (option.submenu || []).some((sub) => location.pathname.includes(sub.url) && location.pathname.includes(option.url))
   );
 
   return (
