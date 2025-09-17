@@ -190,7 +190,6 @@ const KanbanCard = ({
       whileDrag={!!selected ? {} : { zIndex: 2 }}
       sx={[
         {
-          position: 'relative',
           bgcolor: 'background.default',
           top: 0,
           left: 0,
@@ -336,6 +335,7 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
               <Stack gap={1}>
                 {card.items.map((item) => (
                   <KanbanCard
+                    key={item.id}
                     item={item}
                     cards={cards}
                     setCards={setCards}
