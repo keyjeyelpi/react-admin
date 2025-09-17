@@ -32,6 +32,7 @@ const Kanban = () => {
     {
       id: uuid(),
       name: 'In Progress',
+      disableAdd: true,
       items: [
         {
           id: uuid(),

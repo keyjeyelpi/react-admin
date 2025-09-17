@@ -7,12 +7,20 @@ import {
   Collapse,
   Divider,
   IconButton,
+  Modal,
   Stack,
   Typography,
 } from '@mui/material';
 import chroma from 'chroma-js';
-import { motion, type PanInfo } from 'framer-motion';
-import { cloneElement, useState, type Dispatch, type JSX, type SetStateAction } from 'react';
+import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
+import {
+  cloneElement,
+  useEffect,
+  useState,
+  type Dispatch,
+  type JSX,
+  type SetStateAction,
+} from 'react';
 import { v4 as uuid } from 'uuid';
 import { TbLayersSelected, TbLock, TbPlus } from 'react-icons/tb';
 import { faker } from '@faker-js/faker';
@@ -27,15 +35,20 @@ export interface Column {
   id: string;
   name: string;
   items: Task[];
+  disableAdd?: boolean;
   addAction?: () => void;
 }
 
 export const KanbanCardContent = ({
+  id,
   isLocked,
   category,
   title,
   description,
+  selected,
+  setSelected,
 }: {
+  id: string;
   isLocked?: boolean;
   category?: {
     color?: string;
@@ -44,49 +57,68 @@ export const KanbanCardContent = ({
   };
   title?: string;
   description?: string;
+  selected?: boolean;
+  setSelected?: () => void;
 }) => {
-  const [showMore, setShowMore] = useState(false);
-
   return (
-    <Stack gap={1} sx={{ p: 2 }}>
-      {isLocked && (
-        <Alert severity="error" icon={<TbLock />}>
-          The item cannot be edited.
-        </Alert>
-      )}
-      {category && (
-        <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
-          <Stack justifyContent="center" alignItems="center" sx={{ color: 'primary.main' }}>
-            {cloneElement(category?.icon || <TbLayersSelected />, { size: 24 })}
+    <Stack>
+      <Stack gap={1} sx={{ p: 2 }}>
+        {category && (
+          <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
+            <Stack
+              component={motion.div}
+              layoutId={id + 'icon' + (category?.label || '') + (title || '')}
+              justifyContent="center"
+              alignItems="center"
+              sx={{ color: 'primary.main' }}
+            >
+              {cloneElement(category?.icon || <TbLayersSelected />, { size: 24 })}
+            </Stack>
+            <Typography component={motion.span} layoutId={id + category?.label} variant="caption">
+              {category?.label || 'Category'}
+            </Typography>
           </Stack>
-          <Typography variant="caption">{category?.label || 'Category'}</Typography>
-        </Stack>
+        )}
+        {isLocked && (
+          <Alert severity="error" component={motion.div} icon={<TbLock />}>
+            The item cannot be edited.
+          </Alert>
+        )}
+        <Typography fontWeight={600} component={motion.div} layoutId={id + title}>
+          {title || 'Task Title'}
+        </Typography>
+        <Box sx={{ position: 'relative' }}>
+          <Box
+            component={motion.div}
+            initial={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: 64,
+            }}
+            animate={{ height: selected ? 0 : 64 }}
+            sx={{
+              background: (theme) =>
+                `linear-gradient(to top, ${theme.palette.background.paper} 0%, ${chroma(theme.palette.background.paper).alpha(0).hex()} 100%)`,
+              zIndex: 1,
+            }}
+          />
+          <Collapse in={!!selected} collapsedSize={64}>
+            <Typography variant="body2" component={motion.div} layoutId={id + description}>
+              {description || 'Lorem Ipsum'}
+            </Typography>
+          </Collapse>
+        </Box>
+      </Stack>
+      {!selected && (
+        <Box>
+          <Divider />
+          <Button size="small" onClick={setSelected} fullWidth>
+            Show More
+          </Button>
+        </Box>
       )}
-      <Typography fontWeight={600}>{title || 'Task Title'}</Typography>
-      <Box sx={{ position: 'relative' }}>
-        <Box
-          component={motion.div}
-          initial={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            height: showMore ? 0 : 64,
-          }}
-          animate={{ height: showMore ? 0 : 64 }}
-          sx={{
-            background: (theme) =>
-              `linear-gradient(to top, ${theme.palette.background.paper} 0%, ${chroma(theme.palette.background.paper).alpha(0).hex()} 100%)`,
-            zIndex: 1,
-          }}
-        />
-        <Collapse in={showMore} collapsedSize={64}>
-          <Typography variant="body2">{description || 'Lorem Ipsum'}</Typography>
-        </Collapse>
-      </Box>
-      <Button size="small" onClick={() => setShowMore((prev) => !prev)} sx={{ mt: 1 }}>
-        {showMore ? 'Show Less' : 'Show More'}
-      </Button>
     </Stack>
   );
 };
@@ -95,10 +127,14 @@ const KanbanCard = ({
   item,
   cards,
   setCards,
+  selected,
+  setSelected,
 }: {
   item: Task;
   cards: Column[];
   setCards: Dispatch<SetStateAction<Column[]>>;
+  selected?: boolean;
+  setSelected?: Dispatch<SetStateAction<string | null>>;
 }) => {
   const handleDragEnd = (info: PanInfo, taskId: string) => {
     const { x, y } = info.point;
@@ -145,32 +181,53 @@ const KanbanCard = ({
 
   return (
     <Card
-      key={item.id}
       elevation={0}
+      layoutId={item.id}
       component={motion.div}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      drag
+      whileHover={!!selected ? {} : { scale: 1.02 }}
+      whileTap={!!selected ? {} : { scale: 0.98 }}
+      drag={!selected}
       dragSnapToOrigin
-      onDragEnd={(_, info) => handleDragEnd(info, item.id)}
-      whileDrag={{ zIndex: 2 }}
-      sx={{
-        bgcolor: 'background.default',
-        borderRadius: 1,
-        border: (theme) => `1px solid ${theme.palette.divider}`,
-        '&:hover': {
-          cursor: 'grab',
+      onDragEnd={(_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) =>
+        handleDragEnd(info, item.id)
+      }
+      whileDrag={!!selected ? {} : { zIndex: 2 }}
+      sx={[
+        {
+          position: 'relative',
+          bgcolor: 'background.default',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          margin: 'auto',
+          borderRadius: 1,
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+          '&:hover': {
+            cursor: 'grab',
+          },
+          '&:active': { cursor: 'grabbing' },
         },
-        '&:active': { cursor: 'grabbing' },
-      }}
+        !!selected && {
+          position: 'fixed',
+          width: 600,
+          height: 500,
+          zIndex: 9999,
+        },
+      ]}
     >
-      {item.content}
+      {cloneElement(item.content, {
+        selected,
+        setSelected: () => setSelected?.(item.id),
+        id: item.id,
+      })}
     </Card>
   );
 };
 
 const KanbanContainer = ({ items }: { items: Column[] }) => {
   const [cards, setCards] = useState<Column[]>(items);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const addCard = (id: string) => {
     setCards((prev) =>
@@ -204,56 +261,99 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
   };
 
   return (
-    <Stack flex={1} flexDirection="row" gap={2}>
-      {cards.map((card, i) => (
-        <>
+    <>
+      <AnimatePresence initial={false} mode="wait">
+        {selected && (
           <Stack
-            key={card.name}
-            id={card.id}
-            flex={1}
-            gap={2}
-            sx={{
-              p: 2,
-              borderRadius: 1,
+            alignItems="center"
+            justifyContent="center"
+            component={motion.div}
+            initial={{
+              height: '100dvh',
+              width: '100vw',
+              zIndex: 0,
+              backdropFilter: 'blur(4px)',
+              opacity: 0,
+              top: 0,
+              left: 0,
             }}
-          >
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Typography fontWeight={700}>{card.name}</Typography>
-                <Chip
-                  label={card.items.length}
-                  size="small"
-                  sx={{
-                    color: 'text.primary',
-                    backgroundColor: 'background.paper',
-                    border: (theme) => `1px solid ${theme.palette.divider}`,
-                  }}
-                />
+            sx={{
+              position: 'fixed',
+              backgroundColor: (theme) => chroma(theme.palette.background.paper).alpha(0.4).hex(),
+              borderRadius: 2,
+              overflow: 'auto',
+            }}
+            animate={{
+              zIndex: 9999,
+              opacity: 1,
+            }}
+            exit={{
+              zIndex: 0,
+              opacity: 0,
+            }}
+            onClick={() => setSelected(null)}
+          />
+        )}
+      </AnimatePresence>
+      <Stack flex={1} flexDirection="row" gap={2}>
+        {cards.map((card, i) => (
+          <>
+            <Stack
+              key={card.name}
+              id={card.id}
+              flex={1}
+              gap={2}
+              sx={{
+                p: 2,
+                borderRadius: 1,
+              }}
+            >
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Typography fontWeight={700}>{card.name}</Typography>
+                  <Chip
+                    label={card.items.length}
+                    size="small"
+                    sx={{
+                      color: 'text.primary',
+                      backgroundColor: 'background.paper',
+                      border: (theme) => `1px solid ${theme.palette.divider}`,
+                    }}
+                  />
+                </Stack>
+                {!card?.disableAdd && (
+                  <IconButton
+                    onClick={() => addCard(card.id)}
+                    sx={{
+                      bgcolor: 'primary.main',
+                      color: 'primary.contrastText',
+                      '&:hover': {
+                        bgcolor: 'primary.dark',
+                      },
+                    }}
+                    size="small"
+                  >
+                    <TbPlus />
+                  </IconButton>
+                )}
               </Stack>
-              <IconButton
-                onClick={() => addCard(card.id)}
-                sx={{
-                  bgcolor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    bgcolor: 'primary.dark',
-                  },
-                }}
-                size="small"
-              >
-                <TbPlus />
-              </IconButton>
+              <Stack gap={1}>
+                {card.items.map((item) => (
+                  <KanbanCard
+                    item={item}
+                    cards={cards}
+                    setCards={setCards}
+                    selected={selected === item.id}
+                    setSelected={setSelected}
+                  />
+                ))}
+              </Stack>
             </Stack>
-            <Stack gap={1}>
-              {card.items.map((item) => (
-                <KanbanCard key={item.id} item={item} cards={cards} setCards={setCards} />
-              ))}
-            </Stack>
-          </Stack>
-          {i !== cards.length - 1 && <Divider orientation="vertical" flexItem />}
-        </>
-      ))}
-    </Stack>
+            {i !== cards.length - 1 && <Divider orientation="vertical" flexItem />}
+          </>
+        ))}
+      </Stack>
+    </>
   );
 };
 
