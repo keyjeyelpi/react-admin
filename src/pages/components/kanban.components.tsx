@@ -1,30 +1,93 @@
 import { Stack } from '@mui/material';
 import Title from '../../components/title.component';
 import { v4 as uuid } from 'uuid';
-import KanbanContainer, { type Column } from '../../components/kanban.component';
+import KanbanContainer, { KanbanCardContent, type Column } from '../../components/kanban.component';
+import { faker } from '@faker-js/faker';
+import { TbLayersSelected } from 'react-icons/tb';
 
 const Kanban = () => {
   const initialCards: Column[] = [
     {
       id: uuid(),
       name: 'To Do',
-      items: [{ id: uuid(), content: 'Task 1' }],
+      items: [
+        {
+          id: uuid(),
+          content: (
+            <KanbanCardContent
+            isLocked
+              title={faker.lorem.words(3)}
+              description={faker.lorem.paragraphs(2)}
+              category={{
+                color: 'primary.main',
+                label: faker.commerce.department(),
+                icon: <TbLayersSelected />,
+              }}
+            />
+          ),
+        },
+      ],
       addAction: () => {},
     },
     {
       id: uuid(),
       name: 'In Progress',
-      items: [{ id: uuid(), content: 'Task 2' }],
+      items: [
+        {
+          id: uuid(),
+          content: (
+            <KanbanCardContent
+              title={faker.lorem.words(3)}
+              description={faker.lorem.paragraphs(2)}
+              category={{
+                color: 'primary.main',
+                label: faker.commerce.department(),
+                icon: <TbLayersSelected />,
+              }}
+            />
+          ),
+        },
+      ],
     },
     {
       id: uuid(),
       name: 'For Review',
-      items: [{ id: uuid(), content: 'Task 3' }],
+      items: [
+        {
+          id: uuid(),
+          content: (
+            <KanbanCardContent
+              title={faker.lorem.words(3)}
+              description={faker.lorem.paragraphs(2)}
+              category={{
+                color: 'primary.main',
+                label: faker.commerce.department(),
+                icon: <TbLayersSelected />,
+              }}
+            />
+          ),
+        },
+      ],
     },
     {
       id: uuid(),
       name: 'Finished',
-      items: [{ id: uuid(), content: 'Task 4' }],
+      items: [
+        {
+          id: uuid(),
+          content: (
+            <KanbanCardContent
+              title={faker.lorem.words(3)}
+              description={faker.lorem.paragraphs(2)}
+              category={{
+                color: 'primary.main',
+                label: faker.commerce.department(),
+                icon: <TbLayersSelected />,
+              }}
+            />
+          ),
+        },
+      ],
     },
   ];
 

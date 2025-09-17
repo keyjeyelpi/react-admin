@@ -1,12 +1,25 @@
-import { Card, Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Chip,
+  Collapse,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import chroma from 'chroma-js';
 import { motion, type PanInfo } from 'framer-motion';
+import { cloneElement, useState, type Dispatch, type JSX, type SetStateAction } from 'react';
 import { v4 as uuid } from 'uuid';
-import { TbPlus } from 'react-icons/tb';
+import { TbLayersSelected, TbLock, TbPlus } from 'react-icons/tb';
+import { faker } from '@faker-js/faker';
 
 interface Task {
   id: string;
-  content: string;
+  content: JSX.Element;
   status?: string;
 }
 
@@ -16,6 +29,66 @@ export interface Column {
   items: Task[];
   addAction?: () => void;
 }
+
+export const KanbanCardContent = ({
+  isLocked,
+  category,
+  title,
+  description,
+}: {
+  isLocked?: boolean;
+  category?: {
+    color?: string;
+    label?: string;
+    icon?: JSX.Element;
+  };
+  title?: string;
+  description?: string;
+}) => {
+  const [showMore, setShowMore] = useState(false);
+
+  return (
+    <Stack gap={1} sx={{ p: 2 }}>
+      {isLocked && (
+        <Alert severity="error" icon={<TbLock />}>
+          The item cannot be edited.
+        </Alert>
+      )}
+      {category && (
+        <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
+          <Stack justifyContent="center" alignItems="center" sx={{ color: 'primary.main' }}>
+            {cloneElement(category?.icon || <TbLayersSelected />, { size: 24 })}
+          </Stack>
+          <Typography variant="caption">{category?.label || 'Category'}</Typography>
+        </Stack>
+      )}
+      <Typography fontWeight={600}>{title || 'Task Title'}</Typography>
+      <Box sx={{ position: 'relative' }}>
+        <Box
+          component={motion.div}
+          initial={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+          }}
+          animate={{ height: showMore ? 0 : 64 }}
+          sx={{
+            background: (theme) =>
+              `linear-gradient(to top, ${theme.palette.background.paper} 0%, ${chroma(theme.palette.background.paper).alpha(0).hex()} 100%)`,
+            zIndex: 1,
+          }}
+        />
+        <Collapse in={showMore} collapsedSize={64}>
+          <Typography variant="body2">{description || 'Lorem Ipsum'}</Typography>
+        </Collapse>
+      </Box>
+      <Button size="small" onClick={() => setShowMore((prev) => !prev)} sx={{ mt: 1 }}>
+        {showMore ? 'Show Less' : 'Show More'}
+      </Button>
+    </Stack>
+  );
+};
 
 const KanbanCard = ({
   item,
@@ -101,7 +174,26 @@ const KanbanContainer = ({ items }: { items: Column[] }) => {
     setCards((prev) =>
       prev.map((col) =>
         col.id === id
-          ? { ...col, items: [...col.items, { id: uuid(), content: 'New Task' }] }
+          ? {
+              ...col,
+              items: [
+                ...col.items,
+                {
+                  id: uuid(),
+                  content: (
+                    <KanbanCardContent
+                      category={{
+                        color: 'primary.main',
+                        label: faker.commerce.department(),
+                        icon: <TbLayersSelected />,
+                      }}
+                      title={faker.lorem.words(3)}
+                      description={faker.lorem.paragraphs(2)}
+                    />
+                  ),
+                },
+              ],
+            }
           : col,
       ),
     );
