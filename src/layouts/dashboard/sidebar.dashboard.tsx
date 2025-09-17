@@ -95,7 +95,7 @@ const SidebarSubmenu = ({
                   color: (theme) => theme.palette.text.secondary,
                   height: 40,
                 },
-                location.pathname === menu.url && {
+                location.pathname === url + menu.url && {
                   bgcolor: (theme) =>
                     chroma(theme.palette.primary.main)
                       .alpha(!collapsed ? 0.05 : 0.1)
@@ -132,7 +132,9 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
   const isURL = !!(
     option.url === location.pathname ||
     ('alternativeLinks' in option ? option.alternativeLinks : [])?.includes(location.pathname) ||
-    (option.submenu || []).some((sub) => location.pathname.includes(sub.url) && location.pathname.includes(option.url))
+    (option.submenu || []).some(
+      (sub) => location.pathname.includes(sub.url) && location.pathname.includes(option.url),
+    )
   );
 
   return (
