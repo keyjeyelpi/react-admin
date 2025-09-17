@@ -71,6 +71,7 @@ export const KanbanCardContent = ({
             bottom: 0,
             left: 0,
             width: '100%',
+            height: showMore ? 0 : 64,
           }}
           animate={{ height: showMore ? 0 : 64 }}
           sx={{
@@ -152,6 +153,7 @@ const KanbanCard = ({
       drag
       dragSnapToOrigin
       onDragEnd={(_, info) => handleDragEnd(info, item.id)}
+      whileDrag={{ zIndex: 2 }}
       sx={{
         bgcolor: 'background.default',
         borderRadius: 1,
