@@ -10,7 +10,7 @@ import { persistor, store } from './store/index.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider {...{ store }}>
-      <BrowserRouter>
+      <BrowserRouter basename='/react-admin'>
         <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>
