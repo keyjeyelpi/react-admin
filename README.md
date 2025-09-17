@@ -39,5 +39,5 @@ A modern, responsive **Dashboard UI** built by **[@keyjeyelpi](https://github.co
 Clone the repository:
 
 ```bash
-git clone https://github.com/keyjeyelpi/react-dashboard.git
-cd react-dashboard
+git clone https://github.com/keyjeyelpi/react-admin.git
+cd react-admin
