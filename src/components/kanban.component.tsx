@@ -7,20 +7,12 @@ import {
   Collapse,
   Divider,
   IconButton,
-  Modal,
   Stack,
   Typography,
 } from '@mui/material';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
-import {
-  cloneElement,
-  useEffect,
-  useState,
-  type Dispatch,
-  type JSX,
-  type SetStateAction,
-} from 'react';
+import { cloneElement, useState, type Dispatch, type JSX, type SetStateAction } from 'react';
 import { v4 as uuid } from 'uuid';
 import { TbLayersSelected, TbLock, TbPlus } from 'react-icons/tb';
 import { faker } from '@faker-js/faker';
@@ -48,7 +40,7 @@ export const KanbanCardContent = ({
   selected,
   setSelected,
 }: {
-  id: string;
+  id?: string;
   isLocked?: boolean;
   category?: {
     color?: string;
@@ -67,14 +59,18 @@ export const KanbanCardContent = ({
           <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
             <Stack
               component={motion.div}
-              layoutId={id + 'icon' + (category?.label || '') + (title || '')}
+              layoutId={(id || '') + 'icon' + (category?.label || '') + (title || '')}
               justifyContent="center"
               alignItems="center"
               sx={{ color: 'primary.main' }}
             >
               {cloneElement(category?.icon || <TbLayersSelected />, { size: 24 })}
             </Stack>
-            <Typography component={motion.span} layoutId={id + category?.label} variant="caption">
+            <Typography
+              component={motion.span}
+              layoutId={(id || '') + category?.label}
+              variant="caption"
+            >
               {category?.label || 'Category'}
             </Typography>
           </Stack>
@@ -84,7 +80,7 @@ export const KanbanCardContent = ({
             The item cannot be edited.
           </Alert>
         )}
-        <Typography fontWeight={600} component={motion.div} layoutId={id + title}>
+        <Typography fontWeight={600} component={motion.div} layoutId={(id || '') + title}>
           {title || 'Task Title'}
         </Typography>
         <Box sx={{ position: 'relative' }}>
@@ -105,7 +101,7 @@ export const KanbanCardContent = ({
             }}
           />
           <Collapse in={!!selected} collapsedSize={64}>
-            <Typography variant="body2" component={motion.div} layoutId={id + description}>
+            <Typography variant="body2" component={motion.div} layoutId={(id || '') + description}>
               {description || 'Lorem Ipsum'}
             </Typography>
           </Collapse>

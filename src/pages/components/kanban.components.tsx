@@ -15,7 +15,7 @@ const Kanban = () => {
           id: uuid(),
           content: (
             <KanbanCardContent
-            isLocked
+              isLocked
               title={faker.lorem.words(3)}
               description={faker.lorem.paragraphs(2)}
               category={{
@@ -33,62 +33,17 @@ const Kanban = () => {
       id: uuid(),
       name: 'In Progress',
       disableAdd: true,
-      items: [
-        {
-          id: uuid(),
-          content: (
-            <KanbanCardContent
-              title={faker.lorem.words(3)}
-              description={faker.lorem.paragraphs(2)}
-              category={{
-                color: 'primary.main',
-                label: faker.commerce.department(),
-                icon: <TbLayersSelected />,
-              }}
-            />
-          ),
-        },
-      ],
+      items: [],
     },
     {
       id: uuid(),
       name: 'For Review',
-      items: [
-        {
-          id: uuid(),
-          content: (
-            <KanbanCardContent
-              title={faker.lorem.words(3)}
-              description={faker.lorem.paragraphs(2)}
-              category={{
-                color: 'primary.main',
-                label: faker.commerce.department(),
-                icon: <TbLayersSelected />,
-              }}
-            />
-          ),
-        },
-      ],
+      items: [],
     },
     {
       id: uuid(),
       name: 'Finished',
-      items: [
-        {
-          id: uuid(),
-          content: (
-            <KanbanCardContent
-              title={faker.lorem.words(3)}
-              description={faker.lorem.paragraphs(2)}
-              category={{
-                color: 'primary.main',
-                label: faker.commerce.department(),
-                icon: <TbLayersSelected />,
-              }}
-            />
-          ),
-        },
-      ],
+      items: [],
     },
   ];
 
