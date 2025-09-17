@@ -66,7 +66,7 @@ const SidebarSubmenu = ({
                 initial={{ y: i === 0 ? -1 : -20 }}
                 animate={{
                   borderColor:
-                    location.pathname === menu.url
+                    location.pathname === url + menu.url
                       ? theme.palette.primary.main
                       : theme.palette.divider,
                 }}

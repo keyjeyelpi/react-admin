@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { ComponentsRoute } from './blocks.dashboard';
+import { ComponentsRoute } from './components.dashboard';
 
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
 const Dashboard = lazy(() => import('../../pages/dashboard.page'));
