@@ -21,6 +21,7 @@ import {
   setDashboardContainerMaxWidth,
   setDashboardLoading,
 } from '../store/slices/settings.slice';
+import { title } from 'process';
 
 export type iSidebarOptions = {
   title?: string;
@@ -90,6 +91,10 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
             {
               title: 'Kanban',
               url: '/kanban',
+            },
+            {
+              title: 'Pomodoro',
+              url: '/pomodoro',
             },
             ...(true
               ? []

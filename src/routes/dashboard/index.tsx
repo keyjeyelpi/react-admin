@@ -4,7 +4,7 @@ import { ComponentsRoute } from './components.dashboard';
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
 const Dashboard = lazy(() => import('../../pages/dashboard.page'));
 const NotFound = lazy(() => import('../../pages/not-found.page'));
-const Settings = lazy(() => import('../../pages/settings.page'));
+const Settings = lazy(() => import('../../pages/settings'));
 
 const dashboardRoutes = [
   {

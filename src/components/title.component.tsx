@@ -1,7 +1,17 @@
-import { Breadcrumbs, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Stack, Typography, type SxProps } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 
-const Title = ({ title, subtitle }: { title?: string; subtitle?: string }) => {
+const Title = ({
+  title,
+  titleSx,
+  subtitle,
+  subtitleSx,
+}: {
+  title?: string;
+  titleSx?: SxProps;
+  subtitle?: string;
+  subtitleSx?: SxProps;
+}) => {
   const location = useLocation();
 
   const paths = location.pathname.split('/').filter((p) => p);
@@ -25,10 +35,12 @@ const Title = ({ title, subtitle }: { title?: string; subtitle?: string }) => {
           })}
         </Breadcrumbs>
       )}
-      <Typography variant="h5" fontWeight={600} textTransform="capitalize">
+      <Typography variant="h5" fontWeight={600} textTransform="capitalize" sx={titleSx}>
         {title || paths[paths.length - 1]}
       </Typography>
-      <Typography variant="body2" color='text.secondary'>{subtitle}</Typography>
+      <Typography variant="body2" color="text.secondary" sx={subtitleSx}>
+        {subtitle}
+      </Typography>
     </Stack>
   );
 };
