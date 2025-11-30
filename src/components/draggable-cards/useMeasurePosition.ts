@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from 'react';
 
 export type Position = {
   row: number;
@@ -9,9 +9,7 @@ export type Position = {
 
 type UpdateFn = (pos: Position) => void;
 
-export function useMeasurePosition(
-  update: UpdateFn
-): RefObject<HTMLElement | null> {
+export function useMeasurePosition(update: UpdateFn): RefObject<HTMLElement | null> {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {

@@ -41,3 +41,4 @@ Clone the repository:
 ```bash
 git clone https://github.com/keyjeyelpi/react-admin.git
 cd react-admin
+```

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { iSettingsState } from "../interfaces/settings.interface";
+import { createSlice } from '@reduxjs/toolkit';
+import type { iSettingsState } from '../interfaces/settings.interface';
 
 const initialState: iSettingsState = {
   dashboard: {
@@ -8,21 +8,21 @@ const initialState: iSettingsState = {
     containerMaxWidth: 'xl',
   },
   theme: {
-    mode: "system",
-    resolvedMode: "light",
+    mode: 'system',
+    resolvedMode: 'light',
     colors: {
-      primary: "#1E88E5",
-      secondary: "#F4511E",
+      primary: '#1E88E5',
+      secondary: '#F4511E',
     },
     fonts: {
-      primary: "sans-serif",
-      secondary: "serif",
+      primary: 'sans-serif',
+      secondary: 'serif',
     },
   },
 };
 
 export const SettingsSlice = createSlice({
-  name: "settings",
+  name: 'settings',
   initialState,
   reducers: {
     // THEME
@@ -54,7 +54,7 @@ export const SettingsSlice = createSlice({
     },
     setDashboardContainerMaxWidth: (state, action) => {
       state.dashboard.containerMaxWidth = action.payload;
-    }
+    },
   },
 });
 
@@ -68,5 +68,5 @@ export const {
   setSecondaryFont,
   setDashboardLoading,
   setDashboardCollapsed,
-  setDashboardContainerMaxWidth
+  setDashboardContainerMaxWidth,
 } = SettingsSlice.actions;

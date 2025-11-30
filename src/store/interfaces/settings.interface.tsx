@@ -13,8 +13,8 @@ interface iDashboard {
 
 // THEME INTERFACES
 interface iTheme {
-  mode: "light" | "dark" | "system";
-  resolvedMode: "light" | "dark";
+  mode: 'light' | 'dark' | 'system';
+  resolvedMode: 'light' | 'dark';
   colors: iThemeColors;
   fonts: iThemeFonts;
 }

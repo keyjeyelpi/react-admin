@@ -1,15 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 type CardProps<T> = T & {
   id: string;
   content?: React.ReactNode | ((isSelected: boolean) => void);
 };
 
-export function arrayMoveMutable<T>(
-  array: T[],
-  fromIndex: number,
-  toIndex: number
-): void {
+export function arrayMoveMutable<T>(array: T[], fromIndex: number, toIndex: number): void {
   const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
 
   if (startIndex >= 0 && startIndex < array.length) {
@@ -23,7 +19,7 @@ export function arrayMoveMutable<T>(
 export function arrayMoveImmutable<T>(
   array: CardProps<T>[],
   fromIndex: number,
-  toIndex: number
+  toIndex: number,
 ): CardProps<T>[] {
   array = [...array];
   arrayMoveMutable(array, fromIndex, toIndex);
@@ -46,14 +42,10 @@ interface Position {
 }
 
 type UpdatePositionFn = (index: number, offset: Position) => void;
-type UpdateOrderFn = (
-  index: number,
-  dragXOffset: number,
-  dragYOffset: number
-) => void;
+type UpdateOrderFn = (index: number, dragXOffset: number, dragYOffset: number) => void;
 
 export function usePositionReorder<T>(
-  initialState: CardProps<T>[]
+  initialState: CardProps<T>[],
 ): [T[], UpdatePositionFn, UpdateOrderFn] {
   const [order, setOrder] = useState<CardProps<T>[]>(initialState);
   const positions = useRef<Position[]>([]).current;
@@ -69,12 +61,12 @@ export function usePositionReorder<T>(
 
   useEffect(() => {
     setOrder((prevOrder) =>
-      initialState.length === prevOrder.length ?
-      prevOrder.map((item) => {
-        const found = initialState.find((initItem) => initItem.id === item.id);
-        return found ? { ...item, content: found.content } : item;
-      }) :
-      initialState
+      initialState.length === prevOrder.length
+        ? prevOrder.map((item) => {
+            const found = initialState.find((initItem) => initItem.id === item.id);
+            return found ? { ...item, content: found.content } : item;
+          })
+        : initialState,
     );
   }, [initialState]);
 
@@ -87,7 +79,7 @@ export const findIndex = (
   i: number,
   xOffset: number,
   yOffset: number,
-  positions: Position[]
+  positions: Position[],
 ): number => {
   let target = i;
   const { top, column, row, left } = positions[i];
@@ -103,21 +95,18 @@ export const findIndex = (
   } else if (yOffset > 0 && Math.abs(yOffset) > Math.abs(xOffset)) {
     const nextItem = positions[i + 3];
     if (!nextItem) return i;
-    const ySwapOffset =
-      distance(bottom, nextItem.top + nextItem.row / 2) + buffer;
+    const ySwapOffset = distance(bottom, nextItem.top + nextItem.row / 2) + buffer;
     if (yOffset > ySwapOffset) target = i + 3;
   } else if (xOffset < 0 && Math.abs(xOffset) > Math.abs(yOffset)) {
     const prevItem = positions[i - 1];
     if (!prevItem) return i;
     const prevRight = prevItem.left + prevItem.column;
-    const xSwapOffset =
-      distance(left, prevRight - prevItem.column / 2) + buffer;
+    const xSwapOffset = distance(left, prevRight - prevItem.column / 2) + buffer;
     if (xOffset < -xSwapOffset) target = i - 1;
   } else if (xOffset > 0 && Math.abs(xOffset) > Math.abs(yOffset)) {
     const nextItem = positions[i + 1];
     if (!nextItem) return i;
-    const xSwapOffset =
-      distance(right, nextItem.left + nextItem.column / 2) + buffer;
+    const xSwapOffset = distance(right, nextItem.left + nextItem.column / 2) + buffer;
     if (xOffset > xSwapOffset) target = i + 1;
   }
 

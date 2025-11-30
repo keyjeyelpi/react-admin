@@ -71,7 +71,7 @@ const GeneralSettingsTheme = () => {
                         height: '100%',
                         objectFit: 'cover',
                         objectPosition: 'left',
-                        opacity: 0.9
+                        opacity: 0.9,
                       }}
                     />
                     <Divider />

@@ -222,9 +222,9 @@ const KanbanCard = ({
         !!selected && {
           position: 'fixed',
           width: 600,
-          maxWidth: "90vw",
+          maxWidth: '90vw',
           height: 500,
-          maxHeight: "90dvh",
+          maxHeight: '90dvh',
           zIndex: 9999,
         },
       ]}

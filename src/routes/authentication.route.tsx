@@ -1,19 +1,17 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
-const AuthenticationLayout = lazy(
-  () => import("../layouts/authentication.layout")
-);
-const Authenticate = lazy(() => import("../pages/authenticate.page"));
+const AuthenticationLayout = lazy(() => import('../layouts/authentication.layout'));
+const Authenticate = lazy(() => import('../pages/authenticate.page'));
 
 const authenticationRoutes = [
   {
-    path: "/authenticate",
+    path: '/authenticate',
     element: <Authenticate />,
   },
 ];
 
 export const AuthenticationRoute = {
-  path: "/",
+  path: '/',
   element: <AuthenticationLayout />,
   children: authenticationRoutes,
 };

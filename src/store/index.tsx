@@ -1,5 +1,5 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import localforage from "localforage";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import localforage from 'localforage';
 import {
   createMigrate,
   persistStore,
@@ -10,14 +10,13 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import { encryptTransform } from "redux-persist-transform-encrypt";
-import type { TypedUseSelectorHook } from "react-redux";
-import { useDispatch, useSelector } from "react-redux";
+} from 'redux-persist';
+import { encryptTransform } from 'redux-persist-transform-encrypt';
+import type { TypedUseSelectorHook } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { SettingsSlice } from "./slices/settings.slice";
-import { UserSlice } from "./slices/user.slice";
-
+import { SettingsSlice } from './slices/settings.slice';
+import { UserSlice } from './slices/user.slice';
 
 const migrations = {
   0: (state: any) => {
@@ -26,7 +25,7 @@ const migrations = {
       settings: {
         ...state.settings,
         moodColorCategory: {
-          colorPalette: "DEFAULT",
+          colorPalette: 'DEFAULT',
         },
       },
     };
@@ -36,7 +35,7 @@ const migrations = {
 const reducerSlices = {
   [SettingsSlice.name]: SettingsSlice.reducer,
   [UserSlice.name]: UserSlice.reducer,
-}
+};
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -55,10 +54,7 @@ const persistConfig = {
 
 const reducers = combineReducers(reducerSlices);
 
-const reducer = persistReducer<ReturnType<typeof reducers>>(
-  persistConfig,
-  reducers
-);
+const reducer = persistReducer<ReturnType<typeof reducers>>(persistConfig, reducers);
 
 export const store = configureStore({
   reducer,
@@ -74,6 +70,4 @@ export const persistor = persistStore(store);
 export type IFRootState = ReturnType<typeof store.getState>;
 export type IFRootDispatch = ReturnType<typeof store.dispatch>;
 export const useAppDispatch: () => typeof store.dispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<
-  ReturnType<typeof store.getState>
-> = useSelector;
+export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
