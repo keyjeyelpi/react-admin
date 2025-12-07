@@ -92,6 +92,21 @@ export const useCurrentThemeMode = (): {
   return { darkMode, textColor, bgColor, logo };
 };
 
+export const useColors = (): {
+  primary: string;
+  secondary: string;
+  background: string;
+} => {
+  const { primary, secondary } = useAppSelector((state) => state.settings?.theme.colors) || {
+    primary: '#0D3B66',
+    secondary: '#FF7F50',
+  };
+
+  const { bgColor } = useCurrentThemeMode();
+
+  return { primary, secondary, background: bgColor };
+};
+
 const generatePalette = (bc: string) => {
   const { darkMode } = useCurrentThemeMode();
 

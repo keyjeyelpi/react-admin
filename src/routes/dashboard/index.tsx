@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { ComponentsRoute } from './components.dashboard';
 
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
-const Dashboard = lazy(() => import('../../pages/dashboard.page'));
+const Dashboard = lazy(() => import('../../pages/dashboard'));
 const NotFound = lazy(() => import('../../pages/not-found.page'));
 const Settings = lazy(() => import('../../pages/settings'));
 

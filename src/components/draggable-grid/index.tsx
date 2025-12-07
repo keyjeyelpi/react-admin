@@ -1,12 +1,12 @@
 import { type ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMeasurePosition } from './useMeasurePosition';
-import { Box, Card, Stack, type SxProps } from '@mui/material';
+import { Grid, type SxProps } from '@mui/material';
 import { useBreakpoint } from '../../theme';
 
-export interface CardProps {
+export interface GridProps {
   id: string;
-  content: ReactNode;
+  children: ReactNode;
   column:
     | number
     | {
@@ -25,11 +25,31 @@ export interface CardProps {
         lg?: number;
         xl?: number;
       };
+  turnDragOff?: boolean;
 }
 
-interface DraggableCardProps {
+interface DraggableGridProps {
   i: number;
-  card: CardProps;
+  id: string;
+  column:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+        xl?: number;
+      };
+  row:
+    | number
+    | {
+        xs?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+        xl?: number;
+      };
+  children: GridProps | ReactNode;
   updatePosition: (
     index: number,
     pos: { top: number; left: number; column: number; row: number },
@@ -37,13 +57,13 @@ interface DraggableCardProps {
   updateOrder: (index: number, xOffset: number, yOffset: number) => void;
   padding?: number;
   turnDragOff?: boolean;
-  cardSx?: SxProps;
+  sx?: SxProps;
   onClick?: () => void;
   outlined?: boolean;
   backgroundColor?: string;
 }
 
-export const DraggableCardContainer = ({
+export const DraggableGridContainer = ({
   row = 4,
   column = 4,
   gap = 2,
@@ -52,8 +72,8 @@ export const DraggableCardContainer = ({
   customGridTemplateRows,
   flex,
 }: {
-  row: number;
-  column: number;
+  row?: number;
+  column?: number;
   children: ReactNode;
   gap?: number;
   customGridTemplateColumns?: string;
@@ -61,69 +81,63 @@ export const DraggableCardContainer = ({
   flex?: number;
 }) => {
   return (
-    <Box
+    <Grid
+      gap={gap}
+      gridTemplateRows={`repeat(${column}, ${customGridTemplateColumns || '1fr'})`}
+      gridTemplateColumns={`repeat(${row}, ${customGridTemplateRows || '1fr'})`}
+      height={!flex ? '100%' : undefined}
+      width={!flex ? '100%' : undefined}
       flex={flex}
-      sx={{
-        height: flex ? undefined : '100%',
-        width: flex ? undefined : '100%',
-        gridTemplateColumns: `repeat(${column}, ${customGridTemplateColumns || '1fr'})`,
-        gridTemplateRows: `repeat(${row}, ${customGridTemplateRows || '1fr'})`,
-        gap,
-      }}
       display="grid"
     >
       {children}
-    </Box>
+    </Grid>
   );
 };
 
-const DraggableCard = ({
+const DraggableGrid = ({
   i,
-  card,
   updatePosition,
   updateOrder,
   padding,
   turnDragOff,
-  cardSx,
+  sx,
   onClick,
   outlined,
   backgroundColor,
-}: DraggableCardProps) => {
+  children,
+  column,
+  row,
+}: DraggableGridProps) => {
   const [isDragging, setDragging] = useState(false);
 
   const { getResponsiveValue, breakpoint } = useBreakpoint();
   const ref = useMeasurePosition((pos) => updatePosition(i, pos));
 
   const columnValue =
-    typeof card?.column === 'number'
-      ? card?.column
-      : getResponsiveValue(card?.column, breakpoint) || 1;
-  const rowValue =
-    typeof card?.column === 'number' ? card?.row : getResponsiveValue(card?.row, breakpoint) || 1;
+    typeof column === 'number' ? column : getResponsiveValue(column, breakpoint) || 1;
+  const rowValue = typeof row === 'number' ? row : getResponsiveValue(row, breakpoint) || 1;
 
   return (
-    <Card
+    <Grid
       component={motion.div}
       ref={ref as any}
       layout
       initial={false}
-      sx={{
-        position: 'relative',
-        zIndex: isDragging ? 3 : 1,
-        backgroundColor: backgroundColor || 'background.default',
-        p: padding || 0,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        border: outlined ? (theme) => `1px solid ${theme.palette.divider}` : 'none',
-        ...cardSx,
-      }}
+      position="relative"
+      zIndex={isDragging ? 3 : 1}
+      bgcolor={backgroundColor || 'background.default'}
+      padding={padding}
+      display="flex"
+      flexDirection="column"
+      overflow="hidden"
+      border={outlined ? (theme) => `1px solid ${theme.palette.divider}` : 'none'}
+      sx={sx}
       onClick={onClick}
       animate={{
         gridColumn: `span ${columnValue}`,
         gridRow: `span ${rowValue}`,
       }}
-      elevation={0}
       drag={!turnDragOff}
       dragSnapToOrigin
       onDragStart={() => setDragging(true)}
@@ -135,11 +149,11 @@ const DraggableCard = ({
         zIndex: 100,
       }}
     >
-      <Stack sx={{ height: '100%', width: '100%' }} justifyContent="center">
-        {card.content}
-      </Stack>
-    </Card>
+      {typeof children === 'object' && children !== null && 'children' in children
+        ? children.children
+        : children}
+    </Grid>
   );
 };
 
-export default DraggableCard;
+export default DraggableGrid;

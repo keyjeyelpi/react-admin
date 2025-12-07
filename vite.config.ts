@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: '/react-admin',
+    base: '/',
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
       PERSIST_KEY: JSON.stringify(env.VITE_PERSIST_KEY),
