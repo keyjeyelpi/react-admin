@@ -6,16 +6,12 @@ import { useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { TbEye, TbEyeClosed, TbMail, TbPassword, TbUser } from 'react-icons/tb';
-import Tabs from '../components/tabs.component';
-import {
-  LoginSchema,
-  RegisterSchema,
-  iLoginSchema,
-  iRegisterSchema,
-} from '../schema/authenticate.schema';
-import { useAppDispatch, useAppSelector } from '../store';
-import { setUserProfile } from '../store/slices/user.slice';
+import Tabs from '../../components/tabs.component';
+import { LoginSchema, RegisterSchema } from '../../schema/authenticate.schema';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { setUserProfile } from '../../store/slices/user.slice';
 import ProfilePicture from '../assets/images/profile-picture.png';
+import type { LoginSchemaType, RegisterSchemaType } from '@/schema/types';
 
 const Login = () => {
   const [togglePassword, setTogglePassword] = useState(false);
@@ -25,7 +21,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<iLoginSchema>({
+  } = useForm<LoginSchemaType>({
     mode: 'onChange',
     resolver: yupResolver(LoginSchema),
     defaultValues: {
@@ -34,7 +30,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data: iLoginSchema) => {
+  const onSubmit = (data: LoginSchemaType) => {
     const profile =
       data?.email === 'k.penaloza@keyjeyelpi.com'
         ? {
@@ -124,12 +120,12 @@ const Register = () => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<iRegisterSchema>({
+  } = useForm<RegisterSchemaType>({
     mode: 'onChange',
     resolver: yupResolver(RegisterSchema),
   });
 
-  const onSubmit = (data: iRegisterSchema) => {
+  const onSubmit = (data: RegisterSchemaType) => {
     dispatch(
       setUserProfile({
         email: data?.email,

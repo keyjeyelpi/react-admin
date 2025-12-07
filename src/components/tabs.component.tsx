@@ -1,16 +1,8 @@
 import { Box, Button, Stack } from '@mui/material';
 import { motion } from 'framer-motion';
-import { Dispatch, SetStateAction } from 'react';
+import type { TabsProps } from './types';
 
-const Tabs = ({
-  tabs,
-  selectedTab,
-  setSelectedTab,
-}: {
-  tabs: string[];
-  selectedTab: string;
-  setSelectedTab: Dispatch<SetStateAction<string>>;
-}) => (
+const Tabs = ({ tabs, selectedTab, setSelectedTab }: TabsProps) => (
   <Stack
     direction="row"
     sx={{

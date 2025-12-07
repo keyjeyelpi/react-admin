@@ -247,7 +247,7 @@ const DashboardLayoutHeader = () => {
                     {profile
                       ? `${profile.name.last}, ${profile.name.first} ${profile.name.middle
                           ?.split(' ')
-                          ?.map((name) => name[0])
+                          ?.map((name: string) => name[0])
                           ?.join()}.`
                       : 'User Name'}
                   </Typography>

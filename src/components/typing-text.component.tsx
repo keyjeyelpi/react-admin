@@ -1,28 +1,12 @@
-import { Stack, Typography, TypographyProps } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { useBreakpoint } from '../theme';
+import type { TypingProps } from './types';
 
-const isString = (a): a is string => typeof a === 'string';
+const isString = (a: unknown): a is string => typeof a === 'string';
 
-const Typing = ({
-  text,
-  delay = 0,
-  spacing = 0.2,
-  ...typography
-}: TypographyProps & {
-  text:
-    | string
-    | {
-        xs?: string;
-        sm?: string;
-        md?: string;
-        lg?: string;
-        xl?: string;
-      };
-  delay?: number;
-  spacing?: number;
-}) => {
+const Typing = ({ text, delay = 0, spacing = 0.2, ...typography }: TypingProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, {
     once: true,

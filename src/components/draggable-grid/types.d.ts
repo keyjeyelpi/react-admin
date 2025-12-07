@@ -1,5 +1,5 @@
 import { ReactNode, MouseEventHandler } from 'react';
-import { SxProps, Theme } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 
 export type ResponsiveValue<T> = T | Partial<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', T>>;
 

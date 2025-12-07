@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Grid } from '@mui/material';
 import { useBreakpoint } from '@/theme';
 import { useMeasurePosition } from './useMeasurePosition';
-import type { DraggableGridProps, DraggableGridContainerProps } from './index.d';
+import type { DraggableGridProps, DraggableGridContainerProps } from './types';
 
 const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 

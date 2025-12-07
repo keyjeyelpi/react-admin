@@ -1,5 +1,6 @@
-import { Breadcrumbs, Stack, Typography, SxProps } from '@mui/material';
+import { Breadcrumbs, Stack, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
+import type { SxProps } from './types';
 
 const Title = ({
   title,

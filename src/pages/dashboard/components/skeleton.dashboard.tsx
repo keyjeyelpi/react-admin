@@ -1,4 +1,4 @@
-import type { GridProps } from '@/components/draggable-grid/index.d';
+import type { GridProps } from '@/components/draggable-grid/types';
 import DraggableGrid, { DraggableGridContainer } from '@/components/draggable-grid';
 import { usePositionReorder } from '@/components/draggable-grid/usePositionReorder';
 import Title from '@/components/title.component';

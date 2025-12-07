@@ -1,18 +1,11 @@
-import { Box, SxProps } from '@mui/material';
+import { Box } from '@mui/material';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
-import { useLayoutEffect, useRef, useState, ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import useTheme from '../theme';
+import type { BlurredContainerProps, Particle } from './types';
 
-type Particle = {
-  id: number;
-  size: number;
-  x: number;
-  y: number;
-  duration: number;
-};
-
-const BlurredContainer = ({ children, sx }: { children: ReactNode; sx?: SxProps }) => {
+const BlurredContainer = ({ children, sx }: BlurredContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
 

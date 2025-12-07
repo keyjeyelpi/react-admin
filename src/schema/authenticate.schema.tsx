@@ -8,8 +8,6 @@ export const LoginSchema = yup.object().shape({
     .required('Password is required'),
 });
 
-export type iLoginSchema = yup.InferType<typeof LoginSchema>;
-
 export const RegisterSchema = yup.object().shape({
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),
@@ -25,5 +23,3 @@ export const RegisterSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must match')
     .required('Confirm password is required'),
 });
-
-export type iRegisterSchema = yup.InferType<typeof RegisterSchema>;

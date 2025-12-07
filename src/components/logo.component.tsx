@@ -1,18 +1,9 @@
+import { useCurrentThemeMode } from '@/theme';
 import { Box, Stack, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useCurrentThemeMode } from '../theme';
+import type { LogoProps } from './types';
 
-const Logo = ({
-  withText,
-  logoContainerSize,
-  logoSize,
-  textSize,
-}: {
-  withText?: boolean;
-  logoContainerSize?: number;
-  logoSize?: number;
-  textSize?: number;
-}) => {
+const Logo = ({ withText, logoContainerSize, logoSize, textSize }: LogoProps) => {
   const { logo } = useCurrentThemeMode();
 
   return (
