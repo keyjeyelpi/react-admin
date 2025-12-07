@@ -1,7 +1,6 @@
-import { setTimeout } from 'node:timers/promises';
 import { TbTicket } from 'react-icons/tb';
 import { useEffect, useState } from 'react';
-import DashboardCard from '../../../components/dashboard/card.dashboard';
+import DashboardCard from './card.dashboard';
 
 const DashboardTickets = () => {
   const [value, setValue] = useState(31);

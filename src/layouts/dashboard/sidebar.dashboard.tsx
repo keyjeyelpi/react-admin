@@ -16,7 +16,7 @@ import { TbArrowBarToLeft, TbArrowBarToRight, TbChevronRight } from 'react-icons
 import { cloneElement, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import useDashboard, { useSidebarOptions, iSidebarOptions } from '../../hooks/dashboard.hook';
+import useDashboard, { useSidebarOptions, type iSidebarOptions } from '../../hooks/dashboard.hook';
 import { useBreakpoint } from '../../theme';
 import Logo from '../../components/logo.component';
 

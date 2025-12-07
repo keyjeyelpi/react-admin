@@ -1,74 +1,11 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Grid, SxProps } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useMeasurePosition } from './useMeasurePosition';
-import { useBreakpoint } from '../../theme';
+import { useBreakpoint } from '@/theme';
+import type { DraggableGridProps, DraggableGridContainerProps } from './index.d';
 
-const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
-
-export interface GridProps {
-  id: string;
-  children: ReactNode;
-  column:
-    | number
-    | {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-      };
-  row:
-    | number
-    | {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-      };
-  turnDragOff?: boolean;
-}
-
-interface DraggableGridProps {
-  i: number;
-  id: string;
-  column:
-    | number
-    | {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-      };
-  row:
-    | number
-    | {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-      };
-  children: GridProps | ReactNode;
-  updatePosition: (
-    index: number,
-    pos: {
-      top: number;
-      left: number;
-      column: number;
-      row: number;
-    },
-  ) => void;
-  updateOrder: (index: number, xOffset: number, yOffset: number) => void;
-  padding?: number;
-  turnDragOff?: boolean;
-  sx?: SxProps;
-  onClick?: () => void;
-  outlined?: boolean;
-  backgroundColor?: string;
-}
+const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 
 export const DraggableGridContainer = ({
   row = 4,
@@ -78,15 +15,7 @@ export const DraggableGridContainer = ({
   customGridTemplateColumns,
   customGridTemplateRows,
   flex,
-}: {
-  row?: number;
-  column?: number;
-  children: ReactNode;
-  gap?: number;
-  customGridTemplateColumns?: string;
-  customGridTemplateRows?: string;
-  flex?: number;
-}) => (
+}: DraggableGridContainerProps) => (
   <Grid
     gap={gap}
     gridTemplateRows={`repeat(${column}, ${customGridTemplateColumns || '1fr'})`}

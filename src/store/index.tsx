@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import localforage from 'localforage';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
-import type { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
   createMigrate,
   persistStore,
@@ -37,7 +37,7 @@ const reducerSlices = {
 
 const persistConfig = {
   key: PERSIST_KEY,
-  version: APP_VERSION,
+  version: parseInt(APP_VERSION, 10) || 0,
   timeout: 0,
   storage: localforage,
   whitelist: Object.keys(reducerSlices),

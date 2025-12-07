@@ -1,9 +1,10 @@
 import { Chip, Stack, Typography } from '@mui/material';
-import { cloneElement, JSX } from 'react';
+import { cloneElement, type JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
-import Typing from '../typing-text.component';
+import Typing from '../../../components/typing-text.component';
+import DashboardTitle from './title.dashobard';
 
-const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
+const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 
 const DashboardCard = ({
   auto,
@@ -20,16 +21,20 @@ const DashboardCard = ({
 }) => {
   const change =
     previousValue && isNumber(previousValue) && typeof value === 'number'
-      ? Math.round(((value - previousValue) / previousValue) * 100)
+      ? Math.round(((value - Number(previousValue)) / Number(previousValue)) * 100)
       : 0;
 
   return (
     <Stack
       sx={[
-        auto && {
-          height: '100%',
-          width: '100%',
-        },
+        ...(auto
+          ? [
+              {
+                height: '100%',
+                width: '100%',
+              },
+            ]
+          : []),
       ]}
       justifyContent="center"
     >
@@ -39,26 +44,15 @@ const DashboardCard = ({
           p: 2,
         }}
       >
+        <DashboardTitle title={title} icon={icon} />
         <Stack flexDirection="row" alignItems="center" gap={2}>
-          <Stack
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              height: 32,
-              width: 32,
-              bgcolor: 'background.50',
-              borderRadius: 2,
-              border: (theme) => `solid 1px ${theme.palette.divider}`,
-            }}
-          >
-            {cloneElement(icon, {
-              size: 14,
-            })}
-          </Stack>
-          <Typography variant="h6">{title}</Typography>
-        </Stack>
-        <Stack flexDirection="row" alignItems="center" gap={2}>
-          <Typing text={value?.toLocaleString()} variant="h3" fontWeight={600} delay={10} />
+          <Typing
+            text={value?.toLocaleString()}
+            variant="h3"
+            fontWeight={600}
+            fontSize="2rem"
+            delay={10}
+          />
           {previousValue && (
             <Chip
               variant="filled"

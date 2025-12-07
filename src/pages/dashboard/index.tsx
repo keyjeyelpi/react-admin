@@ -1,13 +1,15 @@
-import { TbBug, TbWorld } from 'react-icons/tb';
 import { Stack } from '@mui/material';
+import { TbBug, TbWorld } from 'react-icons/tb';
 import { v4 as uuid } from 'uuid';
-import DashboardCard from '../../components/dashboard/card.dashboard';
-import DraggableGrid, { DraggableGridContainer, GridProps } from '../../components/draggable-grid';
-import { usePositionReorder } from '../../components/draggable-grid/usePositionReorder';
-import Title from '../../components/title.component';
+
+import type { GridProps } from '@/components/draggable-grid/index.d';
+import { usePositionReorder } from '@/components/draggable-grid/usePositionReorder';
+import Title from '@/components/title.component';
+import DraggableGrid, { DraggableGridContainer } from '@/components/draggable-grid';
 import DashboardTickets from './components/tickets.dashboard';
-import DashboardProjectAnalytic from './components/project-analytic.dashboard';
 import DashboardUsers from './components/users.dashboard';
+import DashboardCard from '@/pages/dashboard/components/card.dashboard';
+import DashboardProjectAnalytic from './components/project-analytic.dashboard';
 
 const initialGrid: GridProps[] = [
   {
@@ -116,7 +118,6 @@ const Dashboard = () => {
             key={grid.id}
             column={grid.column}
             row={grid.row}
-            id={grid.id}
             i={index}
             outlined
             backgroundColor="background.paper"

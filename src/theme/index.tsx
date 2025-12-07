@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme, type Theme } from '@mui/material/styles';
 import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
@@ -7,8 +7,8 @@ import darkLogo from '../assets/images/logo/black.png';
 import lightLogo from '../assets/images/logo/white.png';
 import { useAppSelector } from '../store';
 
-const isUndefined = (a): a is undefined => typeof a === 'undefined';
-const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
+const isUndefined = (a: unknown): a is undefined => typeof a === 'undefined';
+const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 
 export const useBreakpoint = () => {
   const theme = useTheme();
@@ -189,7 +189,7 @@ const generatePalette = (bc: string) => {
 };
 
 const useTheme = (): Theme => {
-  const { darkMode } = useCurrentThemeMode();
+  const { textColor, darkMode } = useCurrentThemeMode();
   const { primary, secondary } = useAppSelector((state) => state.settings?.theme.colors) || {
     primary: '#0D3B66',
     secondary: '#FF7F50',
@@ -223,7 +223,7 @@ const useTheme = (): Theme => {
         styleOverrides: {
           root: {
             borderRadius: 8,
-            textTransform: 'uppercase',
+            textTransform: 'capitalize',
             boxShadow: 'none',
           },
         },
@@ -233,7 +233,18 @@ const useTheme = (): Theme => {
               size: 'small',
             },
             style: {
-              height: 40,
+              height: 32,
+              fontSize: '0.75rem',
+            },
+          },
+          {
+            props: {
+              variant: 'outlined',
+            },
+            style: {
+              borderColor: backgroundPalette['200'],
+              backgroundColor: backgroundPalette['50'],
+              color: textColor,
             },
           },
         ],

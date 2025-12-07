@@ -3,9 +3,10 @@ import { v4 as uuid } from 'uuid';
 import { faker } from '@faker-js/faker';
 import { useEffect } from 'react';
 import { TbBook, TbDeviceGamepad, TbHeartbeat, TbAlien } from 'react-icons/tb';
-import Title from '../../components/title.component';
-import KanbanContainer, { Column } from '../../components/kanban.component';
-import useDashboard from '../../hooks/dashboard.hook';
+import Title from '../../../components/title.component';
+import useDashboard from '../../../hooks/dashboard.hook';
+import type { Column } from './index.d';
+import KanbanContainer from './components/container.kanban';
 
 const noop = () => {};
 

@@ -2,7 +2,11 @@
   "rules": {
     "variables/remove-unused": "on",
     "remove-empty": "on",
+    "spread": "on",
     "remove-unreachable-code": "on",
-    "spread": "on"
-  }
+    "typescript": "on",
+    "typescript/keep-type-imports": "on",
+    "react": "on"
+  },
+  "plugins": ["typescript", "react"]
 }

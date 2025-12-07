@@ -1,5 +1,6 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { ComponentsRoute } from './components.dashboard';
+import DashboardSkeleton from '@/pages/dashboard/components/skeleton.dashboard';
 
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
 const Dashboard = lazy(() => import('../../pages/dashboard'));
@@ -9,11 +10,19 @@ const Settings = lazy(() => import('../../pages/settings'));
 const dashboardRoutes = [
   {
     index: true,
-    element: <Dashboard />,
+    element: (
+      <Suspense fallback={<DashboardSkeleton />}>
+        <Dashboard />
+      </Suspense>
+    ),
   },
   {
     path: 'dashboard',
-    element: <Dashboard />,
+    element: (
+      <Suspense fallback={<DashboardSkeleton />}>
+        <Dashboard />
+      </Suspense>
+    ),
   },
   {
     path: 'settings',
