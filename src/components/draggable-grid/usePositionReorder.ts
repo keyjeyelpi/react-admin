@@ -56,6 +56,7 @@ export function usePositionReorder<T>(
 
   const updateOrder: UpdateOrderFn = (i, dragXOffset, dragYOffset) => {
     const targetIndex = findIndex(i, dragXOffset, dragYOffset, positions);
+
     if (targetIndex !== i) setOrder(arrayMoveImmutable(order, i, targetIndex));
   };
 
@@ -64,7 +65,13 @@ export function usePositionReorder<T>(
       initialState.length === prevOrder.length
         ? prevOrder.map((item) => {
             const found = initialState.find((initItem) => initItem.id === item.id);
-            return found ? { ...item, content: found.content } : item;
+
+            return found
+              ? {
+                  ...item,
+                  content: found.content,
+                }
+              : item;
           })
         : initialState,
     );
@@ -72,8 +79,6 @@ export function usePositionReorder<T>(
 
   return [order, updatePosition, updateOrder];
 }
-
-const buffer = 0;
 
 export const findIndex = (
   i: number,
@@ -83,30 +88,43 @@ export const findIndex = (
 ): number => {
   let target = i;
   const { top, column, row, left } = positions[i];
+
   const bottom = top + row;
   const right = left + column;
 
   if (yOffset < 0 && Math.abs(yOffset) > Math.abs(xOffset)) {
     const prevItem = positions[i - 3];
+
     if (!prevItem) return i;
+
     const prevBottom = prevItem.top + prevItem.row;
-    const ySwapOffset = distance(top, prevBottom - prevItem.row / 2) + buffer;
+    const ySwapOffset = distance(top, prevBottom - prevItem.row / 2);
+
     if (yOffset < -ySwapOffset) target = i - 3;
   } else if (yOffset > 0 && Math.abs(yOffset) > Math.abs(xOffset)) {
     const nextItem = positions[i + 3];
+
     if (!nextItem) return i;
-    const ySwapOffset = distance(bottom, nextItem.top + nextItem.row / 2) + buffer;
+
+    const ySwapOffset = distance(bottom, nextItem.top + nextItem.row / 2);
+
     if (yOffset > ySwapOffset) target = i + 3;
   } else if (xOffset < 0 && Math.abs(xOffset) > Math.abs(yOffset)) {
     const prevItem = positions[i - 1];
+
     if (!prevItem) return i;
+
     const prevRight = prevItem.left + prevItem.column;
-    const xSwapOffset = distance(left, prevRight - prevItem.column / 2) + buffer;
+    const xSwapOffset = distance(left, prevRight - prevItem.column / 2);
+
     if (xOffset < -xSwapOffset) target = i - 1;
   } else if (xOffset > 0 && Math.abs(xOffset) > Math.abs(yOffset)) {
     const nextItem = positions[i + 1];
+
     if (!nextItem) return i;
-    const xSwapOffset = distance(right, nextItem.left + nextItem.column / 2) + buffer;
+
+    const xSwapOffset = distance(right, nextItem.left + nextItem.column / 2);
+
     if (xOffset > xSwapOffset) target = i + 1;
   }
 

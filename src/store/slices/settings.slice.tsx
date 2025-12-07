@@ -44,7 +44,6 @@ export const SettingsSlice = createSlice({
     setSecondaryFont: (state, action) => {
       state.theme.fonts.secondary = action.payload;
     },
-
     // DASHBOARD
     setDashboardCollapsed: (state, action) => {
       state.dashboard.collapsed = action.payload;
@@ -59,6 +58,7 @@ export const SettingsSlice = createSlice({
 });
 
 export default SettingsSlice.reducer;
+
 export const {
   setThemeMode,
   setResolvedThemeMode,

@@ -1,7 +1,9 @@
 import { Chip, Stack, Typography } from '@mui/material';
-import { cloneElement, type JSX } from 'react';
+import { cloneElement, JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
 import Typing from '../typing-text.component';
+
+const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
 
 const DashboardCard = ({
   auto,
@@ -17,12 +19,20 @@ const DashboardCard = ({
   previousValue?: string | number;
 }) => {
   const change =
-    previousValue && typeof previousValue === 'number' && typeof value === 'number'
+    previousValue && isNumber(previousValue) && typeof value === 'number'
       ? Math.round(((value - previousValue) / previousValue) * 100)
       : 0;
 
   return (
-    <Stack sx={[!!auto && { height: '100%', width: '100%' }]} justifyContent="center">
+    <Stack
+      sx={[
+        auto && {
+          height: '100%',
+          width: '100%',
+        },
+      ]}
+      justifyContent="center"
+    >
       <Stack
         gap={3}
         sx={{
@@ -41,7 +51,9 @@ const DashboardCard = ({
               border: (theme) => `solid 1px ${theme.palette.divider}`,
             }}
           >
-            {cloneElement(icon, { size: 14 })}
+            {cloneElement(icon, {
+              size: 14,
+            })}
           </Stack>
           <Typography variant="h6">{title}</Typography>
         </Stack>

@@ -1,3 +1,4 @@
+import chroma from 'chroma-js';
 import {
   AppBar,
   Stack,
@@ -11,16 +12,13 @@ import {
   Popover,
   useTheme,
 } from '@mui/material';
-import chroma from 'chroma-js';
 import { TbArrowBarToLeft, TbArrowBarToRight, TbChevronRight } from 'react-icons/tb';
-
-import useDashboard, { useSidebarOptions, type iSidebarOptions } from '../../hooks/dashboard.hook';
-import { useBreakpoint } from '../../theme';
-import Logo from '../../components/logo.component';
 import { cloneElement, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { set } from 'react-hook-form';
+import useDashboard, { useSidebarOptions, iSidebarOptions } from '../../hooks/dashboard.hook';
+import { useBreakpoint } from '../../theme';
+import Logo from '../../components/logo.component';
 
 const drawerWidth = 240;
 
@@ -54,7 +52,7 @@ const SidebarSubmenu = ({
   const navigate = useNavigate();
   const theme = useTheme();
 
-  if (!submenu || submenu.length === 0) return null;
+  if (!submenu || !submenu.length) return null;
 
   return (
     <Stack pl={collapsed ? 0 : 2.5}>
@@ -65,7 +63,9 @@ const SidebarSubmenu = ({
               <Box
                 component={motion.div}
                 layoutId={`menu-border-${i}`}
-                initial={{ y: i === 0 ? -1 : -20 }}
+                initial={{
+                  y: i === 0 ? -1 : -20,
+                }}
                 animate={{
                   borderColor:
                     location.pathname === url + menu.url
@@ -86,7 +86,6 @@ const SidebarSubmenu = ({
                 }}
               />
             )}
-
             <Button
               key={menu.title}
               sx={[
@@ -108,9 +107,8 @@ const SidebarSubmenu = ({
               ]}
               onClick={() => {
                 navigate(url + menu.url);
-                if (breakpoint === 'xs') {
-                  setCollapsed(true);
-                }
+
+                if (breakpoint === 'xs') setCollapsed(true);
               }}
             >
               {menu.title}
@@ -128,6 +126,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -136,13 +135,12 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isURL = !!(
+  const isURL =
     option.url === location.pathname ||
     ('alternativeLinks' in option ? option.alternativeLinks : [])?.includes(location.pathname) ||
     (option.submenu || []).some(
       (sub) => location.pathname.includes(sub.url) && location.pathname.includes(option.url),
-    )
-  );
+    );
 
   return (
     <Stack key={option.title}>
@@ -172,7 +170,6 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
       >
         <SidebarSubmenu submenu={option?.submenu} url={option.url} />
       </Popover>
-
       {!collapsed ? (
         <Button
           component={motion.div}
@@ -195,10 +192,15 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
             option.submenu && option.submenu.length > 0 ? (
               <Stack
                 component={motion.div}
-                animate={{ rotate: openSubmenu ? 90 : 0 }}
+                animate={{
+                  rotate: openSubmenu ? 90 : 0,
+                }}
                 alignItems="center"
                 justifyContent="center"
-                sx={{ width: 16, height: 16 }}
+                sx={{
+                  width: 16,
+                  height: 16,
+                }}
               >
                 <TbChevronRight size={16} />
               </Stack>
@@ -226,7 +228,10 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
                 alignItems="center"
                 justifyContent="center"
                 layoutId={`sidebar-icon-${option.title}`}
-                initial={{ height: 16, width: 16 }}
+                initial={{
+                  height: 16,
+                  width: 16,
+                }}
               >
                 {cloneElement(isURL ? option.activeIcon || option.icon : option.icon, {
                   size: 16,
@@ -271,7 +276,10 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
             alignItems="center"
             justifyContent="center"
             layoutId={`sidebar-icon-${option.title}`}
-            initial={{ height: 16, width: 16 }}
+            initial={{
+              height: 16,
+              width: 16,
+            }}
           >
             {cloneElement(isURL ? option.activeIcon || option.icon : option.icon, {
               size: 16,
@@ -279,7 +287,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
           </Stack>
         </IconButton>
       )}
-      <Collapse in={!!option.submenu && openSubmenu && !collapsed} unmountOnExit>
+      <Collapse in={option.submenu && openSubmenu && !collapsed} unmountOnExit>
         <SidebarSubmenu submenu={option?.submenu} url={option.url} />
       </Collapse>
     </Stack>
@@ -302,14 +310,25 @@ const SidebarCategories = ({
           (!collapsed ? (
             <Box
               component={motion.div}
-              initial={{ width: 0, overflowX: 'hidden' }}
-              animate={{ width: 'auto' }}
-              exit={{ width: 0 }}
+              initial={{
+                width: 0,
+                overflowX: 'hidden',
+              }}
+              animate={{
+                width: 'auto',
+              }}
+              exit={{
+                width: 0,
+              }}
             >
               <Typography
                 fontSize=".75rem"
                 fontWeight={600}
-                sx={{ opacity: 0.5, textTransform: 'uppercase', textWrap: 'nowrap' }}
+                sx={{
+                  opacity: 0.5,
+                  textTransform: 'uppercase',
+                  textWrap: 'nowrap',
+                }}
               >
                 {title}
               </Typography>
@@ -318,9 +337,9 @@ const SidebarCategories = ({
             <Divider />
           ))}
       </AnimatePresence>
-      {options.map((option) => {
-        return <SidebarOptions key={option.title} option={option} />;
-      })}
+      {options.map((option) => (
+        <SidebarOptions key={option.title} option={option} />
+      ))}
     </Stack>
   );
 };
@@ -330,7 +349,11 @@ const DashboardLayoutSidebarContent = () => {
   const sidebarOptions = useSidebarOptions();
 
   return (
-    <Stack sx={{ minHeight: '100dvh' }}>
+    <Stack
+      sx={{
+        minHeight: '100dvh',
+      }}
+    >
       <AppBar
         position="static"
         elevation={0}
@@ -345,13 +368,19 @@ const DashboardLayoutSidebarContent = () => {
           flexDirection="row"
           alignItems="center"
           justifyContent={'space-between'}
-          sx={{ p: 2, height: '100%' }}
+          sx={{
+            p: 2,
+            height: '100%',
+          }}
         >
           <Stack
             flexDirection="row"
             alignItems="center"
             justifyContent="flex-start"
-            sx={{ height: 40, width: !collapsed ? 'auto' : 40 }}
+            sx={{
+              height: 40,
+              width: !collapsed ? 'auto' : 40,
+            }}
           >
             <Logo withText={!collapsed} logoContainerSize={32} />
           </Stack>
@@ -360,17 +389,16 @@ const DashboardLayoutSidebarContent = () => {
       </AppBar>
       <Stack
         flexGrow={1}
-        sx={{ p: collapsed ? 1.5 : 2, py: 2, overflowY: 'auto', bgcolor: 'background.paper' }}
+        sx={{
+          p: collapsed ? 1.5 : 2,
+          py: 2,
+          overflowY: 'auto',
+          bgcolor: 'background.paper',
+        }}
       >
-        {sidebarOptions.map((options) => {
-          return (
-            <SidebarCategories
-              key={options.title}
-              title={options?.title}
-              options={options.options}
-            />
-          );
-        })}
+        {sidebarOptions.map((options) => (
+          <SidebarCategories key={options.title} title={options?.title} options={options.options} />
+        ))}
       </Stack>
     </Stack>
   );
@@ -386,7 +414,13 @@ const DashboardLayoutSidebar = () => {
       anchor="left"
       open={breakpoint === 'xs' ? !collapsed : true}
       onClose={breakpoint === 'xs' ? () => setCollapsed(false) : undefined}
-      ModalProps={breakpoint === 'xs' ? { keepMounted: true } : undefined}
+      ModalProps={
+        breakpoint === 'xs'
+          ? {
+              keepMounted: true,
+            }
+          : undefined
+      }
       sx={[
         {
           width: collapsed ? 64 : drawerWidth,

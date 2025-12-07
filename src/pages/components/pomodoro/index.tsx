@@ -1,8 +1,5 @@
-import { Box, Card, Grid, Stack } from '@mui/material';
-import DraggableCard, { DraggableCardContainer } from '../../../components/draggable-grid';
+import { Box } from '@mui/material';
 
-const Pomodoro = () => {
-  return <Box></Box>;
-};
+const Pomodoro = () => <Box></Box>;
 
 export default Pomodoro;

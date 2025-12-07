@@ -8,5 +8,8 @@ export const themes = [
     label: 'dark',
     image: 'dark-theme.png',
   },
-  { label: 'system', image: 'system-theme.png' },
+  {
+    label: 'system',
+    image: 'system-theme.png',
+  },
 ];

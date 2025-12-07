@@ -3,26 +3,29 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Collapse, InputAdornment, Stack, TextField, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLayoutEffect, useState } from 'react';
-import { TbEye, TbEyeClosed, TbMail, TbPassword, TbUser } from 'react-icons/tb';
 import { useForm } from 'react-hook-form';
-
+import { useNavigate } from 'react-router-dom';
+import { TbEye, TbEyeClosed, TbMail, TbPassword, TbUser } from 'react-icons/tb';
 import Tabs from '../components/tabs.component';
 import {
   LoginSchema,
   RegisterSchema,
-  type iLoginSchema,
-  type iRegisterSchema,
+  iLoginSchema,
+  iRegisterSchema,
 } from '../schema/authenticate.schema';
 import { useAppDispatch, useAppSelector } from '../store';
 import { setUserProfile } from '../store/slices/user.slice';
-import { useNavigate } from 'react-router-dom';
 import ProfilePicture from '../assets/images/profile-picture.png';
 
 const Login = () => {
   const [togglePassword, setTogglePassword] = useState(false);
   const dispatch = useAppDispatch();
 
-  const methods = useForm<iLoginSchema>({
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<iLoginSchema>({
     mode: 'onChange',
     resolver: yupResolver(LoginSchema),
     defaultValues: {
@@ -30,12 +33,6 @@ const Login = () => {
       password: 'keyjeyelpi',
     },
   });
-
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = methods;
 
   const onSubmit = (data: iLoginSchema) => {
     const profile =
@@ -66,9 +63,7 @@ const Login = () => {
     dispatch(setUserProfile(profile));
   };
 
-  const onError = (errors: any) => {
-    console.log(errors);
-  };
+  const onError = () => {};
 
   return (
     <Stack component="form" gap={2} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -104,7 +99,9 @@ const Login = () => {
             <InputAdornment
               position="end"
               onClick={() => setTogglePassword(!togglePassword)}
-              sx={{ cursor: 'pointer' }}
+              sx={{
+                cursor: 'pointer',
+              }}
             >
               {!togglePassword ? <TbEyeClosed /> : <TbEye />}
             </InputAdornment>
@@ -123,16 +120,14 @@ const Register = () => {
   const [toggleConfirmPassword, setToggleConfirmPassword] = useState(false);
   const dispatch = useAppDispatch();
 
-  const methods = useForm<iRegisterSchema>({
-    mode: 'onChange',
-    resolver: yupResolver(RegisterSchema),
-  });
-
   const {
     formState: { errors },
     handleSubmit,
     register,
-  } = methods;
+  } = useForm<iRegisterSchema>({
+    mode: 'onChange',
+    resolver: yupResolver(RegisterSchema),
+  });
 
   const onSubmit = (data: iRegisterSchema) => {
     dispatch(
@@ -150,9 +145,7 @@ const Register = () => {
     );
   };
 
-  const onError = (errors: any) => {
-    console.log(errors);
-  };
+  const onError = () => {};
 
   return (
     <Stack component="form" gap={2} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -219,7 +212,9 @@ const Register = () => {
             <InputAdornment
               position="end"
               onClick={() => setTogglePassword(!togglePassword)}
-              sx={{ cursor: 'pointer' }}
+              sx={{
+                cursor: 'pointer',
+              }}
             >
               {!togglePassword ? <TbEyeClosed /> : <TbEye />}
             </InputAdornment>
@@ -244,7 +239,9 @@ const Register = () => {
             <InputAdornment
               position="end"
               onClick={() => setToggleConfirmPassword(!toggleConfirmPassword)}
-              sx={{ cursor: 'pointer' }}
+              sx={{
+                cursor: 'pointer',
+              }}
             >
               {!toggleConfirmPassword ? <TbEyeClosed /> : <TbEye />}
             </InputAdornment>
@@ -263,8 +260,14 @@ const Authenticate = () => {
   const navigate = useNavigate();
 
   const tabs = [
-    { title: 'Login', content: <Login /> },
-    { title: 'Register', content: <Register /> },
+    {
+      title: 'Login',
+      content: <Login />,
+    },
+    {
+      title: 'Register',
+      content: <Register />,
+    },
   ];
 
   const [selectedTab, setSelectedTab] = useState(tabs[0]?.title);

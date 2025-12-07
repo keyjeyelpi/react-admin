@@ -1,15 +1,15 @@
 import { Box, Stack, LinearProgress, Collapse, Container } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Suspense, useLayoutEffect } from 'react';
-
+import { AnimatePresence, motion } from 'framer-motion';
 import useDashboard from '../../hooks/dashboard.hook';
 import { useAppSelector } from '../../store';
 import DashboardLayoutSidebar from './sidebar.dashboard';
 import DashboardLayoutHeader from './header.dashboard';
-import { AnimatePresence, motion } from 'framer-motion';
 
 const DashboardLayout = () => {
   const { loading, containerMaxWidth, setContainerMaxWidth } = useDashboard();
+
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user);
@@ -32,7 +32,9 @@ const DashboardLayout = () => {
         xs: 'column',
         sm: 'row',
       }}
-      sx={{ minHeight: '100vh' }}
+      sx={{
+        minHeight: '100vh',
+      }}
     >
       <DashboardLayoutSidebar />
       <Stack
@@ -55,7 +57,12 @@ const DashboardLayout = () => {
             <LinearProgress />
           </Collapse>
           <Suspense fallback={<LinearProgress />}>
-            <Container maxWidth={containerMaxWidth} sx={{ height: '100%' }}>
+            <Container
+              maxWidth={containerMaxWidth}
+              sx={{
+                height: '100%',
+              }}
+            >
               <AnimatePresence mode="wait" initial>
                 <Box
                   component={motion.div}
@@ -72,7 +79,10 @@ const DashboardLayout = () => {
                     opacity: 0,
                     x: '-100dvw',
                   }}
-                  sx={{ py: 4, height: '100%' }}
+                  sx={{
+                    py: 4,
+                    height: '100%',
+                  }}
                 >
                   <Outlet />
                 </Box>

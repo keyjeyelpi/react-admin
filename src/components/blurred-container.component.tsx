@@ -1,8 +1,7 @@
-import { Box, type SxProps } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-
+import { useLayoutEffect, useRef, useState, ReactNode } from 'react';
 import useTheme from '../theme';
 
 type Particle = {
@@ -23,7 +22,9 @@ const BlurredContainer = ({ children, sx }: { children: ReactNode; sx?: SxProps 
     if (!containerRef.current) return;
 
     const { offsetWidth, offsetHeight } = containerRef.current;
-    const newParticles = Array.from({ length: Math.random() * 4 + 10 }).map((_, i) => {
+    const newParticles = Array.from({
+      length: Math.random() * 4 + 10,
+    }).map((_, i) => {
       const x = Math.random() * offsetWidth;
       const y = Math.random() * offsetHeight;
 
@@ -53,7 +54,10 @@ const BlurredContainer = ({ children, sx }: { children: ReactNode; sx?: SxProps 
         <Box
           component={motion.div}
           key={p.id}
-          initial={{ x: p.x, y: p.y }}
+          initial={{
+            x: p.x,
+            y: p.y,
+          }}
           animate={{
             x: p.x + (Math.random() * 2 - 1) * 500,
             y: p.y + (Math.random() * 2 - 1) * 500,
@@ -88,7 +92,14 @@ const BlurredContainer = ({ children, sx }: { children: ReactNode; sx?: SxProps 
           pointerEvents: 'none',
         }}
       />
-      <Box sx={{ zIndex: 2, ...sx }}>{children}</Box>
+      <Box
+        sx={{
+          zIndex: 2,
+          ...sx,
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 };

@@ -1,14 +1,10 @@
-import { TbBug, TbUsers, TbWorld } from 'react-icons/tb';
-import DashboardCard from '../../components/dashboard/card.dashboard';
-import DraggableGrid, {
-  DraggableGridContainer,
-  type GridProps,
-} from '../../components/draggable-grid';
-import { usePositionReorder } from '../../components/draggable-grid/usePositionReorder';
-import Title from '../../components/title.component';
+import { TbBug, TbWorld } from 'react-icons/tb';
 import { Stack } from '@mui/material';
 import { v4 as uuid } from 'uuid';
-import ProjectAnalytic from './components/project-analytic.dashboard';
+import DashboardCard from '../../components/dashboard/card.dashboard';
+import DraggableGrid, { DraggableGridContainer, GridProps } from '../../components/draggable-grid';
+import { usePositionReorder } from '../../components/draggable-grid/usePositionReorder';
+import Title from '../../components/title.component';
 import DashboardTickets from './components/tickets.dashboard';
 import DashboardProjectAnalytic from './components/project-analytic.dashboard';
 import DashboardUsers from './components/users.dashboard';
@@ -62,7 +58,10 @@ const initialGrid: GridProps[] = [
       xs: 8,
       md: 4,
     },
-    row: { xs: 1, md: 2 },
+    row: {
+      xs: 1,
+      md: 2,
+    },
   },
   {
     id: uuid(),
@@ -103,7 +102,13 @@ const Dashboard = () => {
   const [order, updatePosition, updateOrder] = usePositionReorder(initialGrid);
 
   return (
-    <Stack gap={2} flex={1} sx={{ height: '100%' }}>
+    <Stack
+      gap={2}
+      flex={1}
+      sx={{
+        height: '100%',
+      }}
+    >
       <Title subtitle="Overview & analytics" />
       <DraggableGridContainer row={8} column={5} flex={1}>
         {order.map((grid, index) => (

@@ -1,11 +1,13 @@
 import { Stack } from '@mui/material';
-import Title from '../../components/title.component';
 import { v4 as uuid } from 'uuid';
-import KanbanContainer, { type Column } from '../../components/kanban.component';
 import { faker } from '@faker-js/faker';
-import { TbBook, TbDeviceGamepad, TbHeartbeat, TbAlien } from 'react-icons/tb';
 import { useEffect } from 'react';
+import { TbBook, TbDeviceGamepad, TbHeartbeat, TbAlien } from 'react-icons/tb';
+import Title from '../../components/title.component';
+import KanbanContainer, { Column } from '../../components/kanban.component';
 import useDashboard from '../../hooks/dashboard.hook';
+
+const noop = () => {};
 
 const initialCards: Column[] = [
   {
@@ -25,7 +27,7 @@ const initialCards: Column[] = [
         },
       },
     ],
-    addAction: () => {},
+    addAction: noop,
   },
   {
     id: uuid(),
@@ -104,12 +106,18 @@ const initialCards: Column[] = [
 
 const Kanban = () => {
   const { setContainerMaxWidth } = useDashboard();
+
   useEffect(() => {
     setContainerMaxWidth(false);
   }, []);
 
   return (
-    <Stack gap={2} sx={{ height: '100%' }}>
+    <Stack
+      gap={2}
+      sx={{
+        height: '100%',
+      }}
+    >
       <Title subtitle="Visualize your workflow, track progress, and stay organized." />
       <KanbanContainer items={initialCards} />
     </Stack>

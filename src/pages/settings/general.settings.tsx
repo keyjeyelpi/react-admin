@@ -1,21 +1,18 @@
 import { Box, Card, Divider, Stack, Typography } from '@mui/material';
+import { TbCircle, TbCircleCheckFilled } from 'react-icons/tb';
+import { motion } from 'framer-motion';
 import Title from '../../components/title.component';
 import { useAppDispatch, useAppSelector } from '../../store';
-import {
-  setPrimaryColor,
-  setSecondaryColor,
-  setThemeMode,
-} from '../../store/slices/settings.slice';
-import { TbCircle, TbCircleCheckFilled } from 'react-icons/tb';
+import { setPrimaryColor, setThemeMode } from '../../store/slices/settings.slice';
 import { isHexColor } from '../../utils/general.util';
-import { AnimatePresence, motion } from 'framer-motion';
 import { primaryColors, themes } from '../../utils/init.util';
 
 const GeneralSettingsTheme = () => {
   const {
     mode,
-    colors: { primary, secondary },
+    colors: { primary },
   } = useAppSelector((state) => state.settings.theme);
+
   const dispatch = useAppDispatch();
 
   const handleThemeChange = (theme: string) => {
@@ -28,14 +25,14 @@ const GeneralSettingsTheme = () => {
     dispatch(setPrimaryColor(color));
   };
 
-  const handleSecondaryColorChange = (color: string) => {
-    if (!isHexColor(color)) return;
-
-    dispatch(setSecondaryColor(color));
-  };
-
   return (
-    <Card sx={{ p: 2, bgcolor: 'background.paper' }} elevation={0}>
+    <Card
+      sx={{
+        p: 2,
+        bgcolor: 'background.paper',
+      }}
+      elevation={0}
+    >
       <Stack gap={4}>
         <Stack gap={2}>
           <Title
@@ -44,11 +41,20 @@ const GeneralSettingsTheme = () => {
             titleSx={{
               fontSize: '1.125rem',
             }}
-            subtitleSx={{ fontSize: '.875rem' }}
+            subtitleSx={{
+              fontSize: '.875rem',
+            }}
           />
-          <Stack flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
+          <Stack
+            flexDirection={{
+              xs: 'column',
+              md: 'row',
+            }}
+            gap={2}
+          >
             {themes.map((theme) => {
               const isMode = mode === theme?.label;
+
               return (
                 <Card
                   key={theme.label}
@@ -110,40 +116,55 @@ const GeneralSettingsTheme = () => {
             titleSx={{
               fontSize: '1.125rem',
             }}
-            subtitleSx={{ fontSize: '.875rem' }}
+            subtitleSx={{
+              fontSize: '.875rem',
+            }}
           />
           <Stack flexDirection="row" gap={2}>
             <Stack justifyContent="flex-end" gap={2} flex={1}>
-              <Card elevation={0} sx={{ p: 2 }}>
+              <Card
+                elevation={0}
+                sx={{
+                  p: 2,
+                }}
+              >
                 <Stack gap={1}>
                   <Typography>Primary</Typography>
                   <Stack flexDirection="row" gap={2}>
-                    {primaryColors.map((color) => {
-                      return (
-                        <Box sx={{ position: 'relative' }} key={`primary-${color}`}>
-                          {color === primary && (
-                            <Box
-                              component={motion.div}
-                              layoutId="primarycolor"
-                              sx={{
-                                position: 'absolute',
-                                width: 36,
-                                height: 36,
-                                borderRadius: '50%',
-                                top: -4,
-                                left: -4,
-                                border: (t) => `2px solid ${t.palette.primary.main}`,
-                                zIndex: 1,
-                              }}
-                            />
-                          )}
+                    {primaryColors.map((color) => (
+                      <Box
+                        sx={{
+                          position: 'relative',
+                        }}
+                        key={`primary-${color}`}
+                      >
+                        {color === primary && (
                           <Box
-                            sx={{ bgcolor: color, width: 28, height: 28, borderRadius: '50%' }}
-                            onClick={() => handlePrimaryColorChange(color)}
+                            component={motion.div}
+                            layoutId="primarycolor"
+                            sx={{
+                              position: 'absolute',
+                              width: 36,
+                              height: 36,
+                              borderRadius: '50%',
+                              top: -4,
+                              left: -4,
+                              border: (t) => `2px solid ${t.palette.primary.main}`,
+                              zIndex: 1,
+                            }}
                           />
-                        </Box>
-                      );
-                    })}
+                        )}
+                        <Box
+                          sx={{
+                            bgcolor: color,
+                            width: 28,
+                            height: 28,
+                            borderRadius: '50%',
+                          }}
+                          onClick={() => handlePrimaryColorChange(color)}
+                        />
+                      </Box>
+                    ))}
                   </Stack>
                 </Stack>
               </Card>
@@ -155,18 +176,21 @@ const GeneralSettingsTheme = () => {
   );
 };
 
-const GeneralSettings = () => {
-  return (
-    <Stack gap={2} sx={{ height: '100%' }}>
-      <Title
-        title="General Settings"
-        titleSx={{
-          fontSize: '1.25rem',
-        }}
-      />
-      <GeneralSettingsTheme />
-    </Stack>
-  );
-};
+const GeneralSettings = () => (
+  <Stack
+    gap={2}
+    sx={{
+      height: '100%',
+    }}
+  >
+    <Title
+      title="General Settings"
+      titleSx={{
+        fontSize: '1.25rem',
+      }}
+    />
+    <GeneralSettingsTheme />
+  </Stack>
+);
 
 export default GeneralSettings;

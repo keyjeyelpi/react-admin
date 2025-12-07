@@ -1,3 +1,4 @@
+import chroma from 'chroma-js';
 import {
   Alert,
   Box,
@@ -10,10 +11,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import chroma from 'chroma-js';
-import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
-import { cloneElement, useState, type Dispatch, type JSX, type SetStateAction } from 'react';
+import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
+import { cloneElement, useState, Dispatch, JSX, SetStateAction } from 'react';
 import { TbLayersSelected, TbLock, TbPlus } from 'react-icons/tb';
 import { faker } from '@faker-js/faker';
 
@@ -59,79 +59,102 @@ export const KanbanCardContent = ({
   description?: string;
   selected?: boolean;
   setSelected?: () => void;
-}) => {
-  return (
-    <Stack justifyContent="space-between" alignItems="stretch" sx={{ height: '100%' }}>
-      <Stack gap={1} sx={{ p: 2 }}>
-        {category && (
-          <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
-            <Stack
-              component={motion.div}
-              layoutId={(id || '') + 'icon' + (category?.label || '') + (title || '')}
-              justifyContent="center"
-              alignItems="center"
-              sx={{ color: 'primary.main' }}
-            >
-              {cloneElement(category?.icon || <TbLayersSelected />, { size: 24 })}
-            </Stack>
-            <Typography
-              component={motion.span}
-              layoutId={(id || '') + category?.label}
-              variant="caption"
-            >
-              {category?.label || 'Category'}
-            </Typography>
-          </Stack>
-        )}
-        {isLocked && (
-          <Alert severity="error" component={motion.div} icon={<TbLock />}>
-            The item cannot be edited.
-          </Alert>
-        )}
-        <Typography fontWeight={600} component={motion.div} layoutId={(id || '') + title}>
-          {title || 'Task Title'}
-        </Typography>
-        <Box sx={{ position: 'relative' }}>
-          <Box
+}) => (
+  <Stack
+    justifyContent="space-between"
+    alignItems="stretch"
+    sx={{
+      height: '100%',
+    }}
+  >
+    <Stack
+      gap={1}
+      sx={{
+        p: 2,
+      }}
+    >
+      {category && (
+        <Stack direction="row" justifyContent="flex-start" gap={1} alignItems="center">
+          <Stack
             component={motion.div}
-            initial={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              width: '100%',
-              height: 64,
-            }}
-            animate={{ height: selected ? 0 : 64 }}
+            layoutId={(id || '') + 'icon' + (category?.label || '') + (title || '')}
+            justifyContent="center"
+            alignItems="center"
             sx={{
-              background: (theme) =>
-                `linear-gradient(to top, ${theme.palette.background.paper} 0%, ${chroma(theme.palette.background.paper).alpha(0).hex()} 100%)`,
-              zIndex: 1,
+              color: 'primary.main',
             }}
-          />
-          <Collapse in={!!selected} collapsedSize={64}>
-            <Typography variant="body2" component={motion.div} layoutId={(id || '') + description}>
-              {description || 'Lorem Ipsum'}
-            </Typography>
-          </Collapse>
-        </Box>
-      </Stack>
-      <Box>
-        <Divider />
-        {!selected ? (
-          <Button size="small" onClick={setSelected} fullWidth>
-            Show More
-          </Button>
-        ) : (
-          <Stack>
-            <Button size="small" fullWidth>
-              Show More
-            </Button>
+          >
+            {cloneElement(category?.icon || <TbLayersSelected />, {
+              size: 24,
+            })}
           </Stack>
-        )}
+          <Typography
+            component={motion.span}
+            layoutId={(id || '') + category?.label}
+            variant="caption"
+          >
+            {category?.label || 'Category'}
+          </Typography>
+        </Stack>
+      )}
+      {isLocked && (
+        <Alert severity="error" component={motion.div} icon={<TbLock />}>
+          The item cannot be edited.
+        </Alert>
+      )}
+      <Typography fontWeight={600} component={motion.div} layoutId={(id || '') + title}>
+        {title || 'Task Title'}
+      </Typography>
+      <Box
+        sx={{
+          position: 'relative',
+        }}
+      >
+        <Box
+          component={motion.div}
+          initial={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: 64,
+          }}
+          animate={{
+            height: selected ? 0 : 64,
+          }}
+          sx={{
+            background: (theme) =>
+              `linear-gradient(to top, ${theme.palette.background.paper} 0%, ${chroma(
+                theme.palette.background.paper,
+              )
+                .alpha(0)
+                .hex()} 100%)`,
+            zIndex: 1,
+          }}
+        />
+        <Collapse in={!!selected} collapsedSize={64}>
+          <Typography variant="body2" component={motion.div} layoutId={(id || '') + description}>
+            {description || 'Lorem Ipsum'}
+          </Typography>
+        </Collapse>
       </Box>
     </Stack>
-  );
-};
+    <Box>
+      <Divider />
+      {!selected ? (
+        <Button size="small" onClick={setSelected} fullWidth>
+          Show More
+        </Button>
+      ) : (
+        <Stack>
+          <Button size="small" fullWidth>
+            Show More
+          </Button>
+        </Stack>
+      )}
+    </Box>
+  </Stack>
+);
 
 const KanbanCard = ({
   item,
@@ -152,8 +175,11 @@ const KanbanCard = ({
     // find which column was hit
     const targetColumn = cards.find((col) => {
       const el = document.getElementById(col.id);
+
       if (!el) return false;
+
       const rect = el.getBoundingClientRect();
+
       return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
     });
 
@@ -166,10 +192,12 @@ const KanbanCard = ({
       // remove from old column
       newCards = newCards.map((col) => {
         const idx = col.items.findIndex((i) => i.id === taskId);
+
         if (idx !== -1) {
           draggedTask = col.items[idx];
           col.items.splice(idx, 1);
         }
+
         return col;
       });
 
@@ -180,8 +208,10 @@ const KanbanCard = ({
             ...draggedTask,
             status: col.name.toLowerCase(), // update status
           };
+
           col.items.push(updatedTask);
         }
+
         return col;
       });
 
@@ -194,14 +224,32 @@ const KanbanCard = ({
       elevation={0}
       layoutId={item.id}
       component={motion.div}
-      whileHover={!!selected ? {} : { scale: 1.02 }}
-      whileTap={!!selected ? {} : { scale: 0.98 }}
+      whileHover={
+        selected
+          ? {}
+          : {
+              scale: 1.02,
+            }
+      }
+      whileTap={
+        selected
+          ? {}
+          : {
+              scale: 0.98,
+            }
+      }
       drag={!selected}
       dragSnapToOrigin
       onDragEnd={(_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) =>
         handleDragEnd(info, item.id)
       }
-      whileDrag={!!selected ? {} : { zIndex: 2 }}
+      whileDrag={
+        selected
+          ? {}
+          : {
+              zIndex: 2,
+            }
+      }
       sx={[
         {
           bgcolor: 'background.default',
@@ -217,9 +265,11 @@ const KanbanCard = ({
           '&:hover': {
             cursor: 'grab',
           },
-          '&:active': { cursor: 'grabbing' },
+          '&:active': {
+            cursor: 'grabbing',
+          },
         },
-        !!selected && {
+        selected && {
           position: 'fixed',
           width: 600,
           maxWidth: '90vw',
@@ -231,7 +281,11 @@ const KanbanCard = ({
     >
       <KanbanCardContent
         {...item.content}
-        {...{ selected, setSelected: () => setSelected?.(item.id), id: item.id }}
+        {...{
+          selected,
+          setSelected: () => setSelected?.(item.id),
+          id: item.id,
+        }}
       />
     </Card>
   );

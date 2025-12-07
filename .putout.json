@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "variables/remove-unused": "on",
+    "remove-empty": "on",
+    "remove-unreachable-code": "on",
+    "spread": "on"
+  }
+}

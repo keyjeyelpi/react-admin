@@ -14,14 +14,12 @@ import {
   TbSettings,
   TbSettingsFilled,
 } from 'react-icons/tb';
-
 import { useAppDispatch, useAppSelector } from '../store';
 import {
   setDashboardCollapsed,
   setDashboardContainerMaxWidth,
   setDashboardLoading,
 } from '../store/slices/settings.slice';
-import { title } from 'process';
 
 export type iSidebarOptions = {
   title?: string;
@@ -50,6 +48,7 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
           icon: <TbLayoutDashboard />,
           activeIcon: <TbLayoutDashboardFilled />,
         },
+
         // Hide for now
         ...(false
           ? [
@@ -68,7 +67,15 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
                 url: '/messages',
                 icon: <TbMessage />,
                 activeIcon: <TbMessageFilled />,
-                endIcon: <Chip label="8" size="small" sx={{ borderRadius: 2 }} />,
+                endIcon: (
+                  <Chip
+                    label="8"
+                    size="small"
+                    sx={{
+                      borderRadius: 2,
+                    }}
+                  />
+                ),
               },
             ]
           : []),
@@ -160,7 +167,14 @@ const useDashboard = () => {
     dispatch(setDashboardContainerMaxWidth(value));
   };
 
-  return { loading, setLoading, collapsed, setCollapsed, containerMaxWidth, setContainerMaxWidth };
+  return {
+    loading,
+    setLoading,
+    collapsed,
+    setCollapsed,
+    containerMaxWidth,
+    setContainerMaxWidth,
+  };
 };
 
 export default useDashboard;

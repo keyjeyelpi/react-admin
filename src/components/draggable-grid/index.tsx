@@ -1,8 +1,10 @@
-import { type ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Grid, SxProps } from '@mui/material';
 import { useMeasurePosition } from './useMeasurePosition';
-import { Grid, type SxProps } from '@mui/material';
 import { useBreakpoint } from '../../theme';
+
+const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
 
 export interface GridProps {
   id: string;
@@ -52,7 +54,12 @@ interface DraggableGridProps {
   children: GridProps | ReactNode;
   updatePosition: (
     index: number,
-    pos: { top: number; left: number; column: number; row: number },
+    pos: {
+      top: number;
+      left: number;
+      column: number;
+      row: number;
+    },
   ) => void;
   updateOrder: (index: number, xOffset: number, yOffset: number) => void;
   padding?: number;
@@ -79,21 +86,19 @@ export const DraggableGridContainer = ({
   customGridTemplateColumns?: string;
   customGridTemplateRows?: string;
   flex?: number;
-}) => {
-  return (
-    <Grid
-      gap={gap}
-      gridTemplateRows={`repeat(${column}, ${customGridTemplateColumns || '1fr'})`}
-      gridTemplateColumns={`repeat(${row}, ${customGridTemplateRows || '1fr'})`}
-      height={!flex ? '100%' : undefined}
-      width={!flex ? '100%' : undefined}
-      flex={flex}
-      display="grid"
-    >
-      {children}
-    </Grid>
-  );
-};
+}) => (
+  <Grid
+    gap={gap}
+    gridTemplateRows={`repeat(${column}, ${customGridTemplateColumns || '1fr'})`}
+    gridTemplateColumns={`repeat(${row}, ${customGridTemplateRows || '1fr'})`}
+    height={!flex ? '100%' : undefined}
+    width={!flex ? '100%' : undefined}
+    flex={flex}
+    display="grid"
+  >
+    {children}
+  </Grid>
+);
 
 const DraggableGrid = ({
   i,
@@ -112,10 +117,11 @@ const DraggableGrid = ({
   const [isDragging, setDragging] = useState(false);
 
   const { getResponsiveValue, breakpoint } = useBreakpoint();
+
   const ref = useMeasurePosition((pos) => updatePosition(i, pos));
 
-  const columnValue =
-    typeof column === 'number' ? column : getResponsiveValue(column, breakpoint) || 1;
+  const columnValue = isNumber(column) ? column : getResponsiveValue(column, breakpoint) || 1;
+
   const rowValue = typeof row === 'number' ? row : getResponsiveValue(row, breakpoint) || 1;
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import { useEffect, useRef, RefObject } from 'react';
 
 export type Position = {
   row: number;

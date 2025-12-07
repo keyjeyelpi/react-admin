@@ -24,12 +24,13 @@ import {
   TbSearch,
   TbUser,
 } from 'react-icons/tb';
-
 import useDashboard from '../../hooks/dashboard.hook';
 import { useBreakpoint } from '../../theme';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setLogout } from '../../store/slices/user.slice';
 import { DashboardLayoutSidebarToggle } from './sidebar.dashboard';
+
+const noop = () => {};
 
 const DashboardLayoutHeader = () => {
   const dispatch = useAppDispatch();
@@ -43,6 +44,7 @@ const DashboardLayoutHeader = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -50,17 +52,17 @@ const DashboardLayoutHeader = () => {
   const options = [
     {
       label: 'Gift',
-      onClick: () => {},
+      onClick: noop,
       icon: <TbGift />,
     },
     {
       label: 'Notifications',
-      onClick: () => {},
+      onClick: noop,
       icon: <TbBell />,
     },
     {
       label: 'Notes',
-      onClick: () => {},
+      onClick: noop,
       icon: <TbCirclePlus />,
     },
   ];
@@ -69,9 +71,21 @@ const DashboardLayoutHeader = () => {
     {
       category: '',
       options: [
-        { label: 'Account', onClick: () => dispatch(setLogout()), icon: <TbUser /> },
-        { label: 'Security', onClick: () => dispatch(setLogout()), icon: <TbLock /> },
-        { label: 'Billing', onClick: () => dispatch(setLogout()), icon: <TbCreditCard /> },
+        {
+          label: 'Account',
+          onClick: () => dispatch(setLogout()),
+          icon: <TbUser />,
+        },
+        {
+          label: 'Security',
+          onClick: () => dispatch(setLogout()),
+          icon: <TbLock />,
+        },
+        {
+          label: 'Billing',
+          onClick: () => dispatch(setLogout()),
+          icon: <TbCreditCard />,
+        },
       ],
     },
   ];
@@ -87,12 +101,20 @@ const DashboardLayoutHeader = () => {
         height: 64,
       }}
     >
-      <Container maxWidth="xl" sx={{ height: 64 }}>
+      <Container
+        maxWidth="xl"
+        sx={{
+          height: 64,
+        }}
+      >
         <Stack
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
-          sx={{ py: 2, height: '100%' }}
+          sx={{
+            py: 2,
+            height: '100%',
+          }}
         >
           <Stack flexDirection="row" alignItems="center" gap={2}>
             {collapsed && <DashboardLayoutSidebarToggle />}
@@ -119,8 +141,16 @@ const DashboardLayoutHeader = () => {
             <Stack flexDirection="row" gap={1}>
               {options.map((option, index) => (
                 <Tooltip title={option.label} key={option.label + index}>
-                  <IconButton size="small" onClick={option.onClick} sx={{ color: 'divider.main' }}>
-                    {cloneElement(option.icon, { size: 20 })}
+                  <IconButton
+                    size="small"
+                    onClick={option.onClick}
+                    sx={{
+                      color: 'divider.main',
+                    }}
+                  >
+                    {cloneElement(option.icon, {
+                      size: 20,
+                    })}
                   </IconButton>
                 </Tooltip>
               ))}
@@ -128,7 +158,10 @@ const DashboardLayoutHeader = () => {
             <Divider orientation="vertical" flexItem />
             <Button
               size="small"
-              sx={{ p: 0, color: 'text.primary' }}
+              sx={{
+                p: 0,
+                color: 'text.primary',
+              }}
               onClick={handleClick}
               endIcon={<TbChevronDown />}
             >
@@ -174,7 +207,14 @@ const DashboardLayoutHeader = () => {
                 },
               }}
             >
-              <Stack flexDirection="row" gap={2} sx={{ p: 2 }} alignItems="center">
+              <Stack
+                flexDirection="row"
+                gap={2}
+                sx={{
+                  p: 2,
+                }}
+                alignItems="center"
+              >
                 <Box
                   component="img"
                   sx={{
@@ -225,21 +265,42 @@ const DashboardLayoutHeader = () => {
               </Stack>
               <Divider />
               {profileSettings.map(({ category, options }, index) => (
-                <Stack key={category + index} sx={{ p: 1 }}>
-                  {!!category && <Typography sx={{ px: 2, py: 1 }}>{category}</Typography>}
+                <Stack
+                  key={category + index}
+                  sx={{
+                    p: 1,
+                  }}
+                >
+                  {!!category && (
+                    <Typography
+                      sx={{
+                        px: 2,
+                        py: 1,
+                      }}
+                    >
+                      {category}
+                    </Typography>
+                  )}
                   {options.map((option, idx) => (
                     <MenuItem
                       onClick={option.onClick}
                       key={option.label + idx}
-                      sx={{ borderRadius: 1 }}
+                      sx={{
+                        borderRadius: 1,
+                      }}
                     >
                       <Stack flexDirection="row" alignItems="center" gap={2}>
                         <Stack
                           alignItems="center"
                           justifyContent="center"
-                          sx={{ height: 18, width: 18 }}
+                          sx={{
+                            height: 18,
+                            width: 18,
+                          }}
                         >
-                          {cloneElement(option.icon, { size: 18 })}
+                          {cloneElement(option.icon, {
+                            size: 18,
+                          })}
                         </Stack>
                         <Typography variant="body2">{option.label}</Typography>
                       </Stack>
@@ -249,7 +310,11 @@ const DashboardLayoutHeader = () => {
                 </Stack>
               ))}
               <Divider />
-              <Box sx={{ p: 1 }}>
+              <Box
+                sx={{
+                  p: 1,
+                }}
+              >
                 <Button
                   fullWidth
                   disableElevation

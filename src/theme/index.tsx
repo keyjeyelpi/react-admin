@@ -1,13 +1,14 @@
-import { createTheme } from '@mui/material/styles';
-import type { Theme } from '@mui/material/styles';
+import { createTheme, Theme } from '@mui/material/styles';
 import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { green, red } from '@mui/material/colors';
-
 import darkLogo from '../assets/images/logo/black.png';
 import lightLogo from '../assets/images/logo/white.png';
 import { useAppSelector } from '../store';
+
+const isUndefined = (a): a is undefined => typeof a === 'undefined';
+const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
 
 export const useBreakpoint = () => {
   const theme = useTheme();
@@ -23,7 +24,7 @@ export const useBreakpoint = () => {
     value: number | Partial<Record<(typeof breakpoints)[number], number>> | undefined,
     currentBreakpoint: (typeof breakpoints)[number],
   ): number | undefined => {
-    if (typeof value === 'number') return value;
+    if (isNumber(value)) return value;
 
     if (!value) return undefined;
 
@@ -32,9 +33,8 @@ export const useBreakpoint = () => {
 
     for (let i = startIndex; i < breakpoints.length; i++) {
       const bp = breakpoints[i];
-      if (value[bp] !== undefined) {
-        return value[bp];
-      }
+
+      if (!isUndefined(value[bp])) return value[bp];
     }
 
     return undefined;
@@ -68,9 +68,7 @@ export const useCurrentThemeMode = (): {
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
-    if (mq.matches) {
-      setIsDark(true);
-    }
+    if (mq.matches) setIsDark(true);
 
     // This callback will fire if the perferred color scheme changes without a reload
     mq.addEventListener('change', (evt) => setIsDark(evt.matches));
@@ -84,12 +82,15 @@ export const useCurrentThemeMode = (): {
     link.rel = 'icon';
     link.href = logo;
 
-    if (!link.parentNode) {
-      document.head.appendChild(link);
-    }
+    if (!link.parentNode) document.head.appendChild(link);
   }, [darkMode]);
 
-  return { darkMode, textColor, bgColor, logo };
+  return {
+    darkMode,
+    textColor,
+    bgColor,
+    logo,
+  };
 };
 
 export const useColors = (): {
@@ -104,7 +105,11 @@ export const useColors = (): {
 
   const { bgColor } = useCurrentThemeMode();
 
-  return { primary, secondary, background: bgColor };
+  return {
+    primary,
+    secondary,
+    background: bgColor,
+  };
 };
 
 const generatePalette = (bc: string) => {
@@ -116,7 +121,7 @@ const generatePalette = (bc: string) => {
 
   const dark = '#000000';
   const light = '#FFFFFF';
-  const saturation = chroma(baseColor).hsl()[1];
+  const [, saturation] = chroma(baseColor).hsl();
 
   const palette: any = {};
 
@@ -171,10 +176,10 @@ const generatePalette = (bc: string) => {
     .darken(darkMode ? 1 : 0)
     .hex();
 
-  palette['A100'] = chroma(baseColor).brighten(2).hex();
-  palette['A200'] = chroma(baseColor).brighten(1).hex();
-  palette['A400'] = chroma(baseColor).darken(0.5).hex();
-  palette['A700'] = chroma(baseColor).darken(1.5).hex();
+  palette.A100 = chroma(baseColor).brighten(2).hex();
+  palette.A200 = chroma(baseColor).brighten(1).hex();
+  palette.A400 = chroma(baseColor).darken(0.5).hex();
+  palette.A700 = chroma(baseColor).darken(1.5).hex();
 
   palette.main = baseColor;
   palette.light = palette['200'];
@@ -224,7 +229,9 @@ const useTheme = (): Theme => {
         },
         variants: [
           {
-            props: { size: 'small' },
+            props: {
+              size: 'small',
+            },
             style: {
               height: 40,
             },
@@ -276,7 +283,9 @@ const useTheme = (): Theme => {
       MuiTextField: {
         variants: [
           {
-            props: { variant: 'outlined' },
+            props: {
+              variant: 'outlined',
+            },
             style: ({ theme }) => ({
               '& .MuiOutlinedInput-root': {
                 borderRadius: 8,

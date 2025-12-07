@@ -1,7 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 import { Suspense } from 'react';
 import { CssBaseline, LinearProgress, ThemeProvider } from '@mui/material';
-
 import theme from './theme';
 import routes from './routes';
 

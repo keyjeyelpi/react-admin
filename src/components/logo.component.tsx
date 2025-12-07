@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { useCurrentThemeMode } from '../theme';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useCurrentThemeMode } from '../theme';
 
 const Logo = ({
   withText,
@@ -14,18 +14,25 @@ const Logo = ({
   textSize?: number;
 }) => {
   const { logo } = useCurrentThemeMode();
+
   return (
     <Stack flexDirection="row" alignItems="center">
       <Stack
         justifyContent="center"
         alignItems="center"
-        sx={{ height: logoContainerSize ?? 24, width: logoContainerSize ?? 24 }}
+        sx={{
+          height: logoContainerSize ?? 24,
+          width: logoContainerSize ?? 24,
+        }}
       >
         <Box
           component="img"
           src={logo}
           alt="Logo"
-          sx={{ height: logoSize ?? 24, width: logoSize ?? 24 }}
+          sx={{
+            height: logoSize ?? 24,
+            width: logoSize ?? 24,
+          }}
         />
       </Stack>
       <AnimatePresence initial={false} mode="wait">

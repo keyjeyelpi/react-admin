@@ -1,7 +1,9 @@
-import { Stack, Typography, type TypographyProps } from '@mui/material';
+import { Stack, Typography, TypographyProps } from '@mui/material';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { useBreakpoint } from '../theme';
+
+const isString = (a): a is string => typeof a === 'string';
 
 const Typing = ({
   text,
@@ -22,7 +24,9 @@ const Typing = ({
   spacing?: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, {
+    once: true,
+  });
 
   const { breakpoint } = useBreakpoint();
 
@@ -33,10 +37,12 @@ const Typing = ({
       justifyContent="center"
       ref={ref}
       component={motion.div}
-      transition={{ delay }}
+      transition={{
+        delay,
+      }}
     >
       <AnimatePresence>
-        {(typeof text === 'string'
+        {(isString(text)
           ? text
           : typeof text === 'object'
             ? ((breakpoint === 'xl'
@@ -56,9 +62,20 @@ const Typing = ({
               component={motion.p}
               key={i}
               {...typography}
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.2, delay: i * 0.1 }}
+              initial={{
+                opacity: 0,
+              }}
+              animate={
+                isInView
+                  ? {
+                      opacity: 1,
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 0.2,
+                delay: i * 0.1,
+              }}
             >
               {char === ' ' ? '\u00A0' : char}
             </Typography>
