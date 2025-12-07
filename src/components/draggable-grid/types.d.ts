@@ -1,22 +1,7 @@
-import { ReactNode, MouseEventHandler } from 'react';
+import type { ReactNode, MouseEventHandler, RefObject } from 'react';
 import type { SxProps, Theme } from '@mui/material';
 
-export type ResponsiveValue<T> = T | Partial<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', T>>;
-
-export type Position = {
-  row: number;
-  column: number;
-  top: number;
-  left: number;
-};
-
-export interface GridProps {
-  id: string;
-  children: ReactNode;
-  column: ResponsiveValue<number>;
-  row: ResponsiveValue<number>;
-  turnDragOff?: boolean;
-}
+export { RefObject };
 
 export interface DraggableGridProps {
   i: number;
@@ -43,6 +28,19 @@ export interface DraggableGridContainerProps {
   flex?: number;
 }
 
-declare const DraggableGrid: React.FC<DraggableGridProps>;
-export const DraggableGridContainer: React.FC<DraggableGridContainerProps>;
-export default DraggableGrid;
+export interface GridProps {
+  id: string;
+  children: ReactNode;
+  column: ResponsiveValue<number>;
+  row: ResponsiveValue<number>;
+  turnDragOff?: boolean;
+}
+
+export type Position = {
+  row: number;
+  column: number;
+  top: number;
+  left: number;
+};
+
+export type ResponsiveValue<T> = T | Partial<Record<'xl' | 'lg' | 'md' | 'sm' | 'xs', T>>;

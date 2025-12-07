@@ -1,11 +1,5 @@
-import { useEffect, useRef, RefObject } from 'react';
-
-export type Position = {
-  row: number;
-  column: number;
-  top: number;
-  left: number;
-};
+import { useEffect, useRef } from 'react';
+import type { Position, RefObject } from './types';
 
 type UpdateFn = (pos: Position) => void;
 

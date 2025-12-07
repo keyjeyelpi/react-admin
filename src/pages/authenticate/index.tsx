@@ -6,11 +6,12 @@ import { useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { TbEye, TbEyeClosed, TbMail, TbPassword, TbUser } from 'react-icons/tb';
-import Tabs from '../../components/tabs.component';
-import { LoginSchema, RegisterSchema } from '../../schema/authenticate.schema';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { setUserProfile } from '../../store/slices/user.slice';
-import ProfilePicture from '../assets/images/profile-picture.png';
+
+import Tabs from '@/components/tabs.component';
+import { LoginSchema, RegisterSchema } from '@/schema/authenticate.schema';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { setUserProfile } from '@/store/slices/user.slice';
+import ProfilePicture from '@/assets/images/profile-picture.png';
 import type { LoginSchemaType, RegisterSchemaType } from '@/schema/types';
 
 const Login = () => {
