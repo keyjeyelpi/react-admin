@@ -1,4 +1,5 @@
 import { Chip } from '@mui/material';
+import type { iSidebarOptions } from '@/layouts/dashboard/sidebar/types';
 import {
   TbLayoutDashboard,
   TbLayoutDashboardFilled,
@@ -20,7 +21,6 @@ import {
   setDashboardContainerMaxWidth,
   setDashboardLoading,
 } from '../store/slices/settings.slice';
-import type { iSidebarOptions } from '@/layouts/dashboard/sidebar/types';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [

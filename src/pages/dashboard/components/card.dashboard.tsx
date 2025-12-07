@@ -1,24 +1,12 @@
 import { Chip, Stack, Typography } from '@mui/material';
-import { JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
 import Typing from '../../../components/typing-text.component';
 import DashboardTitle from './title.dashobard';
+import type { DashboardCardProps } from '../types';
 
 const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 
-const DashboardCard = ({
-  auto,
-  icon,
-  title,
-  value,
-  previousValue,
-}: {
-  auto?: boolean;
-  icon: JSX.Element;
-  title: string;
-  value: string | number;
-  previousValue?: string | number;
-}) => {
+const DashboardCard = ({ auto, icon, title, value, previousValue }: DashboardCardProps) => {
   const change =
     previousValue && isNumber(previousValue) && typeof value === 'number'
       ? Math.round(((value - Number(previousValue)) / Number(previousValue)) * 100)

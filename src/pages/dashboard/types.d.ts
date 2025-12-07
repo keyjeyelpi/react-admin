@@ -5,3 +5,11 @@ export interface DashboardTitleProps {
   icon?: JSX.Element;
   options?: JSX.Element;
 }
+
+export interface DashboardCardProps {
+  auto?: boolean;
+  icon: JSX.Element;
+  title: string;
+  value: string | number;
+  previousValue?: string | number;
+}
