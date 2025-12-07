@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { TbBook, TbDeviceGamepad, TbHeartbeat, TbAlien } from 'react-icons/tb';
 import Title from '../../../components/title.component';
 import useDashboard from '../../../hooks/dashboard.hook';
-import type { Column } from './index.d';
+import type { Column } from './types';
 import KanbanContainer from './components/container.kanban';
 
 const noop = () => {};

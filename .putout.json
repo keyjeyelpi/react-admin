@@ -8,5 +8,6 @@
     "typescript/keep-type-imports": "on",
     "react": "on"
   },
-  "plugins": ["typescript", "react"]
+  "plugins": ["typescript", "react"],
+  "ignore": ["*.d.ts"]
 }

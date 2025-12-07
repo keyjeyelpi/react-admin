@@ -20,22 +20,7 @@ import {
   setDashboardContainerMaxWidth,
   setDashboardLoading,
 } from '../store/slices/settings.slice';
-
-export type iSidebarOptions = {
-  title?: string;
-  options: {
-    title: string;
-    url: string;
-    alternativeLinks?: string[];
-    icon: React.ReactElement<any>;
-    activeIcon?: React.ReactElement<any>;
-    endIcon?: React.ReactElement<any>;
-    submenu?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}[];
+import type { iSidebarOptions } from '@/layouts/dashboard/sidebar/types';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [

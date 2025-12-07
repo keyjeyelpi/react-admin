@@ -28,7 +28,7 @@ import useDashboard from '../../hooks/dashboard.hook';
 import { useBreakpoint } from '../../theme';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setLogout } from '../../store/slices/user.slice';
-import { DashboardLayoutSidebarToggle } from './sidebar.dashboard';
+import { DashboardLayoutSidebarToggle } from './sidebar';
 
 const noop = () => {};
 

@@ -1,6 +1,5 @@
 import type { GridProps } from '@/components/draggable-grid/index.d';
-import DraggableGrid from '@/components/draggable-grid';
-import { DraggableGridContainer } from '@/components/draggable-grid';
+import DraggableGrid, { DraggableGridContainer } from '@/components/draggable-grid';
 import { usePositionReorder } from '@/components/draggable-grid/usePositionReorder';
 import Title from '@/components/title.component';
 import { Skeleton, Stack } from '@mui/material';
@@ -12,10 +11,20 @@ const createSkeletonGrid = (
   turnDragOff = false,
 ): GridProps => ({
   id: uuid(),
-  children: <Skeleton height="100%" width="100%" sx={{ transform: 'none' }} />,
+  children: (
+    <Skeleton
+      height="100%"
+      width="100%"
+      sx={{
+        transform: 'none',
+      }}
+    />
+  ),
   column,
   row,
-  ...(turnDragOff && { turnDragOff }),
+  ...(turnDragOff && {
+    turnDragOff,
+  }),
 });
 
 const initialGrid: GridProps[] = [
@@ -23,7 +32,13 @@ const initialGrid: GridProps[] = [
   createSkeletonGrid({ xs: 4, md: 2 }, 1),
   createSkeletonGrid({ xs: 4, md: 2 }, 1),
   createSkeletonGrid({ xs: 4, md: 2 }, 1),
-  createSkeletonGrid({ xs: 8, md: 4 }, { xs: 1, md: 2 }),
+  createSkeletonGrid(
+    { xs: 8, md: 4 },
+    {
+      xs: 1,
+      md: 2,
+    },
+  ),
   createSkeletonGrid({ xs: 4, md: 2 }, 2),
   createSkeletonGrid(2, 3),
   createSkeletonGrid(3, 2),

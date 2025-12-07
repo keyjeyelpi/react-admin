@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import type { Column, KanbanContainerProps } from '../index.d';
 import { faker } from '@faker-js/faker';
 import { TbLayersSelected, TbPlus } from 'react-icons/tb';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import KanbanCard from './card.kanban';
 import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
+import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
+import type { Column, KanbanContainerProps } from '../types';
+import KanbanCard from './card.kanban';
 
 const KanbanContainer = ({ items }: KanbanContainerProps) => {
   const [cards, setCards] = useState<Column[]>(items);

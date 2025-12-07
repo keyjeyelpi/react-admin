@@ -1,4 +1,7 @@
 import { JSX } from 'react';
+import type { PanInfo } from 'framer-motion';
+
+export type PanInfo = PanInfo;
 
 export interface Task {
   id: string;

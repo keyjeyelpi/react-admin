@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import localforage from 'localforage';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
-import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createMigrate,
   persistStore,
@@ -15,6 +15,7 @@ import {
 } from 'redux-persist';
 import { SettingsSlice } from './slices/settings.slice';
 import { UserSlice } from './slices/user.slice';
+import type { TypedUseSelectorHook } from './types';
 
 const noop = () => {};
 

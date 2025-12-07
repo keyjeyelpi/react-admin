@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
-import { ComponentsRoute } from './components.dashboard';
 import DashboardSkeleton from '@/pages/dashboard/components/skeleton.dashboard';
+import { ComponentsRoute } from './components.dashboard';
 
 const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
 const Dashboard = lazy(() => import('../../pages/dashboard'));

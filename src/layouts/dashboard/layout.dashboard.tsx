@@ -4,7 +4,7 @@ import { Suspense, useLayoutEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import useDashboard from '../../hooks/dashboard.hook';
 import { useAppSelector } from '../../store';
-import DashboardLayoutSidebar from './sidebar.dashboard';
+import DashboardLayoutSidebar from './sidebar';
 import DashboardLayoutHeader from './header.dashboard';
 
 const DashboardLayout = () => {

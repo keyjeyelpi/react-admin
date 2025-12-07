@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { Task, Column } from '../index.d';
-import { motion, type PanInfo } from 'framer-motion';
-import KanbanCardContent from './card-content.kanban';
+import { motion } from 'framer-motion';
 import { Card } from '@mui/material';
+import type { Task, Column, PanInfo } from '../types';
+import KanbanCardContent from './card-content.kanban';
 
 const KanbanCard = ({
   item,

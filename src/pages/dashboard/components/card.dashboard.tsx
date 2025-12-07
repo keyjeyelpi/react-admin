@@ -1,5 +1,5 @@
 import { Chip, Stack, Typography } from '@mui/material';
-import { cloneElement, type JSX } from 'react';
+import { JSX } from 'react';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
 import Typing from '../../../components/typing-text.component';
 import DashboardTitle from './title.dashobard';
@@ -26,16 +26,16 @@ const DashboardCard = ({
 
   return (
     <Stack
-      sx={[
-        ...(auto
+      sx={
+        auto
           ? [
               {
                 height: '100%',
                 width: '100%',
               },
             ]
-          : []),
-      ]}
+          : []
+      }
       justifyContent="center"
     >
       <Stack
