@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Grid } from '@mui/material';
 import { useBreakpoint } from '@/theme';
+import { isNumber } from '@/utils/function.util';
 import { useMeasurePosition } from './useMeasurePosition';
 import type { DraggableGridProps, DraggableGridContainerProps } from './types';
-import { isNumber } from '@/utils/function.util';
 
 export const DraggableGridContainer = ({
   row = 4,
@@ -50,7 +50,7 @@ const DraggableGrid = ({
 
   const columnValue = isNumber(column) ? column : getResponsiveValue(column, breakpoint) || 1;
 
-  const rowValue = typeof row === 'number' ? row : getResponsiveValue(row, breakpoint) || 1;
+  const rowValue = isNumber(row) ? row : getResponsiveValue(row, breakpoint) || 1;
 
   return (
     <Grid

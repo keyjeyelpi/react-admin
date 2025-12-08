@@ -1,8 +1,8 @@
 import { Button, Stack, Typography } from '@mui/material';
 import chroma from 'chroma-js';
+import Title from '@/components/title.component';
 import { cloneElement, lazy, Suspense, useState } from 'react';
 import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
-import Title from '@/components/title.component';
 
 const GeneralSettings = lazy(() => import('./general.settings'));
 

@@ -1,8 +1,8 @@
 import { Chip, Stack, Typography } from '@mui/material';
 import { TbTrendingDown, TbTrendingUp } from 'react-icons/tb';
 import Typing from '@/components/typing-text.component';
-import DashboardTitle from './title.dashobard';
 import type { DashboardCardProps } from '@/types';
+import DashboardTitle from './title.dashobard';
 
 const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 

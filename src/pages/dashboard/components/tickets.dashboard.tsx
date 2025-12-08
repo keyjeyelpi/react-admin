@@ -1,3 +1,4 @@
+import { setTimeout } from 'node:timers/promises';
 import { TbTicket } from 'react-icons/tb';
 import { useEffect, useState } from 'react';
 import DashboardCard from './card.dashboard';
