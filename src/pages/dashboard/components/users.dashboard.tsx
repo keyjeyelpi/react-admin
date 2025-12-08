@@ -1,4 +1,3 @@
-import { setTimeout } from 'node:timers/promises';
 import { TbUsers } from 'react-icons/tb';
 import { useEffect, useState } from 'react';
 import DashboardCard from './card.dashboard';
@@ -8,12 +7,24 @@ const DashboardUsers = () => {
   const [previousValue, setPreviousValue] = useState(38);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setValue(Math.floor(Math.random() * 50) + 10);
-      setPreviousValue(value);
-    }, 3000);
+    let start: number | null = null;
+    let rafId: number;
 
-    return () => clearTimeout(timeoutId);
+    const loop = (timestamp: number) => {
+      if (start === null) start = timestamp;
+
+      if (timestamp - start >= 3000) {
+        setPreviousValue(value);
+        setValue(Math.floor(Math.random() * 50) + 10);
+        return;
+      }
+
+      rafId = requestAnimationFrame(loop);
+    };
+
+    rafId = requestAnimationFrame(loop);
+
+    return () => cancelAnimationFrame(rafId);
   }, [value]);
 
   return (
