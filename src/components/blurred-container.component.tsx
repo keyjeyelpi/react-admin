@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
 import { useLayoutEffect, useRef, useState } from 'react';
-import useTheme from '../theme';
+import useTheme from '@/theme';
 import type { BlurredContainerProps, Particle } from './types';
 
 const BlurredContainer = ({ children, sx }: BlurredContainerProps) => {

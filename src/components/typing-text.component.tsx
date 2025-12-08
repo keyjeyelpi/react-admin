@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { useBreakpoint } from '../theme';
+import { useBreakpoint } from '@/theme';
 import type { TypingProps } from './types';
 
 const isString = (a: unknown): a is string => typeof a === 'string';

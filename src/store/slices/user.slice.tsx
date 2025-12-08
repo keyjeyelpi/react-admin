@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import type { iUserState } from '../interfaces/user.interface';
+import type { iUserState } from '@/interfaces/user.interface';
 
 const initialState: iUserState = {};
 

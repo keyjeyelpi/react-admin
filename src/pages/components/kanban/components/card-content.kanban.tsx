@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { cloneElement } from 'react';
 import { Alert, Box, Button, Collapse, Divider, Stack, Typography } from '@mui/material';
 import { TbLayersSelected, TbLock } from 'react-icons/tb';
-import type { KanbanCardContentProps } from '../types';
+import type { KanbanCardContentProps } from '@/types';
 
 const KanbanCardContent = ({
   id,

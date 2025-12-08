@@ -1,7 +1,7 @@
 import { Card, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import BlurredContainer from '../components/blurred-container.component';
-import Logo from '../components/logo.component';
+import BlurredContainer from '@/components/blurred-container.component';
+import Logo from '@/components/logo.component';
 
 const AuthenticationLayout = () => (
   <BlurredContainer

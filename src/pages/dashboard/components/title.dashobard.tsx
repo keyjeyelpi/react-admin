@@ -1,6 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { cloneElement } from 'react';
-import type { DashboardTitleProps } from '../types';
+import type { DashboardTitleProps } from '@/types';
 
 const DashboardTitle = ({ title, icon, options }: DashboardTitleProps) => (
   <Stack flexDirection="row" justifyContent="space-between" alignItems="center">

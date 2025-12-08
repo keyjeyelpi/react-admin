@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
 import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import type { Column, KanbanContainerProps } from '../types';
+import type { Column, KanbanContainerProps } from '@/types';
 import KanbanCard from './card.kanban';
 
 const KanbanContainer = ({ items }: KanbanContainerProps) => {

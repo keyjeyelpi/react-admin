@@ -4,8 +4,7 @@ import { Grid } from '@mui/material';
 import { useBreakpoint } from '@/theme';
 import { useMeasurePosition } from './useMeasurePosition';
 import type { DraggableGridProps, DraggableGridContainerProps } from './types';
-
-const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
+import { isNumber } from '@/utils/function.util';
 
 export const DraggableGridContainer = ({
   row = 4,

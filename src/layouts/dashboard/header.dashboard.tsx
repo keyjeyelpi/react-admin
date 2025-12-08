@@ -24,10 +24,10 @@ import {
   TbSearch,
   TbUser,
 } from 'react-icons/tb';
-import useDashboard from '../../hooks/dashboard.hook';
-import { useBreakpoint } from '../../theme';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { setLogout } from '../../store/slices/user.slice';
+import useDashboard from '@/hooks/dashboard.hook';
+import { useBreakpoint } from '@/theme';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { setLogout } from '@/store/slices/user.slice';
 import { DashboardLayoutSidebarToggle } from './sidebar';
 
 const noop = () => {};

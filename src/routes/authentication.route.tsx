@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
-const AuthenticationLayout = lazy(() => import('../layouts/authentication.layout'));
-const Authenticate = lazy(() => import('../pages/authenticate'));
+const AuthenticationLayout = lazy(() => import('@/layouts/authentication.layout'));
+const Authenticate = lazy(() => import('@/pages/authenticate'));
 
 const authenticationRoutes = [
   {

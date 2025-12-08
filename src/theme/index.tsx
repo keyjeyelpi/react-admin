@@ -3,9 +3,9 @@ import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { green, red } from '@mui/material/colors';
-import darkLogo from '../assets/images/logo/black.png';
-import lightLogo from '../assets/images/logo/white.png';
-import { useAppSelector } from '../store';
+import darkLogo from '@/assets/images/logo/black.png';
+import lightLogo from '@/assets/images/logo/white.png';
+import { useAppSelector } from '@/store';
 import type { Theme } from './types';
 
 const isUndefined = (a: unknown): a is undefined => typeof a === 'undefined';

@@ -2,10 +2,10 @@ import { lazy, Suspense } from 'react';
 import DashboardSkeleton from '@/pages/dashboard/components/skeleton.dashboard';
 import { ComponentsRoute } from './components.dashboard';
 
-const DashboardLayout = lazy(() => import('../../layouts/dashboard/layout.dashboard'));
-const Dashboard = lazy(() => import('../../pages/dashboard'));
-const NotFound = lazy(() => import('../../pages/not-found.page'));
-const Settings = lazy(() => import('../../pages/settings'));
+const DashboardLayout = lazy(() => import('@/layouts/dashboard/layout.dashboard'));
+const Dashboard = lazy(() => import('@/pages/dashboard'));
+const NotFound = lazy(() => import('@/pages/not-found.page'));
+const Settings = lazy(() => import('@/pages/settings'));
 
 const dashboardRoutes = [
   {

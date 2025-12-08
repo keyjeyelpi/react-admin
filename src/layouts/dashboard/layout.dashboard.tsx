@@ -2,8 +2,8 @@ import { Box, Stack, LinearProgress, Collapse, Container } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Suspense, useLayoutEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import useDashboard from '../../hooks/dashboard.hook';
-import { useAppSelector } from '../../store';
+import useDashboard from '@/hooks/dashboard.hook';
+import { useAppSelector } from '@/store';
 import DashboardLayoutSidebar from './sidebar';
 import DashboardLayoutHeader from './header.dashboard';
 

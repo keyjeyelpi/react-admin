@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { iSettingsState } from '../interfaces/settings.interface';
+import type { iSettingsState } from '@/interfaces/settings.interface';
 
 const initialState: iSettingsState = {
   dashboard: {

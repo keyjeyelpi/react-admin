@@ -15,12 +15,12 @@ import {
   TbSettings,
   TbSettingsFilled,
 } from 'react-icons/tb';
-import { useAppDispatch, useAppSelector } from '../store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   setDashboardCollapsed,
   setDashboardContainerMaxWidth,
   setDashboardLoading,
-} from '../store/slices/settings.slice';
+} from '@/store/slices/settings.slice';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [

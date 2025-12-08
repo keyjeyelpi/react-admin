@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
-const Kanban = lazy(() => import('../../pages/components/kanban'));
-const Pomodoro = lazy(() => import('../../pages/components/pomodoro'));
+const Kanban = lazy(() => import('@/pages/components/kanban'));
+const Pomodoro = lazy(() => import('@/pages/components/pomodoro'));
 
 const componentsRoutes = [
   {

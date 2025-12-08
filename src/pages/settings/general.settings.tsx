@@ -1,11 +1,11 @@
 import { Box, Card, Divider, Stack, Typography } from '@mui/material';
 import { TbCircle, TbCircleCheckFilled } from 'react-icons/tb';
 import { motion } from 'framer-motion';
-import Title from '../../components/title.component';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { setPrimaryColor, setThemeMode } from '../../store/slices/settings.slice';
-import { isHexColor } from '../../utils/general.util';
-import { primaryColors, themes } from '../../utils/init.util';
+import Title from '@/components/title.component';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { setPrimaryColor, setThemeMode } from '@/store/slices/settings.slice';
+import { isHexColor } from '@/utils/general.util';
+import { primaryColors, themes } from '@/utils/init.util';
 
 const GeneralSettingsTheme = () => {
   const {
