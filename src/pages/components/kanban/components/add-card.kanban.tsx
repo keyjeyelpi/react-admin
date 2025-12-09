@@ -3,14 +3,14 @@ import { Modal, Box, IconButton } from '@mui/material';
 import { TbCirclePlus } from 'react-icons/tb';
 
 const KanbanAddCard = () => {
-  const [show, setShow] = useRouteModal('create');
+  const [show] = useRouteModal('create');
 
   return (
     <>
       <IconButton>
         <TbCirclePlus />
       </IconButton>
-      <Modal open={!!show} onClose={() => setShow(false)}>
+      <Modal open={!!show}>
         <Box></Box>
       </Modal>
     </>

@@ -1,7 +1,7 @@
-import { memo, Dispatch, SetStateAction } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@mui/material';
-import type { Task, Column, PanInfo } from '../types';
+import type { Task, Column, PanInfo, Dispatch, SetStateAction } from '../types';
 import KanbanCardContent from './card-content.kanban';
 
 const KanbanCard = memo(

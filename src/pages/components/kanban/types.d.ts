@@ -1,7 +1,7 @@
-import { JSX } from 'react';
+import { JSX, Dispatch, SetStateAction } from 'react';
 import type { PanInfo } from 'framer-motion';
 
-export type PanInfo = PanInfo;
+export { JSX, Dispatch, SetStateAction, PanInfo };
 
 interface Category {
   color?: string;
