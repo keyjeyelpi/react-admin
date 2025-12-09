@@ -23,8 +23,6 @@ import {
   setDashboardCustomSx,
   setDashboardLoading,
 } from '@/store/slices/settings.slice';
-import { useEffect, useLayoutEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [

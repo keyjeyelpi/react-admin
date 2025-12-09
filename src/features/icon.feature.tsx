@@ -47,10 +47,12 @@ const iconPacks: Record<string, any> = {
 export function getIconByName(name: string) {
   // Find the correct pack by matching the prefix
   const packKey = Object.keys(iconPacks).find((key) => name.toLowerCase().startsWith(key));
+
   if (!packKey) return null;
 
   const pack = iconPacks[packKey];
   const IconComponent = pack[name];
+
   if (!IconComponent) return null;
 
   return <IconComponent />;

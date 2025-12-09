@@ -1,4 +1,4 @@
-import { memo, type Dispatch, type SetStateAction } from 'react';
+import { memo, Dispatch, SetStateAction } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@mui/material';
 import type { Task, Column, PanInfo } from '../types';

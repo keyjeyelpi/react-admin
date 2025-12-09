@@ -1,6 +1,9 @@
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
 import { cloneElement } from 'react';
+import { getIconByName } from '@/features/icon.feature';
+import parse from 'html-react-parser';
+import moment from 'moment-timezone';
 import {
   Alert,
   Avatar,
@@ -15,9 +18,6 @@ import {
 } from '@mui/material';
 import { TbHeart, TbLayersSelected, TbLock, TbMessage2 } from 'react-icons/tb';
 import type { KanbanCardContentProps } from '../types';
-import { getIconByName } from '@/features/icon.feature';
-import parse from 'html-react-parser';
-import moment from 'moment-timezone';
 
 const KanbanCardContent = ({
   id,
@@ -29,7 +29,6 @@ const KanbanCardContent = ({
   comments,
   selected,
   setSelected,
-  setCards,
 }: KanbanCardContentProps) => (
   <Stack justifyContent="space-between" alignItems="stretch">
     <Stack
@@ -105,23 +104,43 @@ const KanbanCardContent = ({
             </Typography>
           )}
         </Collapse>
-        <Collapse in={!!selected} sx={{ mt: 2 }} unmountOnExit>
+        <Collapse
+          in={!!selected}
+          sx={{
+            mt: 2,
+          }}
+          unmountOnExit
+        >
           <>
             <Tabs>
               <Tab label="Comments" />
               <Tab label="Likes" />
             </Tabs>
             <Divider />
-            <Collapse in={comments && comments.length > 0} sx={{ mt: 2 }}>
+            <Collapse
+              in={comments && comments.length > 0}
+              sx={{
+                mt: 2,
+              }}
+            >
               <Stack gap={1}>
                 {comments?.map((comment, index) => (
                   <Stack flexDirection="row" gap={1} alignItems="flex-start" mb={1}>
                     <Avatar
                       src={comment?.avatar}
                       alt={comment?.author}
-                      sx={{ width: 24, height: 24 }}
+                      sx={{
+                        width: 24,
+                        height: 24,
+                      }}
                     />
-                    <Box key={index} sx={{ pl: 1, borderColor: 'divider' }}>
+                    <Box
+                      key={index}
+                      sx={{
+                        pl: 1,
+                        borderColor: 'divider',
+                      }}
+                    >
                       <Stack flexDirection="row" gap={0.5} alignItems="center">
                         <Typography variant="subtitle2" fontWeight={600}>
                           {comment?.author}
@@ -159,23 +178,38 @@ const KanbanCardContent = ({
                             <Avatar
                               src={reply?.avatar}
                               alt={reply?.author}
-                              sx={{ width: 20, height: 20 }}
+                              sx={{
+                                width: 20,
+                                height: 20,
+                              }}
                             />
                             <Stack>
                               <Stack flexDirection="row" gap={0.5} alignItems="center">
                                 <Typography
                                   variant="body2"
                                   fontWeight={600}
-                                  sx={{ color: 'text.secondary' }}
+                                  sx={{
+                                    color: 'text.secondary',
+                                  }}
                                 >
                                   {reply?.author}
                                 </Typography>
                                 🞗
-                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                <Typography
+                                  variant="body2"
+                                  sx={{
+                                    color: 'text.secondary',
+                                  }}
+                                >
                                   {moment(reply?.date).fromNow()}
                                 </Typography>
                               </Stack>
-                              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: 'text.secondary',
+                                }}
+                              >
                                 {reply?.text}
                               </Typography>
                             </Stack>
@@ -194,12 +228,24 @@ const KanbanCardContent = ({
     <Box>
       <Divider />
       <Collapse in={!selected}>
-        <Stack direction="row" justifyContent="space-between" sx={{ p: 1 }}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          sx={{
+            p: 1,
+          }}
+        >
           <Stack direction="row">
             <Button size="small" startIcon={<TbHeart />}>
               {likes}
             </Button>
-            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{
+                mx: 1,
+              }}
+            />
             <Button size="small" startIcon={<TbMessage2 />}>
               {comments?.reduce(
                 (acc, curr) => acc + 1 + (curr.replies ? curr.replies.length : 0),
