@@ -1,5 +1,6 @@
 import { Chip } from '@mui/material';
 import type { iSidebarOptions } from '@/layouts/dashboard/sidebar/types';
+import type { SxProps } from '@/store/interfaces/settings';
 import {
   TbLayoutDashboard,
   TbLayoutDashboardFilled,
@@ -19,8 +20,11 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import {
   setDashboardCollapsed,
   setDashboardContainerMaxWidth,
+  setDashboardCustomSx,
   setDashboardLoading,
 } from '@/store/slices/settings.slice';
+import { useEffect, useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [
@@ -137,6 +141,7 @@ const useDashboard = () => {
   const loading = useAppSelector((state) => state.settings?.dashboard.loading) || false;
   const collapsed = useAppSelector((state) => state.settings?.dashboard.collapsed) || false;
   const containerMaxWidth = useAppSelector((state) => state.settings?.dashboard.containerMaxWidth);
+  const sx = useAppSelector((state) => state.settings?.dashboard.customSx);
 
   const dispatch = useAppDispatch();
 
@@ -152,13 +157,19 @@ const useDashboard = () => {
     dispatch(setDashboardContainerMaxWidth(value));
   };
 
+  const setCustomDashboardSx = (value: SxProps) => {
+    dispatch(setDashboardCustomSx(value));
+  };
+
   return {
     loading,
     setLoading,
     collapsed,
     setCollapsed,
     containerMaxWidth,
+    sx,
     setContainerMaxWidth,
+    setCustomDashboardSx,
   };
 };
 

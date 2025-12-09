@@ -3,16 +3,27 @@ import type { PanInfo } from 'framer-motion';
 
 export type PanInfo = PanInfo;
 
+interface Category {
+  color?: string;
+  label?: string;
+  icon?: string;
+}
+
+interface Comment {
+  id: string;
+  text: string;
+  avatar?: string;
+  author: string;
+  date: string;
+  replies?: Comment[];
+}
+
 export interface Task {
   id: string;
   content: {
     title: string;
     description: string;
-    category?: {
-      color?: string;
-      label?: string;
-      icon?: JSX.Element;
-    };
+    category?: Category;
   };
   status?: string;
 }
@@ -28,15 +39,15 @@ export interface Column {
 export interface KanbanCardContentProps {
   id?: string;
   isLocked?: boolean;
-  category?: {
-    color?: string;
-    label?: string;
-    icon?: JSX.Element;
-  };
+  category?: Category;
   title?: string;
   description?: string;
+  likes?: number;
+  comments?: Comment[];
   selected?: boolean;
   setSelected?: () => void;
+  cards?: Column[];
+  setCards?: (cards: Column[]) => void;
 }
 
 export interface KanbanContainerProps {

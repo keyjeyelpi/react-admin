@@ -1,9 +1,23 @@
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
 import { cloneElement } from 'react';
-import { Alert, Box, Button, Collapse, Divider, Stack, Typography } from '@mui/material';
-import { TbLayersSelected, TbLock } from 'react-icons/tb';
-import type { KanbanCardContentProps } from '@/types';
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
+import { TbHeart, TbLayersSelected, TbLock, TbMessage2 } from 'react-icons/tb';
+import type { KanbanCardContentProps } from '../types';
+import { getIconByName } from '@/features/icon.feature';
+import parse from 'html-react-parser';
+import moment from 'moment-timezone';
 
 const KanbanCardContent = ({
   id,
@@ -11,16 +25,13 @@ const KanbanCardContent = ({
   category,
   title,
   description,
+  likes,
+  comments,
   selected,
   setSelected,
+  setCards,
 }: KanbanCardContentProps) => (
-  <Stack
-    justifyContent="space-between"
-    alignItems="stretch"
-    sx={{
-      height: '100%',
-    }}
-  >
+  <Stack justifyContent="space-between" alignItems="stretch">
     <Stack
       gap={1}
       sx={{
@@ -38,9 +49,10 @@ const KanbanCardContent = ({
               color: 'primary.main',
             }}
           >
-            {cloneElement(category?.icon || <TbLayersSelected />, {
-              size: 24,
-            })}
+            {!!category?.icon &&
+              cloneElement(getIconByName(category?.icon) || <TbLayersSelected />, {
+                size: 22,
+              })}
           </Stack>
           <Typography
             component={motion.span}
@@ -86,26 +98,122 @@ const KanbanCardContent = ({
             zIndex: 1,
           }}
         />
-        <Collapse in={!!selected} collapsedSize={64}>
-          <Typography variant="body2" component={motion.div} layoutId={(id || '') + description}>
-            {description || 'Lorem Ipsum'}
-          </Typography>
+        <Collapse in={!!selected && !!description} collapsedSize={64}>
+          {!!description && (
+            <Typography variant="body2" component={motion.div} layoutId={(id || '') + description}>
+              {parse(description) || 'Lorem Ipsum'}
+            </Typography>
+          )}
+        </Collapse>
+        <Collapse in={!!selected} sx={{ mt: 2 }} unmountOnExit>
+          <>
+            <Tabs>
+              <Tab label="Comments" />
+              <Tab label="Likes" />
+            </Tabs>
+            <Divider />
+            <Collapse in={comments && comments.length > 0} sx={{ mt: 2 }}>
+              <Stack gap={1}>
+                {comments?.map((comment, index) => (
+                  <Stack flexDirection="row" gap={1} alignItems="flex-start" mb={1}>
+                    <Avatar
+                      src={comment?.avatar}
+                      alt={comment?.author}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                    <Box key={index} sx={{ pl: 1, borderColor: 'divider' }}>
+                      <Stack flexDirection="row" gap={0.5} alignItems="center">
+                        <Typography variant="subtitle2" fontWeight={600}>
+                          {comment?.author}
+                        </Typography>
+                        🞗
+                        <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
+                          {moment(comment?.date).fromNow()}
+                        </Typography>
+                      </Stack>
+                      <Typography variant="subtitle2">{comment?.text}</Typography>
+                      {comment.replies?.map((reply, i) => (
+                        <Stack flexDirection="row" key={i}>
+                          <Box
+                            component={motion.div}
+                            animate={{
+                              y: i === 0 ? -1 : -40,
+                            }}
+                            sx={{
+                              width: 12,
+                              height: i === 0 ? 25 : 50,
+                              borderBottomLeftRadius:
+                                i !== (comment?.replies?.length || 0) - 1 ? 0 : 6,
+                              borderLeft: '2px solid',
+                              borderBottom: '2px solid',
+                              borderColor: 'divider',
+                            }}
+                          />
+                          <Stack
+                            flexDirection="row"
+                            gap={2}
+                            ml={1}
+                            alignItems="flex-start"
+                            height={50}
+                          >
+                            <Avatar
+                              src={reply?.avatar}
+                              alt={reply?.author}
+                              sx={{ width: 20, height: 20 }}
+                            />
+                            <Stack>
+                              <Stack flexDirection="row" gap={0.5} alignItems="center">
+                                <Typography
+                                  variant="body2"
+                                  fontWeight={600}
+                                  sx={{ color: 'text.secondary' }}
+                                >
+                                  {reply?.author}
+                                </Typography>
+                                🞗
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                  {moment(reply?.date).fromNow()}
+                                </Typography>
+                              </Stack>
+                              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                {reply?.text}
+                              </Typography>
+                            </Stack>
+                          </Stack>
+                        </Stack>
+                      ))}
+                    </Box>
+                  </Stack>
+                ))}
+              </Stack>
+            </Collapse>
+          </>
         </Collapse>
       </Box>
     </Stack>
     <Box>
       <Divider />
-      {!selected ? (
-        <Button size="small" onClick={setSelected} fullWidth>
-          Show More
-        </Button>
-      ) : (
-        <Stack>
-          <Button size="small" fullWidth>
-            Show More
-          </Button>
+      <Collapse in={!selected}>
+        <Stack direction="row" justifyContent="space-between" sx={{ p: 1 }}>
+          <Stack direction="row">
+            <Button size="small" startIcon={<TbHeart />}>
+              {likes}
+            </Button>
+            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+            <Button size="small" startIcon={<TbMessage2 />}>
+              {comments?.reduce(
+                (acc, curr) => acc + 1 + (curr.replies ? curr.replies.length : 0),
+                0,
+              )}
+            </Button>
+          </Stack>
+          {!selected && (
+            <Button size="small" onClick={setSelected}>
+              Show More
+            </Button>
+          )}
         </Stack>
-      )}
+      </Collapse>
     </Box>
   </Stack>
 );

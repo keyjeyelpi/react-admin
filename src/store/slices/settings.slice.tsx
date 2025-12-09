@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { iSettingsState } from '@/interfaces/settings.interface';
+import type { iSettingsState } from '@/store/interfaces/settings';
 
 const initialState: iSettingsState = {
   dashboard: {
@@ -54,6 +54,9 @@ export const SettingsSlice = createSlice({
     setDashboardContainerMaxWidth: (state, action) => {
       state.dashboard.containerMaxWidth = action.payload;
     },
+    setDashboardCustomSx: (state, action) => {
+      state.dashboard.customSx = action.payload;
+    },
   },
 });
 
@@ -69,4 +72,5 @@ export const {
   setDashboardLoading,
   setDashboardCollapsed,
   setDashboardContainerMaxWidth,
+  setDashboardCustomSx,
 } = SettingsSlice.actions;

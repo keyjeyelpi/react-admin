@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { TbLayersSelected, TbPlus } from 'react-icons/tb';
+import { TbPlus } from 'react-icons/tb';
 import { AnimatePresence, motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
 import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import type { Column, KanbanContainerProps } from '@/types';
+import type { Column, KanbanContainerProps } from '../types';
 import KanbanCard from './card.kanban';
 
 const KanbanContainer = ({ items }: KanbanContainerProps) => {
@@ -28,7 +28,7 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
                     category: {
                       color: 'primary.main',
                       label: faker.commerce.department(),
-                      icon: <TbLayersSelected />,
+                      icon: '',
                     },
                   },
                 },

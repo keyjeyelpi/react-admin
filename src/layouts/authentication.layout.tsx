@@ -28,7 +28,6 @@ const AuthenticationLayout = () => (
     >
       <Card
         sx={{
-          p: 2,
           borderRadius: 2,
           backgroundColor: 'background.default',
           backdropFilter: 'blur(1px)',
@@ -39,7 +38,7 @@ const AuthenticationLayout = () => (
         }}
         elevation={0}
       >
-        <Stack gap={16} alignItems="center" justifyContent="center">
+        <Stack gap={16} alignItems="center" justifyContent="center" position="relative">
           <Logo withText />
           <Outlet />
         </Stack>

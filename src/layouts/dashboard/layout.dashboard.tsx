@@ -1,5 +1,5 @@
 import { Box, Stack, LinearProgress, Collapse, Container } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Suspense, useLayoutEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import useDashboard from '@/hooks/dashboard.hook';
@@ -8,14 +8,17 @@ import DashboardLayoutSidebar from './sidebar';
 import DashboardLayoutHeader from './header.dashboard';
 
 const DashboardLayout = () => {
-  const { loading, containerMaxWidth, setContainerMaxWidth } = useDashboard();
+  const { loading, containerMaxWidth, sx, setContainerMaxWidth, setCustomDashboardSx } =
+    useDashboard();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const user = useAppSelector((state) => state.user);
 
   useLayoutEffect(() => {
     setContainerMaxWidth('xl');
+    setCustomDashboardSx({});
   }, [location.pathname]);
 
   useLayoutEffect(() => {
@@ -60,6 +63,7 @@ const DashboardLayout = () => {
             <Container
               maxWidth={containerMaxWidth}
               sx={{
+                px: '0px !important',
                 height: '100%',
               }}
             >
@@ -73,6 +77,7 @@ const DashboardLayout = () => {
                   }}
                   animate={{
                     opacity: 1,
+
                     x: 0,
                   }}
                   exit={{
@@ -80,8 +85,9 @@ const DashboardLayout = () => {
                     x: '-100dvw',
                   }}
                   sx={{
-                    py: 4,
+                    p: 4,
                     height: '100%',
+                    ...sx,
                   }}
                 >
                   <Outlet />
