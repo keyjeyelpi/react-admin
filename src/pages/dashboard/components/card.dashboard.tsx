@@ -10,9 +10,11 @@ const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === '
 
 const DashboardCard = ({ auto, icon, title, values }: DashboardCardProps) => {
   const [key, setKey] = useState<'Month' | 'Year'>('Month');
-  const currentValue = values && values.length > 0 ? Object.values(values.at(-1))[0] : 0;
+  const currentValue =
+    values && values.length > 0 && values.at(-1) ? Object.values(values.at(-1)!)[0] : 0;
 
-  const previousValue = values && values.length > 1 ? Object.values(values.at(-2))[0] : undefined;
+  const previousValue =
+    values && values.length > 1 && values.at(-2) ? Object.values(values.at(-2)!)[0] : 0;
 
   const change =
     previousValue && isNumber(previousValue) && typeof currentValue === 'number'
