@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import { cloneElement } from 'react';
+import { cloneElement, memo } from 'react';
 import type { DashboardTitleProps } from '../types';
 
 const DashboardTitle = ({ title, icon, options }: DashboardTitleProps) => (
@@ -30,4 +30,4 @@ const DashboardTitle = ({ title, icon, options }: DashboardTitleProps) => (
   </Stack>
 );
 
-export default DashboardTitle;
+export default memo(DashboardTitle);

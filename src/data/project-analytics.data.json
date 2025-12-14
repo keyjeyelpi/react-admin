@@ -1,0 +1,195 @@
+{
+  "chartData": {
+    "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "datasets": [
+      {
+        "label": "Tasks Completed",
+        "data": [25, 35, 49, 75, 80, 97, 112, 137, 135, 138, 169, 186],
+        "borderColor": "rgb(75, 192, 192)",
+        "backgroundColor": "rgba(75, 192, 192, 0.2)",
+        "tension": 0.1
+      },
+      {
+        "label": "Bugs Reported",
+        "data": [12, 7, 12, 7, 14, 9, 13, 7, 14, 12, 9, 15],
+        "borderColor": "rgb(255, 99, 132)",
+        "backgroundColor": "rgba(255, 99, 132, 0.2)",
+        "tension": 0.1
+      },
+      {
+        "label": "Features Developed",
+        "data": [8, 17, 23, 32, 35, 45, 50, 42, 54, 61, 62, 81],
+        "borderColor": "rgb(54, 162, 235)",
+        "backgroundColor": "rgba(54, 162, 235, 0.2)",
+        "tension": 0.1
+      },
+      {
+        "label": "Team Velocity",
+        "data": [31, 20, 35, 33, 24, 35, 24, 29, 25, 35, 31, 27],
+        "borderColor": "rgb(255, 205, 86)",
+        "backgroundColor": "rgba(255, 205, 86, 0.2)",
+        "tension": 0.1
+      },
+      {
+        "label": "Hours Worked",
+        "data": [180, 158, 152, 163, 155, 166, 177, 169, 160, 169, 178, 174],
+        "borderColor": "rgb(153, 102, 255)",
+        "backgroundColor": "rgba(153, 102, 255, 0.2)",
+        "tension": 0.1
+      },
+      {
+        "label": "Budget Spent (in PHP thousands)",
+        "data": [36, 66, 89, 114, 147, 172, 198, 206, 251, 231, 268, 300],
+        "borderColor": "rgb(255, 159, 64)",
+        "backgroundColor": "rgba(255, 159, 64, 0.2)",
+        "tension": 0.1
+      }
+    ]
+  },
+  "detailedData": [
+    {
+      "month": "January",
+      "year": 2025,
+      "tasksCompleted": 25,
+      "bugsReported": 12,
+      "featuresDeveloped": 8,
+      "teamVelocity": 31,
+      "hoursWorked": 180,
+      "budgetSpent": 36,
+      "productivity": 0.14,
+      "bugFixRate": 0.48
+    },
+    {
+      "month": "February",
+      "year": 2025,
+      "tasksCompleted": 35,
+      "bugsReported": 7,
+      "featuresDeveloped": 17,
+      "teamVelocity": 20,
+      "hoursWorked": 158,
+      "budgetSpent": 66,
+      "productivity": 0.22,
+      "bugFixRate": 0.2
+    },
+    {
+      "month": "March",
+      "year": 2025,
+      "tasksCompleted": 49,
+      "bugsReported": 12,
+      "featuresDeveloped": 23,
+      "teamVelocity": 35,
+      "hoursWorked": 152,
+      "budgetSpent": 89,
+      "productivity": 0.32,
+      "bugFixRate": 0.24
+    },
+    {
+      "month": "April",
+      "year": 2025,
+      "tasksCompleted": 75,
+      "bugsReported": 7,
+      "featuresDeveloped": 32,
+      "teamVelocity": 33,
+      "hoursWorked": 163,
+      "budgetSpent": 114,
+      "productivity": 0.46,
+      "bugFixRate": 0.09
+    },
+    {
+      "month": "May",
+      "year": 2025,
+      "tasksCompleted": 80,
+      "bugsReported": 14,
+      "featuresDeveloped": 35,
+      "teamVelocity": 24,
+      "hoursWorked": 155,
+      "budgetSpent": 147,
+      "productivity": 0.52,
+      "bugFixRate": 0.18
+    },
+    {
+      "month": "June",
+      "year": 2025,
+      "tasksCompleted": 97,
+      "bugsReported": 9,
+      "featuresDeveloped": 45,
+      "teamVelocity": 35,
+      "hoursWorked": 166,
+      "budgetSpent": 172,
+      "productivity": 0.58,
+      "bugFixRate": 0.09
+    },
+    {
+      "month": "July",
+      "year": 2025,
+      "tasksCompleted": 112,
+      "bugsReported": 13,
+      "featuresDeveloped": 50,
+      "teamVelocity": 24,
+      "hoursWorked": 177,
+      "budgetSpent": 198,
+      "productivity": 0.63,
+      "bugFixRate": 0.12
+    },
+    {
+      "month": "August",
+      "year": 2025,
+      "tasksCompleted": 137,
+      "bugsReported": 7,
+      "featuresDeveloped": 42,
+      "teamVelocity": 29,
+      "hoursWorked": 169,
+      "budgetSpent": 206,
+      "productivity": 0.81,
+      "bugFixRate": 0.05
+    },
+    {
+      "month": "September",
+      "year": 2025,
+      "tasksCompleted": 135,
+      "bugsReported": 14,
+      "featuresDeveloped": 54,
+      "teamVelocity": 25,
+      "hoursWorked": 160,
+      "budgetSpent": 251,
+      "productivity": 0.84,
+      "bugFixRate": 0.1
+    },
+    {
+      "month": "October",
+      "year": 2025,
+      "tasksCompleted": 138,
+      "bugsReported": 12,
+      "featuresDeveloped": 61,
+      "teamVelocity": 35,
+      "hoursWorked": 169,
+      "budgetSpent": 231,
+      "productivity": 0.82,
+      "bugFixRate": 0.09
+    },
+    {
+      "month": "November",
+      "year": 2025,
+      "tasksCompleted": 169,
+      "bugsReported": 9,
+      "featuresDeveloped": 62,
+      "teamVelocity": 31,
+      "hoursWorked": 178,
+      "budgetSpent": 268,
+      "productivity": 0.95,
+      "bugFixRate": 0.05
+    },
+    {
+      "month": "December",
+      "year": 2025,
+      "tasksCompleted": 186,
+      "bugsReported": 15,
+      "featuresDeveloped": 81,
+      "teamVelocity": 27,
+      "hoursWorked": 174,
+      "budgetSpent": 300,
+      "productivity": 1.07,
+      "bugFixRate": 0.08
+    }
+  ]
+}

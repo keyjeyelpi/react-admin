@@ -36,6 +36,14 @@ export interface Column {
   addAction?: () => void;
 }
 
+export interface KanbanCardProps {
+  item: Task;
+  cards: Column[];
+  setCards: Dispatch<SetStateAction<Column[]>>;
+  selected?: boolean;
+  setSelected?: Dispatch<SetStateAction<string | null>>;
+}
+
 export interface KanbanCardContentProps {
   id?: string;
   isLocked?: boolean;

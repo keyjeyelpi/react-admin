@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
-import { cloneElement } from 'react';
+import { cloneElement, memo } from 'react';
 import { getIconByName } from '@/features/icon.feature';
 import parse from 'html-react-parser';
 import moment from 'moment-timezone';
@@ -264,4 +264,4 @@ const KanbanCardContent = ({
   </Stack>
 );
 
-export default KanbanCardContent;
+export default memo(KanbanCardContent);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { TbPlus } from 'react-icons/tb';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -140,4 +140,4 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
   );
 };
 
-export default KanbanContainer;
+export default memo(KanbanContainer);
