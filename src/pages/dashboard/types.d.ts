@@ -10,6 +10,5 @@ export interface DashboardCardProps {
   auto?: boolean;
   icon: JSX.Element;
   title: string;
-  value: string | number;
-  previousValue?: string | number;
+  values?: { [key: string]: number }[];
 }

@@ -1,4 +1,4 @@
-import DashboardTitle from '@/pages/dashboard/components/title.dashobard';
+import DashboardTitle from '@/pages/dashboard/components/title.dashboard';
 import {
   Button,
   Card,

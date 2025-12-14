@@ -5,11 +5,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
 import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import type { Column, KanbanContainerProps } from '../types';
+import type { Column, KanbanContainerProps, Task } from '../types';
 import KanbanCard from './card.kanban';
 
 // Pre-generate some fake data templates to avoid expensive faker calls during render
-const generateCardContent = () => ({
+const generateCardContent = (): Task['content'] => ({
   title: faker.lorem.words(3),
   description: faker.lorem.paragraphs(2),
   category: {

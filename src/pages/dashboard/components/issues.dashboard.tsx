@@ -1,18 +1,18 @@
-import { TbUsers } from 'react-icons/tb';
+import { TbBug } from 'react-icons/tb';
 import DashboardData from '@/data/dashboard.data.json';
 import DashboardCard from './card.dashboard';
 
-const DashboardUsers = () => (
+const DashboardOpenIssues = () => (
   <DashboardCard
-    icon={<TbUsers />}
-    title="Users"
+    icon={<TbBug />}
+    title="Open Issues"
     values={
       DashboardData?.map((data) => ({
-        [data.month]: data.users,
+        [data.month]: data.openIssues,
       })) ?? []
     }
     auto
   />
 );
 
-export default DashboardUsers;
+export default DashboardOpenIssues;

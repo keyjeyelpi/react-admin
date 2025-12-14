@@ -250,6 +250,34 @@ const useTheme = (): Theme => {
           },
         ],
       },
+      MuiButtonGroup: {
+        variants: [
+          {
+            props: {
+              variant: 'contained',
+            },
+            style: {
+              padding: 4,
+              borderRadius: 12,
+              background: backgroundPalette['100'],
+              boxShadow: 'none',
+              gap: 2,
+              button: {
+                border: 'none',
+                borderColor: `${backgroundPalette['100']} !important`,
+                color: textColor,
+                backgroundColor: backgroundPalette['100'],
+                borderRadius: `8px !important`,
+                height: 28,
+              },
+              'button.MuiButton-contained': {
+                backgroundColor: darkMode ? backgroundPalette['300'] : backgroundPalette['50'],
+                color: darkMode ? '#fff' : primaryPalette['700'],
+              },
+            },
+          },
+        ],
+      },
       MuiCard: {
         styleOverrides: {
           root: {

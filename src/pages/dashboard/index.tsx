@@ -1,14 +1,14 @@
 import { Stack } from '@mui/material';
-import { TbBug, TbWorld } from 'react-icons/tb';
 import { v4 as uuid } from 'uuid';
 import type { GridProps } from '@/components/draggable-grid/types';
 import { usePositionReorder } from '@/components/draggable-grid/usePositionReorder';
 import Title from '@/components/title.component';
 import DraggableGrid, { DraggableGridContainer } from '@/components/draggable-grid';
-import DashboardCard from '@/pages/dashboard/components/card.dashboard';
 import DashboardTickets from './components/tickets.dashboard';
 import DashboardUsers from './components/users.dashboard';
 import DashboardProjectAnalytic from './components/project-analytic.dashboard';
+import DashboardOpenIssues from './components/issues.dashboard';
+import DashboardViews from './components/views.dashboard';
 
 const initialGrid: GridProps[] = [
   {
@@ -32,9 +32,7 @@ const initialGrid: GridProps[] = [
   },
   {
     id: uuid(),
-    children: (
-      <DashboardCard icon={<TbBug />} title="Open Issues" value={16} previousValue={19} auto />
-    ),
+    children: <DashboardOpenIssues />,
     column: {
       xs: 4,
       md: 2,
@@ -43,9 +41,7 @@ const initialGrid: GridProps[] = [
   },
   {
     id: uuid(),
-    children: (
-      <DashboardCard icon={<TbWorld />} title="Views" value={3103} previousValue={3021} auto />
-    ),
+    children: <DashboardViews />,
     column: {
       xs: 4,
       md: 2,

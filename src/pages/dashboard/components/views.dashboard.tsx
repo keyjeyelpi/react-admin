@@ -1,18 +1,18 @@
-import { TbUsers } from 'react-icons/tb';
+import { TbGlobe } from 'react-icons/tb';
 import DashboardData from '@/data/dashboard.data.json';
 import DashboardCard from './card.dashboard';
 
-const DashboardUsers = () => (
+const DashboardViews = () => (
   <DashboardCard
-    icon={<TbUsers />}
-    title="Users"
+    icon={<TbGlobe />}
+    title="Views"
     values={
       DashboardData?.map((data) => ({
-        [data.month]: data.users,
+        [data.month]: data.views,
       })) ?? []
     }
     auto
   />
 );
 
-export default DashboardUsers;
+export default DashboardViews;
