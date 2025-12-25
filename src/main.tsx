@@ -10,17 +10,15 @@ import App from './App.tsx';
 LicenseInfo.setLicenseKey(import.meta.env.VITE_MUI_LICENSE_KEY);
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Provider
-      {...{
-        store,
-      }}
-    >
-      <BrowserRouter basename="/react-admin">
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </BrowserRouter>
-    </Provider>
-  </StrictMode>,
+  <Provider
+    {...{
+      store,
+    }}
+  >
+    <BrowserRouter basename="/react-admin">
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </BrowserRouter>
+  </Provider>,
 );

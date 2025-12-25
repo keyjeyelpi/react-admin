@@ -127,22 +127,27 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
                   />
                 </div>
               ))}
-              {/* Show gap placeholder at the end if dragging */}
-              {dragState.isDragging &&
-                dragState.position?.columnId === card.id &&
-                dragState.position?.columnId !== dragState.originalColumnId &&
-                dragState.position.insertIndex === card.items.length && (
-                  <Box
-                    sx={{
-                      height: 8,
-                      bgcolor: 'primary.main',
-                      borderRadius: 1,
-                      opacity: 0.3,
-                      mt: 1,
-                      transition: 'all 0.2s ease',
-                    }}
-                  />
-                )}
+              <AnimatePresence>
+                {dragState.isDragging &&
+                  dragState.position?.columnId === card.id &&
+                  dragState.position?.columnId !== dragState.originalColumnId &&
+                  dragState.position.insertIndex === card.items.length && (
+                    <Box
+                      component={motion.div}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: 211.14,
+                        opacity: 0.3,
+                      }}
+                      exit={{ height: 0, opacity: 0 }}
+                      sx={{
+                        bgcolor: 'primary.main',
+                        borderRadius: 1,
+                        mt: 1,
+                      }}
+                    />
+                  )}
+              </AnimatePresence>
             </Stack>
           </Stack>
           {i !== cards.length - 1 && <Divider orientation="vertical" flexItem />}

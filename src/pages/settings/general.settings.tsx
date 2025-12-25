@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { setPrimaryColor, setThemeMode } from '@/store/slices/settings.slice';
 import { isHexColor } from '@/utils/general.util';
 import { primaryColors, themes } from '@/utils/init.util';
+import { useRouteModal } from '@/hooks/route-modal.hook';
 
 const GeneralSettingsTheme = () => {
   const {
@@ -176,21 +177,26 @@ const GeneralSettingsTheme = () => {
   );
 };
 
-const GeneralSettings = () => (
-  <Stack
-    gap={2}
-    sx={{
-      height: '100%',
-    }}
-  >
-    <Title
-      title="General Settings"
-      titleSx={{
-        fontSize: '1.25rem',
+const GeneralSettings = () => {
+  const [show] = useRouteModal('general');
+  if (!show) return null;
+
+  return (
+    <Stack
+      gap={2}
+      sx={{
+        height: '100%',
       }}
-    />
-    <GeneralSettingsTheme />
-  </Stack>
-);
+    >
+      <Title
+        title="General Settings"
+        titleSx={{
+          fontSize: '1.25rem',
+        }}
+      />
+      <GeneralSettingsTheme />
+    </Stack>
+  );
+};
 
 export default GeneralSettings;

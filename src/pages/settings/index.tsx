@@ -1,10 +1,11 @@
 import { Button, Stack, Typography } from '@mui/material';
 import chroma from 'chroma-js';
 import Title from '@/components/title.component';
-import { cloneElement, lazy, Suspense, useState } from 'react';
+import { cloneElement, useEffect } from 'react';
 import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
-
-const GeneralSettings = lazy(() => import('./general.settings'));
+import { useRouteModal } from '@/hooks/route-modal.hook';
+import { useNavigate } from 'react-router-dom';
+import GeneralSettings from './general.settings';
 
 const settingsOptions = [
   {
@@ -14,7 +15,6 @@ const settingsOptions = [
         label: 'General',
         url: '/settings/general',
         icon: <TbSettings />,
-        component: <GeneralSettings />,
       },
       {
         label: 'Account',
@@ -36,7 +36,14 @@ const settingsOptions = [
 ];
 
 const Settings = () => {
-  const [category, setCategory] = useState(settingsOptions?.[0]?.options?.[0]?.url);
+  const [, , params] = useRouteModal('settings/:category');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (params?.category) return;
+
+    navigate(settingsOptions[0].options[0].url);
+  }, [params?.category]);
 
   return (
     <Stack
@@ -75,7 +82,7 @@ const Settings = () => {
               <Typography fontSize=".75rem">{section.label}</Typography>
               <Stack>
                 {section.options?.map((option) => {
-                  const isURL = category === option.url;
+                  const isURL = params?.category === option.label.toLowerCase();
 
                   return (
                     <Button
@@ -97,7 +104,7 @@ const Settings = () => {
                       disableRipple
                       disableTouchRipple
                       fullWidth
-                      onClick={() => setCategory(option.url)}
+                      onClick={() => navigate(option.url)}
                     >
                       <Stack
                         flexDirection="row"
@@ -130,17 +137,7 @@ const Settings = () => {
           ))}
         </Stack>
         <Stack flex={1}>
-          <Suspense fallback={<>Loading...</>}>
-            {cloneElement(
-              settingsOptions
-                ?.find(({ options }) =>
-                  options.some(({ url }: { url: string }) => url === category),
-                )
-                ?.options?.find(({ url }: { url: string }) => url === category)?.component || (
-                <div>Select a setting to view</div>
-              ),
-            )}
-          </Suspense>
+          <GeneralSettings />
         </Stack>
       </Stack>
     </Stack>

@@ -1,11 +1,9 @@
-import { lazy } from 'react';
-
-const Kanban = lazy(() => import('@/pages/components/kanban'));
-const Pomodoro = lazy(() => import('@/pages/components/pomodoro'));
+import Kanban from '@/pages/components/kanban';
+import Pomodoro from '@/pages/components/pomodoro';
 
 const componentsRoutes = [
   {
-    path: 'kanban',
+    path: 'kanban/*',
     element: <Kanban />,
   },
   {

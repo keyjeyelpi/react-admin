@@ -1,21 +1,25 @@
 import { Box, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Title from '@/components/title.component';
 import useDashboard from '@/hooks/dashboard.hook';
 import KanbanContainer from './components/container.kanban';
 import type { Column } from './types';
-import KanbanAddCard from './components/add-card.kanban';
+import KanbanAddColumn from './components/add-column.kanban';
 import KanbanSkeleton from './components/skeleton.kanban';
 
-const Kanban = () => {
-  const [initialCards, setInitialCards] = useState<Column[]>([]);
+// Global variable to persist kanban data across remounts
+let globalKanbanData: Column[] | null = null;
 
-  const { setContainerMaxWidth, setCustomDashboardSx } = useDashboard();
+const Kanban = () => {
+  const [initialCards, setInitialCards] = useState<Column[]>(globalKanbanData || []);
+
+  const { setContainerMaxWidth, setCustomDashboardSx } = useDashboard({ disableReload: true });
 
   useEffect(() => {
-    if (!initialCards.length)
+    if (!globalKanbanData)
       import('@/data/kanban.data.json').then((module) => {
-        setInitialCards(module.default as Column[]);
+        globalKanbanData = module.default as Column[];
+        setInitialCards(globalKanbanData);
       });
 
     setCustomDashboardSx({
@@ -44,8 +48,8 @@ const Kanban = () => {
           },
         }}
       >
-        <Title subtitle="Visualize your workflow, track progress, and stay organized." />
-        <KanbanAddCard />
+        <Title title='Kanban' subtitle="Visualize your workflow, track progress, and stay organized." />
+        <KanbanAddColumn />
       </Stack>
       <Box
         sx={{

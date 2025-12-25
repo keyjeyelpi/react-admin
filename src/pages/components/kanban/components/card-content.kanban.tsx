@@ -44,6 +44,7 @@ const KanbanCardComment = ({ comment }: KanbanCardCommentProps) => {
             p: 1.5,
             borderRadius: 4,
             borderTopLeftRadius: 0,
+            width: 'fit-content',
           }}
         >
           <Stack flexDirection="row" gap={0.5} alignItems="center">
@@ -177,10 +178,16 @@ const KanbanCardContent = ({
                 color: 'primary.main',
               }}
             >
-              {!!category?.icon &&
-                cloneElement(getIconByName(category?.icon) || <TbLayersSelected />, {
-                  size: 22,
-                })}
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{ height: 24, width: 24, bgcolor: 'primary.100', borderRadius: 2 }}
+              >
+                {!!category?.icon &&
+                  cloneElement(getIconByName(category?.icon) || <TbLayersSelected />, {
+                    size: 16,
+                  })}
+              </Stack>
             </Stack>
             <Typography
               component={motion.span}

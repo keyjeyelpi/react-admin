@@ -8,12 +8,14 @@ const Title = ({
   subtitle,
   subtitleSx,
   skeleton = false,
+  hideBreadcrumbs,
 }: {
   title?: string;
   titleSx?: SxProps;
   subtitle?: string;
   subtitleSx?: SxProps;
   skeleton?: boolean;
+  hideBreadcrumbs?: boolean;
 }) => {
   const location = useLocation();
 
@@ -38,7 +40,7 @@ const Title = ({
 
   return (
     <Stack gap={1}>
-      {paths.length > 1 && (
+      {!hideBreadcrumbs && paths.length > 1 && (
         <Breadcrumbs separator="›">
           {paths.map((path, index) => {
             const to = `/${paths.slice(0, index + 1).join('/')}`;
@@ -46,8 +48,8 @@ const Title = ({
             const isLast = index === paths.length - 1;
 
             return isLast ? (
-              <Typography key={to} color="text.primary">
-                {path}
+              <Typography key={to} color="text.primary" sx={{ textTransform: 'capitalize' }}>
+                {path.replaceAll('-', ' ')}
               </Typography>
             ) : (
               <Link
@@ -56,9 +58,10 @@ const Title = ({
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
+                  textTransform: 'capitalize',
                 }}
               >
-                {to.split('/').pop()}
+                {to.split('/').pop()?.replaceAll('-', ' ')}
               </Link>
             );
           })}

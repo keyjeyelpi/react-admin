@@ -25,7 +25,7 @@ const dashboardRoutes = [
     ),
   },
   {
-    path: 'settings',
+    path: 'settings/*',
     element: <Settings />,
   },
   ComponentsRoute,

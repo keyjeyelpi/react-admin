@@ -17,6 +17,7 @@ const DashboardLayout = () => {
   const user = useAppSelector((state) => state.user);
 
   useLayoutEffect(() => {
+    if (location.pathname.includes('/components/kanban')) return;
     setContainerMaxWidth('xl');
     setCustomDashboardSx({});
   }, [location.pathname]);
@@ -71,19 +72,6 @@ const DashboardLayout = () => {
                 <Box
                   component={motion.div}
                   key={location.pathname}
-                  initial={{
-                    opacity: 0,
-                    x: '100dvw',
-                  }}
-                  animate={{
-                    opacity: 1,
-
-                    x: 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    x: '-100dvw',
-                  }}
                   sx={{
                     p: 4,
                     height: '100%',
