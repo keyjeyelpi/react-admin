@@ -25,6 +25,7 @@ const KanbanCard = ({
   const handleDragStart = () => {
     setIsDragging(true);
     const originalColumn = cards.find((col) => col.items.some((i) => i.id === item.id));
+
     onDragStateChange?.({
       isDragging: true,
       position: null,
@@ -97,6 +98,7 @@ const KanbanCard = ({
       columnId: targetColumn.id,
       insertIndex,
     };
+
     onDragStateChange?.({
       isDragging: true,
       position: newPosition,

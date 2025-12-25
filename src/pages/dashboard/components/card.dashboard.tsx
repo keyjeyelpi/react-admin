@@ -44,8 +44,10 @@ const DashboardCard = ({ auto, icon, title, values }: DashboardCardProps) => {
       };
 
     if (key === 'Month') {
-      const current = values.length > 0 ? getValue(values.at(-1)) : 0;
-      const previous = values.length > 1 ? getValue(values.at(-2)) : 0;
+      const currentItem = values.at(-1);
+      const previousItem = values.at(-2);
+      const current = currentItem ? getValue(currentItem) : 0;
+      const previous = previousItem ? getValue(previousItem) : 0;
 
       return {
         currentValue: current,
