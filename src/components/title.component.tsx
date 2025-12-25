@@ -1,4 +1,4 @@
-import { Breadcrumbs, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Skeleton, Stack, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import type { SxProps } from './types';
 
@@ -7,15 +7,34 @@ const Title = ({
   titleSx,
   subtitle,
   subtitleSx,
+  skeleton = false,
 }: {
   title?: string;
   titleSx?: SxProps;
   subtitle?: string;
   subtitleSx?: SxProps;
+  skeleton?: boolean;
 }) => {
   const location = useLocation();
 
   const paths = location.pathname.split('/').filter(Boolean);
+
+  if (skeleton)
+    return (
+      <Stack gap={1}>
+        {paths.length > 1 && (
+          <Breadcrumbs separator="›">
+            {paths.map((_, index) => {
+              const to = `/${paths.slice(0, index + 1).join('/')}`;
+
+              return <Skeleton key={to} width={40} height={24} />;
+            })}
+          </Breadcrumbs>
+        )}
+        <Skeleton width={200} height={32} />
+        <Skeleton width={150} height={20} />
+      </Stack>
+    );
 
   return (
     <Stack gap={1}>

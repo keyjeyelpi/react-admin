@@ -106,7 +106,7 @@ const Dashboard = () => {
         height: '100%',
       }}
     >
-      <Title subtitle="Overview & analytics" />
+      <Title title="Dashboard" subtitle="Overview & analytics" />
       <DraggableGridContainer row={8} column={5} flex={1}>
         {order.map((grid, index) => (
           <DraggableGrid

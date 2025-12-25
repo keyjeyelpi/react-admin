@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
         store,
       }}
     >
-      <BrowserRouter>
+      <BrowserRouter basename="/react-admin">
         <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>

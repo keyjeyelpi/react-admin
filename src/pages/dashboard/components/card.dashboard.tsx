@@ -8,13 +8,60 @@ import type { DashboardCardProps } from '../types';
 
 const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 
+// Helper function to extract value from data item
+const getValue = (item: { [key: string]: number }): number => Object.values(item)[0];
+
+// Helper function to get year from date key
+const getYear = (dateKey: string): number => parseInt(dateKey.split('-')[0]);
+
+// Helper function to aggregate values by year
+const aggregateByYear = (
+  values: {
+    [key: string]: number;
+  }[],
+): Record<number, number> => {
+  const yearMap: Record<number, number> = {};
+
+  for (const item of values) {
+    const [dateKey] = Object.keys(item);
+    const year = getYear(dateKey);
+    const value = getValue(item);
+
+    yearMap[year] = (yearMap[year] || 0) + value;
+  }
+
+  return yearMap;
+};
+
 const DashboardCard = ({ auto, icon, title, values }: DashboardCardProps) => {
   const [key, setKey] = useState<'Month' | 'Year'>('Month');
-  const currentValue =
-    values && values.length > 0 && values.at(-1) ? Object.values(values.at(-1)!)[0] : 0;
 
-  const previousValue =
-    values && values.length > 1 && values.at(-2) ? Object.values(values.at(-2)!)[0] : 0;
+  const { currentValue, previousValue } = useMemo(() => {
+    if (!values?.length)
+      return {
+        currentValue: 0,
+        previousValue: 0,
+      };
+
+    if (key === 'Month') {
+      const current = values.length > 0 ? getValue(values.at(-1)) : 0;
+      const previous = values.length > 1 ? getValue(values.at(-2)) : 0;
+
+      return {
+        currentValue: current,
+        previousValue: previous,
+      };
+    }
+
+    const yearMap = aggregateByYear(values);
+    const currentYear = new Date().getFullYear();
+    const previousYear = currentYear - 1;
+
+    return {
+      currentValue: yearMap[currentYear] || 0,
+      previousValue: yearMap[previousYear] || 0,
+    };
+  }, [values, key]);
 
   const change =
     previousValue && isNumber(previousValue) && typeof currentValue === 'number'

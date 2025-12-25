@@ -36,12 +36,22 @@ export interface Column {
   addAction?: () => void;
 }
 
+export interface DragState {
+  isDragging: boolean;
+  position: { columnId: string; insertIndex: number } | null;
+  originalColumnId?: string;
+}
+
 export interface KanbanCardProps {
   item: Task;
   cards: Column[];
   setCards: Dispatch<SetStateAction<Column[]>>;
   selected?: boolean;
   setSelected?: Dispatch<SetStateAction<string | null>>;
+}
+
+export interface KanbanCardCommentProps {
+  comment: Comment;
 }
 
 export interface KanbanCardContentProps {

@@ -12,7 +12,12 @@ import {
   Popover,
   useTheme,
 } from '@mui/material';
-import { TbArrowBarToLeft, TbArrowBarToRight, TbChevronRight } from 'react-icons/tb';
+import {
+  TbAlignJustified,
+  TbArrowBarToLeft,
+  TbArrowBarToRight,
+  TbChevronRight,
+} from 'react-icons/tb';
 import { cloneElement, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -24,6 +29,7 @@ import Logo from '@/components/logo.component';
 const drawerWidth = 240;
 
 export const DashboardLayoutSidebarToggle = () => {
+  const { breakpoint } = useBreakpoint();
   const { collapsed, setCollapsed } = useDashboard();
 
   return (
@@ -35,7 +41,13 @@ export const DashboardLayoutSidebarToggle = () => {
       }}
       onClick={() => setCollapsed(!collapsed)}
     >
-      {collapsed ? <TbArrowBarToRight size={18} /> : <TbArrowBarToLeft size={18} />}
+      {collapsed && breakpoint === 'xs' ? (
+        <TbAlignJustified size={18} />
+      ) : collapsed ? (
+        <TbArrowBarToRight size={18} />
+      ) : (
+        <TbArrowBarToLeft size={18} />
+      )}
     </IconButton>
   );
 };

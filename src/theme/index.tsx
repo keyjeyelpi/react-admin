@@ -320,6 +320,33 @@ const useTheme = (): Theme => {
           },
         },
       },
+      MuiSkeleton: {
+        styleOverrides: {
+          root: {
+            borderRadius: 4,
+          },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            textTransform: 'capitalize',
+            fontWeight: 600,
+            '&:after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: 3,
+              borderRadius: '2px 2px 0 0',
+              bgcolor: primaryPalette[100],
+              transform: 'scaleX(0)',
+              transition: 'transform 0.3s ease',
+            },
+          },
+        },
+      },
       MuiTextField: {
         variants: [
           {

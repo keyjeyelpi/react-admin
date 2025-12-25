@@ -1,27 +1,33 @@
 import { Box, Stack } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Title from '@/components/title.component';
 import useDashboard from '@/hooks/dashboard.hook';
-import KanbanData from '@/data/kanban.data.json';
 import KanbanContainer from './components/container.kanban';
 import type { Column } from './types';
 import KanbanAddCard from './components/add-card.kanban';
+import KanbanSkeleton from './components/skeleton.kanban';
 
 const Kanban = () => {
-  const initialCards: Column[] = KanbanData as Column[];
+  const [initialCards, setInitialCards] = useState<Column[]>([]);
 
   const { setContainerMaxWidth, setCustomDashboardSx } = useDashboard();
 
   useEffect(() => {
+    if (!initialCards.length)
+      import('@/data/kanban.data.json').then((module) => {
+        setInitialCards(module.default as Column[]);
+      });
+
     setCustomDashboardSx({
       p: 0,
     });
     setContainerMaxWidth(false);
   }, []);
 
+  if (!initialCards.length) return <KanbanSkeleton />;
+
   return (
     <Stack
-      gap={2}
       sx={{
         height: '100%',
         position: 'relative',
@@ -31,11 +37,12 @@ const Kanban = () => {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        p={{
-          xs: 2,
-          md: 4,
+        sx={{
+          p: {
+            xs: 2,
+            md: 4,
+          },
         }}
-        pb={0}
       >
         <Title subtitle="Visualize your workflow, track progress, and stay organized." />
         <KanbanAddCard />

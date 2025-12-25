@@ -4,8 +4,8 @@ import { memo, useState, useCallback, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
-import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
-import type { Column, KanbanContainerProps, Task } from '../types';
+import { Chip, Divider, IconButton, Stack, Typography, Box } from '@mui/material';
+import type { Column, DragState, KanbanContainerProps, Task } from '../types';
 import KanbanCard from './card.kanban';
 
 // Pre-generate some fake data templates to avoid expensive faker calls during render
@@ -22,6 +22,10 @@ const generateCardContent = (): Task['content'] => ({
 const KanbanContainer = ({ items }: KanbanContainerProps) => {
   const [cards, setCards] = useState<Column[]>(items);
   const [selected, setSelected] = useState<string | null>(null);
+  const [dragState, setDragState] = useState<DragState>({
+    isDragging: false,
+    position: null,
+  });
 
   // Memoize the addCard function to prevent recreation on every render
   const addCard = useCallback(
@@ -95,22 +99,56 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
               )}
             </Stack>
             <Stack gap={1}>
-              {card.items.map((item) => (
-                <KanbanCard
-                  key={item.id}
-                  item={item}
-                  cards={cards}
-                  setCards={setCards}
-                  selected={selected === item.id}
-                  setSelected={setSelected}
-                />
+              {card.items.map((item, itemIndex) => (
+                <div key={item.id}>
+                  {/* Show gap placeholder before this card if dragging */}
+                  {dragState.isDragging &&
+                    dragState.position?.columnId === card.id &&
+                    dragState.position?.columnId !== dragState.originalColumnId &&
+                    dragState.position.insertIndex === itemIndex && (
+                      <Box
+                        sx={{
+                          height: 8,
+                          bgcolor: 'primary.main',
+                          borderRadius: 1,
+                          opacity: 0.3,
+                          mb: 1,
+                          transition: 'all 0.2s ease',
+                        }}
+                      />
+                    )}
+                  <KanbanCard
+                    item={item}
+                    cards={cards}
+                    setCards={setCards}
+                    selected={selected === item.id}
+                    setSelected={setSelected}
+                    onDragStateChange={setDragState}
+                  />
+                </div>
               ))}
+              {/* Show gap placeholder at the end if dragging */}
+              {dragState.isDragging &&
+                dragState.position?.columnId === card.id &&
+                dragState.position?.columnId !== dragState.originalColumnId &&
+                dragState.position.insertIndex === card.items.length && (
+                  <Box
+                    sx={{
+                      height: 8,
+                      bgcolor: 'primary.main',
+                      borderRadius: 1,
+                      opacity: 0.3,
+                      mt: 1,
+                      transition: 'all 0.2s ease',
+                    }}
+                  />
+                )}
             </Stack>
           </Stack>
           {i !== cards.length - 1 && <Divider orientation="vertical" flexItem />}
         </div>
       )),
-    [cards, selected, addCard],
+    [cards, selected, addCard, dragState],
   );
 
   return (
