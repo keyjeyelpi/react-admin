@@ -43,14 +43,14 @@ export function useRouteModal(
 
   // Open/close modal based on route match
   useEffect(() => {
-    delay(100).then(() => {
+    delay(200).then(() => {
       setShowModalState(Boolean(match));
     });
   }, [match]);
 
   // Allow manual control while keeping URL in sync
   const setShowModal = (open: boolean) => {
-    delay(100).then(() => {
+    delay(200).then(() => {
       if (!open)
         navigate(locationOverride ?? '..', {
           replace: true,

@@ -9,7 +9,7 @@ let globalKanbanData: Column[] | null = null;
 
 const Kanban = () => {
   const [initialCards, setInitialCards] = useState<Column[]>(globalKanbanData || []);
-  const { setContainerMaxWidth } = useDashboard();
+  const { setContainerMaxWidth, setCustomDashboardSx } = useDashboard();
 
   const addColumn = (name: string) => {
     const newColumn: Column = {
@@ -32,6 +32,9 @@ const Kanban = () => {
 
   useEffect(() => {
     setContainerMaxWidth(false);
+    setCustomDashboardSx({
+      p: 0,
+    });
   }, []);
 
   if (!initialCards.length) return <KanbanSkeleton />;

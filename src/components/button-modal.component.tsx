@@ -1,23 +1,20 @@
 import { IconButton, Box } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useEffect, type PropsWithChildren } from 'react';
 import { TbCircleX } from 'react-icons/tb';
 
-const ModalTrigger = ({ children }: React.PropsWithChildren) => <>{children}</>;
-const ModalContent = ({ children }: React.PropsWithChildren) => <>{children}</>;
-
-const Modal = ({
-  id,
-  show,
-  setShow,
-  children,
-}: {
+type ModalProps = PropsWithChildren<{
   id?: string;
   show: boolean;
   setShow: (value: boolean) => void;
   children: React.ReactNode;
-}) => {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'auto';
+}>;
+
+const ModalTrigger = ({ children }: React.PropsWithChildren) => <>{children}</>;
+const ModalContent = ({ children }: React.PropsWithChildren) => <>{children}</>;
+
+const Modal = ({ id, show, setShow, children, size = 'auto' }: ModalProps) => {
   const childrenArray = React.Children.toArray(children);
   const trigger = childrenArray.find(
     (child) => React.isValidElement(child) && child.type === ModalTrigger,
@@ -28,11 +25,9 @@ const Modal = ({
   );
 
   useEffect(() => {
-    if (show) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (show) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+
     return () => {
       document.body.style.overflow = '';
     };
@@ -40,13 +35,11 @@ const Modal = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setShow(false);
-      }
+      if (e.key === 'Escape') setShow(false);
     };
-    if (show) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
+
+    if (show) document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -69,7 +62,7 @@ const Modal = ({
           </motion.div>
         )}
       </AnimatePresence>
-      {createPortal(
+      {
         <AnimatePresence>
           {show && (
             <motion.div
@@ -110,12 +103,13 @@ const Modal = ({
                 exit={{
                   scale: 0.8,
                 }}
-                sx={{
+                sx={(theme) => ({
+                  width: size === 'auto' ? 'auto' : theme.breakpoints.values[size],
                   position: 'relative',
                   backgroundColor: 'background.paper',
                   p: 4,
                   borderRadius: 2,
-                }}
+                })}
                 onClick={(e) => e.stopPropagation()}
               >
                 <IconButton
@@ -138,9 +132,8 @@ const Modal = ({
               </Box>
             </motion.div>
           )}
-        </AnimatePresence>,
-        document.body,
-      )}
+        </AnimatePresence>
+      }
     </>
   );
 };
