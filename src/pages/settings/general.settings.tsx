@@ -179,6 +179,7 @@ const GeneralSettingsTheme = () => {
 
 const GeneralSettings = () => {
   const [show] = useRouteModal('general');
+
   if (!show) return null;
 
   return (

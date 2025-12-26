@@ -181,7 +181,12 @@ const KanbanCardContent = ({
               <Stack
                 alignItems="center"
                 justifyContent="center"
-                sx={{ height: 24, width: 24, bgcolor: 'primary.100', borderRadius: 2 }}
+                sx={{
+                  height: 24,
+                  width: 24,
+                  bgcolor: 'primary.100',
+                  borderRadius: 2,
+                }}
               >
                 {!!category?.icon &&
                   cloneElement(getIconByName(category?.icon) || <TbLayersSelected />, {

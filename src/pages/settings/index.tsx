@@ -2,9 +2,9 @@ import { Button, Stack, Typography } from '@mui/material';
 import chroma from 'chroma-js';
 import Title from '@/components/title.component';
 import { cloneElement, useEffect } from 'react';
-import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
 import { useRouteModal } from '@/hooks/route-modal.hook';
 import { useNavigate } from 'react-router-dom';
+import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
 import GeneralSettings from './general.settings';
 
 const settingsOptions = [

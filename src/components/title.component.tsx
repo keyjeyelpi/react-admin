@@ -48,7 +48,13 @@ const Title = ({
             const isLast = index === paths.length - 1;
 
             return isLast ? (
-              <Typography key={to} color="text.primary" sx={{ textTransform: 'capitalize' }}>
+              <Typography
+                key={to}
+                color="text.primary"
+                sx={{
+                  textTransform: 'capitalize',
+                }}
+              >
                 {path.replaceAll('-', ' ')}
               </Typography>
             ) : (

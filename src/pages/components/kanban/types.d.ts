@@ -70,4 +70,5 @@ export interface KanbanCardContentProps {
 
 export interface KanbanContainerProps {
   items: Column[];
+  addColumn: (name: string) => void;
 }

@@ -1,19 +1,19 @@
-import { IconButton } from '@mui/material';
+import { IconButton, Box } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { TbCircleX } from 'react-icons/tb';
-import { Box } from '@mui/material';
 
 const ModalTrigger = ({ children }: React.PropsWithChildren) => <>{children}</>;
-
 const ModalContent = ({ children }: React.PropsWithChildren) => <>{children}</>;
 
 const Modal = ({
+  id,
   show,
   setShow,
   children,
 }: {
+  id?: string;
   show: boolean;
   setShow: (value: boolean) => void;
   children: React.ReactNode;
@@ -22,15 +22,49 @@ const Modal = ({
   const trigger = childrenArray.find(
     (child) => React.isValidElement(child) && child.type === ModalTrigger,
   );
+
   const content = childrenArray.find(
     (child) => React.isValidElement(child) && child.type === ModalContent,
   );
+
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [show]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShow(false);
+      }
+    };
+    if (show) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, setShow]);
 
   return (
     <>
       <AnimatePresence>
         {!show && (
-          <motion.div layoutId="add-column-button" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div
+            layoutId={id ?? 'layout-id'}
+            initial={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+          >
             {trigger}
           </motion.div>
         )}
@@ -39,9 +73,17 @@ const Modal = ({
         <AnimatePresence>
           {show && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              role="dialog"
+              aria-modal="true"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              exit={{
+                opacity: 0,
+              }}
               style={{
                 position: 'fixed',
                 top: 0,
@@ -52,16 +94,22 @@ const Modal = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                zIndex: 9000,
+                zIndex: 1201,
               }}
               onClick={() => setShow(false)}
             >
               <Box
                 component={motion.div}
-                layoutId="add-column-button"
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.8 }}
+                layoutId={id ?? 'layout-id'}
+                initial={{
+                  scale: 0.8,
+                }}
+                animate={{
+                  scale: 1,
+                }}
+                exit={{
+                  scale: 0.8,
+                }}
                 sx={{
                   position: 'relative',
                   backgroundColor: 'background.paper',
@@ -98,4 +146,5 @@ const Modal = ({
 };
 
 export default Modal;
+
 export { ModalTrigger, ModalContent };

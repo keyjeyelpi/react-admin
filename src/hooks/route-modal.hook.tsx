@@ -1,5 +1,11 @@
+import { delay } from '@/utils/function.util';
 import { useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router-dom';
+
+const { isArray } = Array;
+type ArrayOrSingle<T> = T | T[];
+
+const maybeArray = <T,>(a: ArrayOrSingle<T>): T[] => (isArray(a) ? a : [a]);
 
 type Params = Record<string, string | undefined>;
 
@@ -12,19 +18,24 @@ export function useRouteModal(
   const [showModal, setShowModalState] = useState(false);
 
   const match = useMemo(() => {
-    const patterns: string[] = Array.isArray(routePattern) ? routePattern : [routePattern];
+    const patterns: string[] = maybeArray(routePattern);
+
     for (const pattern of patterns) {
       // For relative patterns, match against the suffix of the pathname
       const patternParts = pattern.split('/');
-      const pathnameParts = location.pathname.split('/').slice(1); // Skip the first empty part
+      const pathnameParts = location.pathname.split('/').slice(1);
+
+      // Skip the first empty part
       if (pathnameParts.length >= patternParts.length) {
         const suffixParts = pathnameParts.slice(-patternParts.length);
         const suffix = '/' + suffixParts.join('/');
-        const fullPattern = '/' + pattern;
+        const fullPattern = `/${pattern}`;
         const m = matchPath({ path: fullPattern, end: true }, suffix);
+
         if (m) return m;
       }
     }
+
     return null;
   }, [routePattern, location.pathname]);
 
@@ -32,18 +43,19 @@ export function useRouteModal(
 
   // Open/close modal based on route match
   useEffect(() => {
-    setTimeout(() => {
+    delay(100).then(() => {
       setShowModalState(Boolean(match));
-    }, 100);
+    });
   }, [match]);
 
   // Allow manual control while keeping URL in sync
   const setShowModal = (open: boolean) => {
-    setTimeout(() => {
-      if (!open) {
-        navigate(locationOverride ?? '..', { replace: true });
-      }
-    }, 0);
+    delay(100).then(() => {
+      if (!open)
+        navigate(locationOverride ?? '..', {
+          replace: true,
+        });
+    });
     setShowModalState(open);
   };
 

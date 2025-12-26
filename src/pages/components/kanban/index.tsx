@@ -1,19 +1,26 @@
-import { Box, Stack } from '@mui/material';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import Title from '@/components/title.component';
+import { Stack } from '@mui/material';
+import { useEffect, useState } from 'react';
 import useDashboard from '@/hooks/dashboard.hook';
 import KanbanContainer from './components/container.kanban';
 import type { Column } from './types';
-import KanbanAddColumn from './components/add-column.kanban';
 import KanbanSkeleton from './components/skeleton.kanban';
 
-// Global variable to persist kanban data across remounts
 let globalKanbanData: Column[] | null = null;
 
 const Kanban = () => {
   const [initialCards, setInitialCards] = useState<Column[]>(globalKanbanData || []);
+  const { setContainerMaxWidth } = useDashboard();
 
-  const { setContainerMaxWidth, setCustomDashboardSx } = useDashboard({ disableReload: true });
+  const addColumn = (name: string) => {
+    const newColumn: Column = {
+      id: `column-${Date.now()}`,
+      name,
+      items: [],
+    };
+
+    globalKanbanData = [...(globalKanbanData || []), newColumn];
+    setInitialCards(globalKanbanData);
+  };
 
   useEffect(() => {
     if (!globalKanbanData)
@@ -21,10 +28,9 @@ const Kanban = () => {
         globalKanbanData = module.default as Column[];
         setInitialCards(globalKanbanData);
       });
+  }, []);
 
-    setCustomDashboardSx({
-      p: 0,
-    });
+  useEffect(() => {
     setContainerMaxWidth(false);
   }, []);
 
@@ -37,28 +43,7 @@ const Kanban = () => {
         position: 'relative',
       }}
     >
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{
-          p: {
-            xs: 2,
-            md: 4,
-          },
-        }}
-      >
-        <Title title='Kanban' subtitle="Visualize your workflow, track progress, and stay organized." />
-        <KanbanAddColumn />
-      </Stack>
-      <Box
-        sx={{
-          flexGrow: 1,
-          overflowY: 'auto',
-        }}
-      >
-        <KanbanContainer items={initialCards} />
-      </Box>
+      <KanbanContainer items={initialCards} addColumn={addColumn} />
     </Stack>
   );
 };

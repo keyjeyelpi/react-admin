@@ -23,7 +23,6 @@ import {
   setDashboardCustomSx,
   setDashboardLoading,
 } from '@/store/slices/settings.slice';
-import { useEffect, useLayoutEffect } from 'react';
 
 export const useSidebarOptions: () => iSidebarOptions = () => {
   const sidebarOptions = [
@@ -136,7 +135,7 @@ export const useSidebarOptions: () => iSidebarOptions = () => {
   return sidebarOptions;
 };
 
-const useDashboard = ({ disableReload }: { disableReload?: boolean } = {}) => {
+const useDashboard = () => {
   const loading = useAppSelector((state) => state.settings?.dashboard.loading) || false;
   const collapsed = useAppSelector((state) => state.settings?.dashboard.collapsed) || false;
   const containerMaxWidth = useAppSelector((state) => state.settings?.dashboard.containerMaxWidth);

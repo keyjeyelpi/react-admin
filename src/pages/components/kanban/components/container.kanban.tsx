@@ -1,58 +1,20 @@
-import { faker } from '@faker-js/faker';
-import { TbPlus } from 'react-icons/tb';
-import { memo, useState, useCallback, useMemo } from 'react';
+import { memo, useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { v4 as uuid } from 'uuid';
 import chroma from 'chroma-js';
-import { Chip, Divider, IconButton, Stack, Typography, Box } from '@mui/material';
-import type { Column, DragState, KanbanContainerProps, Task } from '../types';
+import Title from '@/components/title.component';
+import { Chip, Divider, Stack, Typography, Box } from '@mui/material';
+import type { Column, DragState, KanbanContainerProps } from '../types';
 import KanbanCard from './card.kanban';
+import KanbanAddColumn from '../kanban-add/add-column.kanban';
+import KanbanAddCard from '../kanban-add/add-card.kanban';
 
-// Pre-generate some fake data templates to avoid expensive faker calls during render
-const generateCardContent = (): Task['content'] => ({
-  title: faker.lorem.words(3),
-  description: faker.lorem.paragraphs(2),
-  category: {
-    color: 'primary.main',
-    label: faker.commerce.department(),
-    icon: '',
-  },
-});
-
-const KanbanContainer = ({ items }: KanbanContainerProps) => {
+const KanbanContainer = ({ items, addColumn }: KanbanContainerProps) => {
   const [cards, setCards] = useState<Column[]>(items);
   const [selected, setSelected] = useState<string | null>(null);
   const [dragState, setDragState] = useState<DragState>({
     isDragging: false,
     position: null,
   });
-
-  // Memoize the addCard function to prevent recreation on every render
-  const addCard = useCallback(
-    (id: string) => {
-      setCards((prev) =>
-        prev.map((col) =>
-          col.id === id
-            ? {
-                ...col,
-                items: [
-                  ...col.items,
-                  {
-                    id: uuid(),
-                    content: generateCardContent(),
-                  },
-                ],
-              }
-            : col,
-        ),
-      );
-
-      // Find the column and call addAction if it exists
-      const column = items.find((col) => col.id === id);
-      column?.addAction?.();
-    },
-    [items],
-  );
 
   // Memoize the rendered cards to prevent unnecessary re-renders
   const renderedCards = useMemo(
@@ -82,21 +44,7 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
                   }}
                 />
               </Stack>
-              {!card?.disableAdd && (
-                <IconButton
-                  onClick={() => addCard(card.id)}
-                  sx={{
-                    bgcolor: 'primary.main',
-                    color: 'primary.contrastText',
-                    '&:hover': {
-                      bgcolor: 'primary.dark',
-                    },
-                  }}
-                  size="small"
-                >
-                  <TbPlus />
-                </IconButton>
-              )}
+              {!card?.disableAdd && <KanbanAddCard card={card} setCards={setCards} />}
             </Stack>
             <Stack gap={1}>
               {card.items.map((item, itemIndex) => (
@@ -134,12 +82,18 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
                   dragState.position.insertIndex === card.items.length && (
                     <Box
                       component={motion.div}
-                      initial={{ height: 0, opacity: 0 }}
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
                       animate={{
                         height: 211.14,
                         opacity: 0.3,
                       }}
-                      exit={{ height: 0, opacity: 0 }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
                       sx={{
                         bgcolor: 'primary.main',
                         borderRadius: 1,
@@ -153,11 +107,28 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
           {i !== cards.length - 1 && <Divider orientation="vertical" flexItem />}
         </div>
       )),
-    [cards, selected, addCard, dragState],
+    [cards, selected, dragState],
   );
 
   return (
     <>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{
+          p: {
+            xs: 2,
+            md: 4,
+          },
+        }}
+      >
+        <Title
+          title="Kanban"
+          subtitle="Visualize your workflow, track progress, and stay organized."
+        />
+        <KanbanAddColumn addColumn={addColumn} />
+      </Stack>
       <AnimatePresence initial={false} mode="wait">
         {selected && (
           <Stack
@@ -191,7 +162,14 @@ const KanbanContainer = ({ items }: KanbanContainerProps) => {
           />
         )}
       </AnimatePresence>
-      <Stack flex={1} flexDirection="row" gap={2}>
+      <Stack
+        flex={1}
+        flexDirection="row"
+        gap={2}
+        sx={{
+          overflowX: 'auto',
+        }}
+      >
         {renderedCards}
       </Stack>
     </>

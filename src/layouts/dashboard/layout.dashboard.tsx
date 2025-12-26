@@ -18,6 +18,7 @@ const DashboardLayout = () => {
 
   useLayoutEffect(() => {
     if (location.pathname.includes('/components/kanban')) return;
+
     setContainerMaxWidth('xl');
     setCustomDashboardSx({});
   }, [location.pathname]);
