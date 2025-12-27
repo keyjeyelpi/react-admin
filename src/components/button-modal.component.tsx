@@ -1,4 +1,4 @@
-import { IconButton, Box } from '@mui/material';
+import { IconButton, Box, type SxProps } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, type PropsWithChildren } from 'react';
 import { TbCircleX } from 'react-icons/tb';
@@ -9,12 +9,13 @@ type ModalProps = PropsWithChildren<{
   setShow: (value: boolean) => void;
   children: React.ReactNode;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'auto';
+  modalSx?: SxProps;
 }>;
 
 const ModalTrigger = ({ children }: React.PropsWithChildren) => <>{children}</>;
 const ModalContent = ({ children }: React.PropsWithChildren) => <>{children}</>;
 
-const Modal = ({ id, show, setShow, children, size = 'auto' }: ModalProps) => {
+const Modal = ({ id, show, setShow, children, size = 'auto', modalSx }: ModalProps) => {
   const childrenArray = React.Children.toArray(children);
   const trigger = childrenArray.find(
     (child) => React.isValidElement(child) && child.type === ModalTrigger,
@@ -103,13 +104,16 @@ const Modal = ({ id, show, setShow, children, size = 'auto' }: ModalProps) => {
                 exit={{
                   scale: 0.8,
                 }}
-                sx={(theme) => ({
-                  width: size === 'auto' ? 'auto' : theme.breakpoints.values[size],
-                  position: 'relative',
-                  backgroundColor: 'background.paper',
-                  p: 4,
-                  borderRadius: 2,
-                })}
+                sx={[
+                  (theme) => ({
+                    width: size === 'auto' ? 'auto' : theme.breakpoints.values[size],
+                    position: 'relative',
+                    backgroundColor: 'background.paper',
+                    p: 4,
+                    borderRadius: 2,
+                  }),
+                  ...(Array.isArray(modalSx) ? modalSx : [modalSx]),
+                ]}
                 onClick={(e) => e.stopPropagation()}
               >
                 <IconButton

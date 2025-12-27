@@ -276,17 +276,17 @@ const Authenticate = () => {
 
   return (
     <Stack gap={2} alignItems="center" justifyContent="center">
-      <Stack alignItems="center">
+      <Stack alignItems="center" justifyContent="center">
         <Collapse in={selectedTab === tabs[0]?.title}>
-          <Typography variant="h5" fontWeight={700}>
-            Welcome Back
+          <Typography variant="h5" fontWeight={700} textAlign="center">
+            Welcome Back!
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Please login to your account
           </Typography>
         </Collapse>
         <Collapse in={selectedTab === tabs[1]?.title}>
-          <Typography variant="h5" fontWeight={700}>
+          <Typography variant="h5" fontWeight={700} textAlign="center">
             Welcome!
           </Typography>
           <Typography variant="body2" color="text.secondary">

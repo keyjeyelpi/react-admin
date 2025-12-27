@@ -32,13 +32,14 @@ const AuthenticationLayout = () => (
           backgroundColor: 'background.default',
           backdropFilter: 'blur(1px)',
           width: '100%',
+          p: 4,
           border: (theme) => ({
             md: `1px solid ${theme.palette.divider}`,
           }),
         }}
         elevation={0}
       >
-        <Stack gap={16} alignItems="center" justifyContent="center" position="relative">
+        <Stack gap={8} alignItems="center" justifyContent="center" position="relative">
           <Logo withText />
           <Outlet />
         </Stack>

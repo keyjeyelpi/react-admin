@@ -1,9 +1,10 @@
 import { useRouteModal } from '@/hooks/route-modal.hook';
-import { Button, TextField, Stack } from '@mui/material';
+import { Button, TextField, Stack, Box } from '@mui/material';
 import Modal, { ModalTrigger, ModalContent } from '@/components/button-modal.component';
 import { TbCirclePlus } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import Title from '@/components/title.component';
 
 const KanbanAddColumn = ({ addColumn }: { addColumn: (name: string) => void }) => {
   const [show, setShow] = useRouteModal('add-column', '/components/kanban');
@@ -23,8 +24,13 @@ const KanbanAddColumn = ({ addColumn }: { addColumn: (name: string) => void }) =
         </Button>
       </ModalTrigger>
       <ModalContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2}>
+            <Title
+              title="Add Column"
+              subtitle="Add a column to the kanban board."
+              hideBreadcrumbs
+            />
             <Controller
               name="name"
               control={control}
@@ -34,18 +40,24 @@ const KanbanAddColumn = ({ addColumn }: { addColumn: (name: string) => void }) =
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  label="Column Name"
+                  label="Column"
+                  size="small"
                   fullWidth
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
                 />
               )}
             />
-            <Button type="submit" variant="contained" fullWidth>
-              Add Column
-            </Button>
+            <Stack flexDirection="row" justifyContent="flex-end" alignItems="center" gap={1}>
+              <Button type="button" variant="outlined" onClick={() => setShow(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained">
+                Submit
+              </Button>
+            </Stack>
           </Stack>
-        </form>
+        </Box>
       </ModalContent>
     </Modal>
   );

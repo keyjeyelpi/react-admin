@@ -64,6 +64,7 @@ const SidebarSubmenu = ({
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const isURL = (menu: string) => location.pathname.includes(url + menu);
 
   if (!submenu || !submenu.length) return null;
 
@@ -80,10 +81,7 @@ const SidebarSubmenu = ({
                   y: i === 0 ? -1 : -20,
                 }}
                 animate={{
-                  borderColor:
-                    location.pathname === url + menu.url
-                      ? theme.palette.primary.main
-                      : theme.palette.divider,
+                  borderColor: isURL(menu.url) ? theme.palette.primary.main : theme.palette.divider,
                 }}
                 transition={{
                   duration: 0.4,
@@ -109,7 +107,7 @@ const SidebarSubmenu = ({
                   color: (theme) => theme.palette.text.secondary,
                   height: 40,
                 },
-                location.pathname === url + menu.url && {
+                isURL(menu.url) && {
                   bgcolor: (theme) =>
                     chroma(theme.palette.primary.main)
                       .alpha(!collapsed ? 0.05 : 0.1)
@@ -149,7 +147,7 @@ const SidebarOptions = ({ option }: { option: iSidebarOptions[number]['options']
   const navigate = useNavigate();
 
   const isURL =
-    option.url === location.pathname ||
+    location.pathname.includes(option.url) ||
     ('alternativeLinks' in option ? option.alternativeLinks : [])?.includes(location.pathname) ||
     (option.submenu || []).some(
       (sub) => location.pathname.includes(sub.url) && location.pathname.includes(option.url),

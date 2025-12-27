@@ -9,12 +9,14 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Box,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import Modal, { ModalTrigger, ModalContent } from '@/components/button-modal.component';
 import { useState, useMemo } from 'react';
 import kanbanData from '@/data/kanban.data.json';
 import type { Column } from '../types';
+import Title from '@/components/title.component';
 
 interface KanbanAddCardProps {
   card: Column;
@@ -89,8 +91,9 @@ const KanbanAddCard = ({ card, setCards }: KanbanAddCardProps) => {
         </IconButton>
       </ModalTrigger>
       <ModalContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2}>
+            <Title title="Add Card" subtitle="Add a card to the kanban board." hideBreadcrumbs />
             <Controller
               name="title"
               control={control}
@@ -100,6 +103,7 @@ const KanbanAddCard = ({ card, setCards }: KanbanAddCardProps) => {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
+                  size="small"
                   label="Card Title"
                   fullWidth
                   error={!!fieldState.error}
@@ -111,7 +115,14 @@ const KanbanAddCard = ({ card, setCards }: KanbanAddCardProps) => {
               name="description"
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Description" fullWidth multiline rows={4} />
+                <TextField
+                  {...field}
+                  size="small"
+                  label="Description"
+                  fullWidth
+                  multiline
+                  rows={4}
+                />
               )}
             />
             <Controller
@@ -125,6 +136,7 @@ const KanbanAddCard = ({ card, setCards }: KanbanAddCardProps) => {
                   <InputLabel id="category-label">Category</InputLabel>
                   <Select
                     {...field}
+                    size="small"
                     label="Category"
                     labelId="category-label"
                     displayEmpty
@@ -139,11 +151,16 @@ const KanbanAddCard = ({ card, setCards }: KanbanAddCardProps) => {
                 </FormControl>
               )}
             />
-            <Button type="submit" variant="contained" fullWidth>
-              Add Card
-            </Button>
+            <Stack flexDirection="row" justifyContent="flex-end" alignItems="center" gap={1}>
+              <Button type="button" variant="outlined" onClick={() => setShow(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained">
+                Submit
+              </Button>
+            </Stack>
           </Stack>
-        </form>
+        </Box>
       </ModalContent>
     </Modal>
   );

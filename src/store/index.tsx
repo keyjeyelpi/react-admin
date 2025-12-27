@@ -15,6 +15,7 @@ import {
 } from 'redux-persist';
 import { SettingsSlice } from './slices/settings.slice';
 import { UserSlice } from './slices/user.slice';
+import { userApi } from '../api/user.api';
 import type { TypedUseSelectorHook } from './types';
 
 const noop = () => {};
@@ -34,6 +35,7 @@ const migrations = {
 const reducerSlices = {
   [SettingsSlice.name]: SettingsSlice.reducer,
   [UserSlice.name]: UserSlice.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 };
 
 const persistConfig = {
@@ -62,7 +64,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(userApi.middleware),
 });
 
 export const persistor = persistStore(store);
