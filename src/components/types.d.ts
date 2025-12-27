@@ -1,7 +1,5 @@
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
-import type { SxProps, Theme, TypographyProps } from '@mui/material';
-
-export type { SxProps, Theme, TypographyProps };
+export type { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
+export type { SxProps, Theme, TypographyProps } from '@mui/material';
 
 export type BlurredContainerProps = { children: ReactNode; sx?: SxProps };
 

@@ -1,3 +1,4 @@
+export const DEMO_MODE: boolean = import.meta.env.VITE_DEMO_MODE === 'true';
 export const isNumber = (a: unknown): a is number => !Number.isNaN(a) && typeof a === 'number';
 export const delay = (ms: number): Promise<void> => {
   return new Promise((resolve) => {

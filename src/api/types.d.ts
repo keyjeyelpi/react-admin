@@ -1,5 +1,6 @@
-// User API Types
+export type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
+// User API Types
 export interface IUser {
   id: string;
   email: string;

@@ -46,10 +46,7 @@ const Kanban = () => {
         position: 'relative',
       }}
     >
-      <KanbanContainer
-        items={initialCards}
-        addColumn={addColumn}
-      />
+      <KanbanContainer items={initialCards} addColumn={addColumn} />
     </Stack>
   );
 };

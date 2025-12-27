@@ -15,8 +15,8 @@ import { useForm, Controller } from 'react-hook-form';
 import Modal, { ModalTrigger, ModalContent } from '@/components/button-modal.component';
 import { useState, useMemo } from 'react';
 import kanbanData from '@/data/kanban.data.json';
-import type { Column } from '../types';
 import Title from '@/components/title.component';
+import type { Column } from '../types';
 
 interface KanbanAddCardProps {
   card: Column;

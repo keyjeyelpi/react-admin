@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import baseQueryWithReauth from './base.api';
 import type {
   IUser,
   IUserCreateRequest,
@@ -8,7 +9,6 @@ import type {
   IUsersResponse,
   IUserQueryParams,
 } from './types';
-import baseQueryWithReauth from './base.api';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -24,24 +24,37 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.users.map(({ id }) => ({ type: 'User' as const, id })),
-              { type: 'Users', id: 'LIST' },
+              ...result.users.map(({ id }) => ({
+                type: 'User' as const,
+                id,
+              })),
+              {
+                type: 'Users',
+                id: 'LIST',
+              },
             ]
-          : [{ type: 'Users', id: 'LIST' }],
+          : [
+              {
+                type: 'Users',
+                id: 'LIST',
+              },
+            ],
     }),
-
     // Get user by ID
     getUserById: builder.query<IUser, string>({
       query: (id) => `/users/${id}`,
-      providesTags: (_result, _error, id) => [{ type: 'User', id }],
+      providesTags: (_result, _error, id) => [
+        {
+          type: 'User',
+          id,
+        },
+      ],
     }),
-
     // Get current user profile
     getCurrentUser: builder.query<IUser, void>({
       query: () => '/users/me',
       providesTags: ['User'],
     }),
-
     // Create new user
     createUser: builder.mutation<IUser, IUserCreateRequest>({
       query: (body) => ({
@@ -49,9 +62,13 @@ export const userApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+      invalidatesTags: [
+        {
+          type: 'Users',
+          id: 'LIST',
+        },
+      ],
     }),
-
     // Update user
     updateUser: builder.mutation<IUser, IUserUpdateRequest>({
       query: ({ id, ...body }) => ({
@@ -60,11 +77,16 @@ export const userApi = createApi({
         body,
       }),
       invalidatesTags: (_result, _error, { id }) => [
-        { type: 'User', id },
-        { type: 'Users', id: 'LIST' },
+        {
+          type: 'User',
+          id,
+        },
+        {
+          type: 'Users',
+          id: 'LIST',
+        },
       ],
     }),
-
     // Delete user
     deleteUser: builder.mutation<void, string>({
       query: (id) => ({
@@ -72,11 +94,16 @@ export const userApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: (_result, _error, id) => [
-        { type: 'User', id },
-        { type: 'Users', id: 'LIST' },
+        {
+          type: 'User',
+          id,
+        },
+        {
+          type: 'Users',
+          id: 'LIST',
+        },
       ],
     }),
-
     // User login
     login: builder.mutation<IUserLoginResponse, IUserLoginRequest>({
       query: (credentials) => ({
@@ -87,6 +114,7 @@ export const userApi = createApi({
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+
           // Store the token for subsequent API calls
           localStorage.setItem('token', data.token);
         } catch {
@@ -94,7 +122,6 @@ export const userApi = createApi({
         }
       },
     }),
-
     // User logout
     logout: builder.mutation<void, void>({
       query: () => ({
@@ -112,7 +139,6 @@ export const userApi = createApi({
         }
       },
     }),
-
     // User registration
     register: builder.mutation<IUser, IUserCreateRequest>({
       query: (body) => ({

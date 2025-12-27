@@ -1,7 +1,11 @@
-import { IconButton, Box, type SxProps } from '@mui/material';
+import { IconButton, Box } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, type PropsWithChildren } from 'react';
+import React, { useEffect } from 'react';
 import { TbCircleX } from 'react-icons/tb';
+import type { PropsWithChildren, SxProps } from './types';
+
+const { isArray } = Array;
+const maybeArray = (a: SxProps) => (isArray(a) ? a : [a]);
 
 type ModalProps = PropsWithChildren<{
   id?: string;
@@ -112,7 +116,7 @@ const Modal = ({ id, show, setShow, children, size = 'auto', modalSx }: ModalPro
                     p: 4,
                     borderRadius: 2,
                   }),
-                  ...(Array.isArray(modalSx) ? modalSx : [modalSx]),
+                  ...(!!modalSx ? maybeArray(modalSx) : []),
                 ]}
                 onClick={(e) => e.stopPropagation()}
               >
