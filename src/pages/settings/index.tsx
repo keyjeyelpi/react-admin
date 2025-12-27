@@ -6,7 +6,6 @@ import { useRouteModal } from '@/hooks/route-modal.hook';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
 import GeneralSettings from './general.settings';
-import { title } from 'process';
 
 const settingsOptions = [
   {
