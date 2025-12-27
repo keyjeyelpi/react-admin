@@ -189,12 +189,6 @@ const GeneralSettings = () => {
         height: '100%',
       }}
     >
-      <Title
-        title="General Settings"
-        titleSx={{
-          fontSize: '1.25rem',
-        }}
-      />
       <GeneralSettingsTheme />
     </Stack>
   );

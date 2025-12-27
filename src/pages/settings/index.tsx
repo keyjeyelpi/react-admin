@@ -3,9 +3,10 @@ import chroma from 'chroma-js';
 import Title from '@/components/title.component';
 import { cloneElement, useEffect } from 'react';
 import { useRouteModal } from '@/hooks/route-modal.hook';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TbBell, TbLock, TbSettings, TbUser } from 'react-icons/tb';
 import GeneralSettings from './general.settings';
+import { title } from 'process';
 
 const settingsOptions = [
   {
@@ -13,21 +14,29 @@ const settingsOptions = [
     options: [
       {
         label: 'General',
+        title: 'General Settings',
+        subtitle: 'Adjust your preferences and configurations.',
         url: '/settings/general',
         icon: <TbSettings />,
       },
       {
         label: 'Account',
+        title: 'Account Settings',
+        subtitle: 'Manage your account information and security settings.',
         url: '/settings/account',
         icon: <TbUser />,
       },
       {
         label: 'Notifications',
+        title: 'Notification Settings',
+        subtitle: 'Customize your notification preferences.',
         url: '/settings/notifications',
         icon: <TbBell />,
       },
       {
         label: 'Security',
+        title: 'Security Settings',
+        subtitle: 'Update your security preferences and password.',
         url: '/settings/security',
         icon: <TbLock />,
       },
@@ -38,6 +47,8 @@ const settingsOptions = [
 const Settings = () => {
   const [, , params] = useRouteModal('settings/:category');
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   useEffect(() => {
     if (params?.category) return;
@@ -52,7 +63,7 @@ const Settings = () => {
         height: '100%',
       }}
     >
-      <Title subtitle="Adjust your preferences and configurations." />
+      <Title title="Settings" subtitle="Adjust your preferences and configurations." />
       <Stack
         flexDirection={{
           xs: 'column',
@@ -137,6 +148,23 @@ const Settings = () => {
           ))}
         </Stack>
         <Stack flex={1}>
+          <Title
+            title={
+              settingsOptions
+                .flatMap((section) => section.options)
+                .find((option) => option.url === currentPath)?.title || 'Settings'
+            }
+            subtitle={
+              settingsOptions
+                .flatMap((section) => section.options)
+                .find((option) => option.url === currentPath)?.subtitle ||
+              'Adjust your preferences and configurations.'
+            }
+            titleSx={{
+              fontSize: '1.25rem',
+            }}
+            hideBreadcrumbs
+          />
           <GeneralSettings />
         </Stack>
       </Stack>
