@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: '/react-admin/',
+    base: '/react-admin/#/',
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

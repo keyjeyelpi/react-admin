@@ -8,7 +8,7 @@ import { useLoginMutation } from '@/api';
 import type { LoginSchemaType } from '@/schema/types';
 import { Button, InputAdornment, Stack, TextField } from '@mui/material';
 import { TbEye, TbEyeClosed, TbMail, TbPassword } from 'react-icons/tb';
-import { createSignature } from '@/utils/function.util';
+import { createSignature, DEMO_MODE } from '@/utils/function.util';
 import { encrypt } from '@/utils/encryption.util';
 
 const Login = () => {
@@ -24,10 +24,15 @@ const Login = () => {
   } = useForm<LoginSchemaType>({
     mode: 'onChange',
     resolver: yupResolver(LoginSchema),
-    defaultValues: {
-      username: '',
-      password: '',
-    },
+    defaultValues: DEMO_MODE
+      ? {
+          username: 'keyjeyelpi',
+          password: 'keyjeyelpi',
+        }
+      : {
+          username: '',
+          password: '',
+        },
   });
 
   const onSubmit = async (data: LoginSchemaType) => {
@@ -41,16 +46,22 @@ const Login = () => {
         ...loginData,
         signature: createSignature(loginData),
       }).unwrap();
+      console.log('Login Response:', response);
 
       dispatch(
         setUserProfile({
-          name: response.user.name,
-          avatar: response.user.avatar,
-          number: response.user.number,
-          birthdate: response.user.birthdate,
+          name: {
+            first: response.data.firstname,
+            last: response.data.lastname,
+            middle: '',
+          },
+          avatar: response.data.photo || undefined,
+          number: response.data.contactnumber,
+          birthdate: undefined, // Not provided in new format
         }),
       );
     } catch (error: any) {
+      console.log(error);
       setError('username', {
         type: 'manual',
         message: error?.data?.message || 'Login failed. Please try again.',

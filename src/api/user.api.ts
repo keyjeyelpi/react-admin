@@ -12,6 +12,7 @@ import type {
 import { DEMO_MODE } from '@/utils/function.util';
 import usersData from '@/data/users.data.json';
 import CryptoJS from 'crypto-js';
+import { useLocalStorage } from 'react-use';
 
 // Demo data
 const demoUsers = usersData as Array<{
@@ -309,6 +310,7 @@ export const userApi = createApi({
     login: builder.mutation<IUserLoginResponse, IUserLoginRequest>({
       ...(DEMO_MODE
         ? createDemoQuery<IUserLoginResponse, IUserLoginRequest>((credentials) => {
+            const [, setValue] = useLocalStorage('token');
             const user = demoUsers.find(
               (u) => u.username === credentials.username || u.email === credentials.username,
             );
@@ -317,29 +319,42 @@ export const userApi = createApi({
               throw new Error('Invalid credentials');
             }
 
-            const apiUser = convertDemoUserToApi(user);
             const token = 'demo-token-' + Math.random().toString(36).substr(2, 32);
-            localStorage.setItem('token', token);
-            return { user: apiUser, token };
+            setValue(token);
+
+            return {
+              message: 'Login successful',
+              data: {
+                token,
+                id: user.id,
+                userId: user.userId,
+                country: user.country,
+                accountTypeId: user.accountTypeId,
+                lastname: user.lastname,
+                firstname: user.firstname,
+                email: user.email,
+                username: user.username,
+                password: user.password,
+                contactnumber: user.contactnumber,
+                photo: user.photo,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+                settings: user.settings,
+              },
+            };
           })
         : {
             query: (credentials) => ({
               url: '/auth/login',
               method: 'POST',
               body: credentials,
+              onSuccess: (data: IUserLoginResponse) => {
+                const [, setValue] = useLocalStorage('token');
+                // Store the token for subsequent API calls
+                setValue(data.data.token);
+              },
             }),
           }),
-      async onQueryStarted(_credentials, { queryFulfilled }) {
-        if (!DEMO_MODE) {
-          try {
-            const { data } = await queryFulfilled;
-            // Store the token for subsequent API calls
-            localStorage.setItem('token', data.token);
-          } catch {
-            // Login failed, no token to store
-          }
-        }
-      },
     }),
     // User logout
     logout: builder.mutation<void, void>({

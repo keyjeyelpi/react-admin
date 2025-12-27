@@ -48,8 +48,30 @@ export interface IUserLoginRequest {
 }
 
 export interface IUserLoginResponse {
-  user: IUser;
-  token: string;
+  message: string;
+  data: {
+    token: string;
+    id: number;
+    userId: string;
+    country: string;
+    accountTypeId: string;
+    lastname: string;
+    firstname: string;
+    email: string;
+    username: string;
+    password: string;
+    contactnumber: string;
+    photo: string | null;
+    createdAt: string;
+    updatedAt: string;
+    settings: {
+      id: number;
+      userId: number;
+      colorPrimary: string;
+      colorSecondary: string;
+      darkModePreference: 'light' | 'dark' | 'system';
+    };
+  };
 }
 
 export interface IUsersResponse {
