@@ -41,7 +41,7 @@ const Typing = ({ text, delay = 0, spacing = 0.2, ...typography }: TypingProps) 
             : ''
         )
           .split('')
-          .map((char, i) => (
+          .map((char: string, i: number) => (
             <Typography
               component={motion.p}
               key={i}

@@ -1,0 +1,234 @@
+[
+  {
+    "id": 1,
+    "userId": "USR-0001",
+    "country": "US",
+    "accountTypeId": "ACC-ADMIN",
+    "lastname": "Peñaloza",
+    "firstname": "Kim Joseph",
+    "email": "kj.penaloza@gmail.com",
+    "username": "keyjeyelpi",
+    "password": "U2FsdGVkX18QXR6j44H8DVizSunDl0xh0F9zZkbhjow=",
+    "contactnumber": "+1-555-101-0001",
+    "photo": null,
+    "createdAt": "2024-01-01T08:00:00.000Z",
+    "updatedAt": "2025-01-01T08:00:00.000Z",
+    "accountType": {
+      "title": "Administrator",
+      "isEditable": true,
+      "isDeletable": false,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 1,
+      "userId": 1,
+      "colorPrimary": "#1976d2",
+      "colorSecondary": "#9c27b0",
+      "darkModePreference": "system"
+    }
+  },
+  {
+    "id": 2,
+    "userId": "USR-0002",
+    "country": "PH",
+    "accountTypeId": "ACC-MANAGER",
+    "lastname": "Santos",
+    "firstname": "Maria",
+    "email": "maria.santos@example.com",
+    "username": "marias",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+63-917-555-0002",
+    "photo": null,
+    "createdAt": "2024-02-10T08:00:00.000Z",
+    "updatedAt": "2025-02-10T08:00:00.000Z",
+    "accountType": {
+      "title": "Manager",
+      "isEditable": true,
+      "isDeletable": false,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 2,
+      "userId": 2,
+      "colorPrimary": "#2e7d32",
+      "colorSecondary": "#ff9800",
+      "darkModePreference": "dark"
+    }
+  },
+  {
+    "id": 3,
+    "userId": "USR-0003",
+    "country": "US",
+    "accountTypeId": "ACC-EDITOR",
+    "lastname": "Johnson",
+    "firstname": "Ava",
+    "email": "ava.johnson@example.com",
+    "username": "avaj",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+1-555-101-0003",
+    "photo": null,
+    "createdAt": "2024-03-15T08:00:00.000Z",
+    "updatedAt": "2025-03-15T08:00:00.000Z",
+    "accountType": {
+      "title": "Editor",
+      "isEditable": true,
+      "isDeletable": true,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 3,
+      "userId": 3,
+      "colorPrimary": "#d32f2f",
+      "colorSecondary": "#607d8b",
+      "darkModePreference": "light"
+    }
+  },
+  {
+    "id": 4,
+    "userId": "USR-0004",
+    "country": "PH",
+    "accountTypeId": "ACC-VIEWER",
+    "lastname": "Reyes",
+    "firstname": "Juan",
+    "email": "juan.reyes@example.com",
+    "username": "juanr",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+63-917-555-0004",
+    "photo": null,
+    "createdAt": "2024-04-20T08:00:00.000Z",
+    "updatedAt": "2025-04-20T08:00:00.000Z",
+    "accountType": {
+      "title": "Viewer",
+      "isEditable": false,
+      "isDeletable": true,
+      "allowedToEdit": false,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 4,
+      "userId": 4,
+      "colorPrimary": "#512da8",
+      "colorSecondary": "#03a9f4",
+      "darkModePreference": "system"
+    }
+  },
+  {
+    "id": 5,
+    "userId": "USR-0005",
+    "country": "US",
+    "accountTypeId": "ACC-MANAGER",
+    "lastname": "Brown",
+    "firstname": "Ethan",
+    "email": "ethan.brown@example.com",
+    "username": "ethanb",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+1-555-101-0005",
+    "photo": null,
+    "createdAt": "2024-05-25T08:00:00.000Z",
+    "updatedAt": "2025-05-25T08:00:00.000Z",
+    "accountType": {
+      "title": "Manager",
+      "isEditable": true,
+      "isDeletable": false,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 5,
+      "userId": 5,
+      "colorPrimary": "#0288d1",
+      "colorSecondary": "#f06292",
+      "darkModePreference": "dark"
+    }
+  },
+  {
+    "id": 6,
+    "userId": "USR-0006",
+    "country": "PH",
+    "accountTypeId": "ACC-EDITOR",
+    "lastname": "Garcia",
+    "firstname": "Luna",
+    "email": "luna.garcia@example.com",
+    "username": "lunag",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+63-917-555-0006",
+    "photo": null,
+    "createdAt": "2024-06-30T08:00:00.000Z",
+    "updatedAt": "2025-06-30T08:00:00.000Z",
+    "accountType": {
+      "title": "Editor",
+      "isEditable": true,
+      "isDeletable": true,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 6,
+      "userId": 6,
+      "colorPrimary": "#388e3c",
+      "colorSecondary": "#ffa000",
+      "darkModePreference": "light"
+    }
+  },
+  {
+    "id": 7,
+    "userId": "USR-0007",
+    "country": "US",
+    "accountTypeId": "ACC-VIEWER",
+    "lastname": "Miller",
+    "firstname": "Noah",
+    "email": "noah.miller@example.com",
+    "username": "noahm",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+1-555-101-0007",
+    "photo": null,
+    "createdAt": "2024-07-05T08:00:00.000Z",
+    "updatedAt": "2025-07-05T08:00:00.000Z",
+    "accountType": {
+      "title": "Viewer",
+      "isEditable": false,
+      "isDeletable": true,
+      "allowedToEdit": false,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 7,
+      "userId": 7,
+      "colorPrimary": "#7b1fa2",
+      "colorSecondary": "#00acc1",
+      "darkModePreference": "system"
+    }
+  },
+  {
+    "id": 8,
+    "userId": "USR-0008",
+    "country": "PH",
+    "accountTypeId": "ACC-ADMIN",
+    "lastname": "Dela Cruz",
+    "firstname": "Aria",
+    "email": "aria.delacruz@example.com",
+    "username": "ariadc",
+    "password": "U2FsdGVkX186dsMKkUyVKFpUIU9QPsMWNAILqTc9EVo=",
+    "contactnumber": "+63-917-555-0008",
+    "photo": null,
+    "createdAt": "2024-08-12T08:00:00.000Z",
+    "updatedAt": "2025-08-12T08:00:00.000Z",
+    "accountType": {
+      "title": "Administrator",
+      "isEditable": true,
+      "isDeletable": false,
+      "allowedToEdit": true,
+      "isSelectable": true
+    },
+    "settings": {
+      "id": 8,
+      "userId": 8,
+      "colorPrimary": "#c2185b",
+      "colorSecondary": "#7c4dff",
+      "darkModePreference": "dark"
+    }
+  }
+]

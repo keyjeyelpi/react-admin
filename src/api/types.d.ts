@@ -42,8 +42,9 @@ export interface IUserUpdateRequest {
 }
 
 export interface IUserLoginRequest {
-  email: string;
+  username: string;
   password: string;
+  signature: string;
 }
 
 export interface IUserLoginResponse {

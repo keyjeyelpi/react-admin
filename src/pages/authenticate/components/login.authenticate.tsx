@@ -8,6 +8,8 @@ import { useLoginMutation } from '@/api';
 import type { LoginSchemaType } from '@/schema/types';
 import { Button, InputAdornment, Stack, TextField } from '@mui/material';
 import { TbEye, TbEyeClosed, TbMail, TbPassword } from 'react-icons/tb';
+import { createSignature } from '@/utils/function.util';
+import { encrypt } from '@/utils/encryption.util';
 
 const Login = () => {
   const [togglePassword, setTogglePassword] = useState(false);
@@ -23,21 +25,25 @@ const Login = () => {
     mode: 'onChange',
     resolver: yupResolver(LoginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
+      const loginData = {
+        username: data.username,
+        password: encrypt(data.password),
+      };
+
       const response = await login({
-        email: data.email,
-        password: data.password,
+        ...loginData,
+        signature: createSignature(loginData),
       }).unwrap();
 
       dispatch(
         setUserProfile({
-          email: response.user.email,
           name: response.user.name,
           avatar: response.user.avatar,
           number: response.user.number,
@@ -45,7 +51,7 @@ const Login = () => {
         }),
       );
     } catch (error: any) {
-      setError('email', {
+      setError('username', {
         type: 'manual',
         message: error?.data?.message || 'Login failed. Please try again.',
       });
@@ -60,9 +66,9 @@ const Login = () => {
         variant="outlined"
         size="small"
         placeholder="keyjeyelpi@sample.com"
-        error={!!errors?.email}
-        helperText={errors?.email?.message}
-        {...register('email')}
+        error={!!errors?.username}
+        helperText={errors?.username?.message}
+        {...register('username')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
